@@ -75,35 +75,48 @@ export default function App() {
 }
 const styles = StyleSheet.create({
   container: {
-   flex: 1,
-   marginTop: 55,
+    flex: 1,
+    marginTop: 55,
+    padding: 20,
+    backgroundColor: '#F5F5F5', // Fundo mais agradável
   },
 
   texto: {
-    color: '#000',
+    color: '#333', // Texto escuro, mas suave
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 35,
+    marginVertical: 20, // Espaçamento em torno do texto
   },
 
   input: {
     alignSelf: 'center',
-    width: 370,
-    height: 40,
-    borderColor: 'gray',
-    backgroundColor: '#EEEEEE',
+    width: '90%',
+    height: 45,
+    borderColor: '#6200EE', // Borda com cor mais vibrante
+    backgroundColor: '#FFF',
     borderWidth: 1,
     marginBottom: 15,
-    paddingLeft: 10,
-    borderRadius: 5,
+    paddingLeft: 15,
+    borderRadius: 8, // Bordas mais arredondadas
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2, // Leve sombra
+    marginTop: 20,
   },
 
   btn: {
-    backgroundColor: '#222',
+    backgroundColor: '#6200EE', // Cor roxa vibrante
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center', // Centralizar o texto no botão
+    marginVertical: 10,
   },
 
-  btnTexto:{
+  btnTexto: {
     color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
-
