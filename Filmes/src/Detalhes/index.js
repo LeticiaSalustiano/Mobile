@@ -7,12 +7,12 @@ export default function Detalhes(props) {
   return (
     <View style={styles.container}>
         <View style={styles.modalcontainer}>
-            <TouchableOpacity style={styles.btnfechar}>
+            <TouchableOpacity style={styles.btnfechar} onPress={props.fecharModal}>
                 <Text style={styles.textofechar}>Fechar</Text>
             </TouchableOpacity>
-            <Text style={styles.textotitulo}>Título</Text>
-            <Text style={styles.textosinopse}>Sínopse: </Text>
-            <Text style={styles.textodetalhes}>Texto</Text>
+            <Text style={styles.textotitulo}>{props.filme.nome}</Text>
+            <Text style={styles.textosinopse}>Sinopse:</Text>
+            <Text style={styles.textodetalhes}>{props.filme.sinopse}</Text>
         </View>
     </View>
   );
@@ -54,25 +54,26 @@ const styles = StyleSheet.create({
   },
 
   textotitulo: {
-    padding: 10,
-    fontSize: 30,
+    padding: 30,
+    fontSize: 25,
     fontWeight: 'bold',
     color: '#FFF',
     textAlign: 'center',
   },
 
   textosinopse: {
-    fontSize: 19,
+    fontSize: 17,
     color: '#B0B0B0',
-    marginBottom: 10,
+    marginBottom: 5,
     marginLeft: 15,
   },
 
   textodetalhes: {
     fontSize: 16,
     color: '#FFFFFF',
-    marginLeft: 15,
-    marginBottom: 10,
+    marginLeft: 5,
+    margin: 15,
+    textAlign: 'justify',
   },
   
 });

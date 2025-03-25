@@ -16,13 +16,13 @@ export default function Filmes({ data }) {
       ></Image>
     </View>
     <View style={styles.areaBotao}>
-        <TouchableOpacity style={styles.botao}>
+        <TouchableOpacity style={styles.botao} onPress={()=>setModalVisibilidade(true)}>
             <Text style={styles.botaoTexto}>Ver mais</Text>
         </TouchableOpacity>
     </View>
   <View>
       <Modal visible={modalVisibilidade} animationType='slide' transparent={true}>
-         <Detalhes filme={data}></Detalhes>
+         <Detalhes filme={data} fecharModal={()=>setModalVisibilidade(false)}></Detalhes>
       </Modal>
   </View>
 </View>
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
 
   areaBotao: {
     alignItems: 'flex-end',
-    marginTop: -55,
+    marginTop: -75,
+    marginBottom: 15,
   },
 
   botao: {
