@@ -1,10 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
-import Picker from './src/Picker';
-import api from './src/Services/Api';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, Keyboard } from 'react-native';
+import PickerItem from './src/Picker'; 
+import { api } from './src/Services/Api';
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [moedas, setMoedas] = useState([]);
+  const [moedaSelecionada, setMoedaSelecionada] = useState(null);
+  const [moedaBase, setMoedaBase] = useState(0);
+  
+
+  useEffect(()=>{
+    async function loadMoedas() {
+      const resposta = await api.get("all")
+      let arrayMoedas = [];
+      Object.keys (resposta.data). map((key)=>{
+        arrayMoedas.push({
+          key:key,
+          label:key,
+          value:key
+        })
+      })
+      setMoedas(arrayMoedas);
+      setMoedaSelecionada(arrayMoedas[0].key)
+      setLoading(false);
+    }
+      loadMoedas();
+  }, [])
+
+  function converter(){
+    console.log(moedaBase)
+    Keyboard.dismiss();
+    setMoedaBase(0);
+  };
 
   if (loading) {
     return (
@@ -17,9 +45,10 @@ export default function App() {
       <View style={styles.container}>
         <View style={styles.card}>
           <Text style={styles.titulo1}>Selecione sua moeda:</Text>
-          <Picker
-            
-            style={styles.picker}
+          <PickerItem
+            moedas={moedas}
+            moedaSelecionada={moedaSelecionada}
+            quandoMudar={(moeda)=> setMoedaSelecionada(moeda)}
           />
 
           <Text style={styles.titulo2}>Digite o valor a ser convertido (R$):</Text>
@@ -27,26 +56,31 @@ export default function App() {
             placeholder='Ex: 1.50'
             style={styles.input}
             keyboardType="numeric"
-            
+            value={moedaBase}
+            onChangeText={(valor)=> setMoedaBase(valor)}
           />
-
-          <TouchableOpacity style={styles.btn} 
+          <TouchableOpacity style={styles.btn} onPress={converter} 
           >
-            <Text style={styles.btnTexto}>Converter</Text>
+            <Text style={styles.btnTexto} >Converter</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.card2}>
           <Text style={styles.texto}>
-            Valor moeda
+            ${moedaSelecionada}
           </Text>
-          <Text style={styles.texto}>
+          <Text style={styles.texto2}>
             Corresponde a
           </Text>
           <Text style={styles.texto}>
             Valor convertido
           </Text>
-        </View>
+         
+
+
+</View>
+
+ 
       </View>
     );
   }
@@ -62,11 +96,11 @@ const styles = StyleSheet.create({
 
   card: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#f3f3f3',
     marginTop: 100,
     width: 300,
     height: 270,
-    borderRadius: 5,
+    borderRadius: 7,
   },
 
   titulo1: {
@@ -110,7 +144,7 @@ const styles = StyleSheet.create({
   card2: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#f3f3f3',
     marginTop: 50,
     width: 300,
     height: 200,
@@ -120,5 +154,10 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+
+  texto2: {
+    padding: 10,
+    fontSize: 15,
   },
 });

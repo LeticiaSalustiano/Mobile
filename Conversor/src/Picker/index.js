@@ -2,23 +2,19 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-export default function PickerItem({ selectedValue, onValueChange }) {
+export default function PickerItem(props) {
+
+  let moedasItem = props.moedas.map((Item, index)=>{
+    return <Picker.Item value={Item.key} key={index} label={Item.key}/>
+  })
+ 
+
   return (
-    <Picker
-      style={styles.picker}
-      selectedValue={selectedValue}
-      onValueChange={onValueChange}>
-      <Picker.Item label="USD" value="USD" />
-      <Picker.Item label="EUR" value="EUR" />
-      <Picker.Item label="JPY" value="JPY" />
-      <Picker.Item label="GBP" value="GBP" />
-      <Picker.Item label="BRL" value="BRL" />
-      <Picker.Item label="CNY" value="CNY" />
-      <Picker.Item label="INR" value="INR" />
-      <Picker.Item label="RUB" value="RUB" />
-      <Picker.Item label="AUD" value="AUD" />
-      <Picker.Item label="MXN" value="MXN" />
-      <Picker.Item label="BTC" value="BTC" />
+    <Picker style={styles.picker}
+       selectedValue={props.moedaSelecionada}
+       onValueChange={(valor)=> props.quandoMudar(valor)}
+    >
+        {moedasItem}
     </Picker>
   );
 }
