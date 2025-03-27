@@ -24,7 +24,11 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 50,
     marginBottom: 15,
+    color: '#f3f3f3',
+    backgroundColor: '#0f3460', // Azul escuro para harmonizar com o design
+    color: '#fff', // Texto branco para maior legibilidade
+    marginTop: 15,
   },
-
 });
+
 
