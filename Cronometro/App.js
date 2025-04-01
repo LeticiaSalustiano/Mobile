@@ -6,7 +6,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
       super(props);
       this.state = {
         numero: 0,
-        botao: 'INICIAR'
+        botao: 'INICIAR',
+        ultimo: null
     };
     this.iniciar = this.iniciar.bind(this);
     this.limpar = this.limpar.bind(this);
@@ -32,10 +33,12 @@ limpar() {
   clearInterval(this.timer);
   this.timer = null;
   this.setState({ 
+    ultimo: this.state.numero,
     numero: 0, 
     botao: 'INICIAR' 
   });
-}
+ }
+
 
 
  render() {
@@ -50,6 +53,11 @@ limpar() {
         <TouchableOpacity style={styles.btn} onPress={this.limpar}>
           <Text style={styles.texto}>Limpar</Text>
         </TouchableOpacity>
+      </View>
+      <View style={styles.areaUltimo}>
+          <Text style={styles.textoUltimo}>
+            {this.state.ultimo > 0 ? 'Último tempo ' + this.state.ultimo.toFixed(2)  + 's' : ''}
+            </Text>
       </View>
     </View>
    );
@@ -92,6 +100,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#00aeef',
+  },
+
+  areaUltimo: {
+    marginTop: 50, 
+  },
+
+  textoUltimo: {
+    fontSize: 30,
+    fontStyle: 'italic',
+    color: '#fff'
   },
 
 });
