@@ -11,6 +11,10 @@ export default function App() {
       Alert.alert('Nome inválido!');
       return;
     }
+    if (mesa.includes(nome)) {
+      Alert.alert('Essa pessoa já está na mesa!');
+      return;
+    }
     if (mesa.length < maxima) {
       setMesa([...mesa, nome]);
       setNome("");
@@ -23,6 +27,25 @@ export default function App() {
     setMesa(mesa.filter((pessoa) => pessoa !== nome));
   };
 
+  const isTableFull = mesa.length >= maxima;
+
+  const getCirclePosition = (index) => {
+    // Define as posições dos círculos ao redor da mesa
+    const positions = [
+      { top: 10, left: 90 },
+      { top: 34, left: 17 },
+      { top: 34, right: 17 },
+      { top: 230, right: 8 },
+      { bottom: -53, left: 15 },
+      { bottom: -78, right: 90 },
+      { bottom: 12, left: -30 },
+      { bottom: 10, right: -30 },
+      { top: 94, left: -24 },
+      { top: 94, right: -24 },
+    ];
+    return positions[index] || {};
+  };
+
   return (
     <FlatList
       style={styles.container}
@@ -31,17 +54,14 @@ export default function App() {
       ListHeaderComponent={
         <View>
           <Text style={styles.nome}>Gerenciador de Mesa</Text>
-          <Image
-             style={styles.img}
-          source={
-             mesa.length === 2
-              ? require('./src/2Pessoas.png')
-           : mesa.length === 3
-             ? require('./src/3Pessoas.png')
-           : require('./src/Round Table.png') // Imagem padrão para outros casos
-  }
-/>
-
+          <View style={styles.imageWrapper}>
+            {/* Imagem da mesa */}
+            <Image style={styles.img} source={require('./src/10Pessoas.png')} />
+            {/* Renderização dos círculos verdes */}
+            {mesa.map((_, index) => (
+              <View key={index} style={[styles.greenCircle, getCirclePosition(index)]} />
+            ))}
+          </View>
           <View style={styles.card}>
             <Text style={styles.texto}>Adicionar pessoas:</Text>
             <TextInput
@@ -51,11 +71,11 @@ export default function App() {
               onChangeText={setNome}
             />
             <TouchableOpacity
-              style={styles.btn}
+              style={[styles.btn, isTableFull && { backgroundColor: 'grey' }]}
               onPress={adicionar}
-              disabled={mesa.length >= maxima}
+              disabled={isTableFull}
             >
-              <Text style={styles.txtBtn}>Adicionar</Text>
+              <Text style={styles.txtBtn}>{isTableFull ? 'Mesa cheia' : 'Adicionar'}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -72,14 +92,8 @@ export default function App() {
         <View style={styles.lista}>
           <Text style={styles.texto2}>Adicionados:</Text>
           {mesa.length === 0 ? (
-            <Text>Ninguém foi adicionado ainda.</Text>
-          ) : (
-            mesa.map((item, index) => (
-              <Text key={index} style={styles.ultimo}>
-                {item}
-              </Text>
-            ))
-          )}
+            <Text style={styles.texto3}>Ninguém foi adicionado ainda.</Text>
+          ) : null}
           <Text style={styles.footer}>
             Total: {mesa.length}/{maxima}
           </Text>
@@ -89,45 +103,75 @@ export default function App() {
   );
 }
 
+const COLORS = {
+  primary: '#4B0082',
+  secondary: '#4CAF50',
+  danger: '#FF6347',
+  background: '#f5f5ff',
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5ff',
+    backgroundColor: COLORS.background,
     padding: 10,
   },
+  
   card: {
     backgroundColor: '#ffffff',
     width: '90%',
     alignSelf: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 117,
     borderRadius: 12,
     padding: 20,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 4,
+    margin: 30,
   },
+
   nome: {
     fontSize: 28,
     fontWeight: 'bold',
     fontStyle: 'italic',
     marginTop: 20,
     textAlign: 'center',
-    color: '#4B0082',
+    color: COLORS.primary,
   },
-  img: {
+
+  imageWrapper: {
     alignSelf: 'center',
+    position: 'relative',
     width: 200,
     height: 200,
-    margin: 20,
   },
+
+  img: {
+    alignSelf: 'center',
+    margin: 50,
+    width: 200,
+    height: 200,
+    borderRadius: 100, // Circular
+  },
+
+  greenCircle: {
+    marginTop: 10,
+    width: 20,
+    height: 20,
+    backgroundColor: 'green',
+    borderRadius: 10, // Circular
+    position: 'absolute', // Sobrepõe a imagem
+  },
+
   texto: {
     fontWeight: 'bold',
     fontSize: 18,
     alignSelf: 'flex-start',
-    color: '#4B0082',
+    color: COLORS.primary,
   },
+
   input: {
     width: '100%',
     height: 50,
@@ -139,22 +183,24 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: '#333',
   },
+
   btn: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: COLORS.secondary,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 25,
     alignSelf: 'flex-end',
     marginTop: 20,
   },
+
   btn2: {
-    backgroundColor: '#FF6347',
+    backgroundColor: COLORS.danger,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 25,
-    alignItems: 'flex-end',
-    marginLeft: 110,
-  },
+    alignSelf: 'flex-end', // Alinha à direita
+    marginLeft: 130,
+  },  
 
   txtBtn: {
     color: '#fff',
@@ -169,6 +215,7 @@ const styles = StyleSheet.create({
   },
 
   listItem: {
+    marginTop: -2,
     width: 332,
     flexDirection: 'row',
     padding: 10,
@@ -179,8 +226,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginLeft: 20,
   },
+
   lista: {
-    marginTop: 15,
+    marginTop: 20,
     backgroundColor: '#ffffff',
     borderRadius: 10,
     padding: 10,
@@ -189,23 +237,33 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 4,
   },
+
   texto2: {
     fontWeight: 'bold',
     fontSize: 18,
-    alignSelf: 'flex-start',
-    color: '#4B0082',
+    alignSelf: 'center',
+    color: COLORS.primary,
   },
+
   ultimo: {
     marginTop: 20,
     fontWeight: 'bold',
   },
+
   footer: {
     marginTop: 20,
     fontSize: 16,
-    color: '#4B0082',
+    color: COLORS.primary,
     textAlign: 'center',
+    fontWeight: 'bold',
+  },
+
+  texto3: {
+    marginTop: 15,
+    alignSelf: 'center',
   },
 });
+
 
 
 
