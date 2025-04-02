@@ -31,6 +31,11 @@ export default function App() {
   
       ])
   ).start()
+
+  let porcentagemLar = larAnimada.interpolate({
+    inputRange:[0, 100],
+    outputRange:['0%', '100%']
+  })
     
   }, []);
 
