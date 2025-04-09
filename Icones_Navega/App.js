@@ -1,39 +1,11 @@
 /*import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import IconesEXP from '@expo/vector-icons/Feather';
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity>
-           <IconesEXP name='arrow-right-circle' size={60} color={'#ff0000'}></IconesEXP>
-      </TouchableOpacity>
-      <TouchableOpacity>
-           <IconesEXP name='arrow-left-circle' size={60} color={'#ff0000'}></IconesEXP>
-      </TouchableOpacity>    
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  
-});*/
-
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from './src/Home/index';
-import Sobre from './src/Sobre/index';
+import SaibaMais from './src/SaibaMais/index';
 import Contato from './src/Contato/Index';
+
 
 const Pilha = createNativeStackNavigator();
 
@@ -46,18 +18,15 @@ export default function App() {
             component={Home}
             options={{
             title:'Tela inicial',
-            headerTintColor:'#fff',
-            headerStyle:{
-            backgroundColor:'#121212'
-          },          
+            headerTintColor:'#000',   
         }}
            ></Pilha.Screen>
 
          <Pilha.Screen 
-          name='Sobre' 
-          component={Sobre}
+          name='Noticia' 
+          component={Noticia}
           options={{
-          title:'Tela Sobre',          
+          title:'Tela Noticias',          
         }}
           ></Pilha.Screen>
 
@@ -68,9 +37,73 @@ export default function App() {
           title:'Tela Contato',
         }}
           ></Pilha.Screen>
+           <Pilha.Screen 
+          name='SaibaMais' 
+          component={SaibaMais}
+          options={{
+          title:'Tela Saiba Mais',
+        }}
+          ></Pilha.Screen>
       </Pilha.Navigator>
     </NavigationContainer>
 
   );
+}*/
+
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import IconesEXP from '@expo/vector-icons/Feather'
+
+import Home from './src/Home/index';
+import SaibaMais from './src/SaibaMais/index';
+import Contato from './src/Contato/Index';
+
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+      screenOptions={{
+        headerShouwn: false,
+        tabBarHideOnKeyboard: true,
+      }}>
+      <Tab.Screen
+      name='Home'
+      component={Home}
+      options={{
+        tabBarIcon:({color, size})=> {
+          return <IconesEXP name="home" color={color} size={size}></IconesEXP>
+        }
+      }}>
+      </Tab.Screen>
+      <Tab.Screen
+      name='SaibaMais'
+      component={SaibaMais}
+      options={{
+        tabBarIcon:({color, size})=> {
+          return <IconesEXP name="saibamais" color={color} size={size}></IconesEXP>
+        }
+      }}>
+      </Tab.Screen>
+      <Tab.Screen
+      name='Contato'
+      component={Contato}
+      options={{
+        tabBarIcon:({color, size})=> {
+          return <IconesEXP name="contato" color={color} size={size}></IconesEXP>
+        }
+      }}>
+      </Tab.Screen>
+      </Tab.Navigator>
+    </NavigationContainer>
+
+  );
 }
+
+
+
 
