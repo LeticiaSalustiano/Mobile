@@ -1,12 +1,11 @@
-
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Contato() {
 
+export default function Detalhes() {
     return (
       <View style={styles.container}>
-        <Text style={styles.titulo}>Contato</Text>       
+        <Text style={styles.titulo}>Pagina Detalhes</Text>       
       </View>
         
     );

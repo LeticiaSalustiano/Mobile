@@ -7,21 +7,25 @@ export default function App() {
 
   const navegacao = useNavigation();
 
-  function chamarSobre(){
-    navegacao.navigate('Sobre')
+  function chamaDetalhe(){
+    navegacao.navigate('Detalhes')
+ 
   }
 
     return (
       <View style={styles.container}>
+        <TextInput placeholder='Digite seu nome'></TextInput>
         <Text style={styles.titulo}>Home</Text>
          <Button
-         title='Ir para Sobre'
-         onPress={chamarSobre}></Button>
+         title='Ir para Detalhes'
+         onPress={chamaDetalhe}></Button>
+         <Button
+         title='Abrir Drawer'
+         onPress={()=> navegacao.openDrawer()}/>
       </View>
         
     );
-}
-
+  }
   
   const styles = StyleSheet.create({
     container: {
