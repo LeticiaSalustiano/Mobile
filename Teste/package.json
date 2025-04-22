@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "teste",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-navigation/drawer": "^7.3.9",
+    "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
     "@react-navigation/native-stack": "^7.3.10",
     "expo": "~52.0.46",

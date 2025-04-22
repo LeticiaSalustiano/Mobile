@@ -1,10 +1,12 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Home from './Pages/home';
-import Sobre from './Pages/sobre';
-import Cadastro from './Pages/cadastro';
+import Home from './src/Home';
+import Sobre from './src/Sobre';
+import Cadastro from './src/Cadastro';
 
-import CustomDrawer from './Pages/Components/CostumDrawer';
+
+
+import CustomDrawer from './src/CustomDrawer';
 const Drawer = createDrawerNavigator();
 
 export default function App() {
