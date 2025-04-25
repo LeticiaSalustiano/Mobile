@@ -1,134 +1,71 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, FlatList, Alert } from 'react-native';
-import { doc, onSnapshot, collection, addDoc, getDoc } from 'firebase/firestore';
-import { db } from './src/firebaseConnection';
-import { UserList } from './src/users';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
-// Aula 23 - Banco
-export default function Fire() {
-  const[nome, setNome] = useState("");
-  const[idade, setIdade] = useState("")
-  const[cargo, setCargo] = useState("");
-  const[mostrarFormulario, setMostrarFormulario] = useState(true);
-  const [users, setUsers] = useState([])
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './src/firebaseConnection';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
-  useEffect(()=> {
-    async function getDados() {
-      //onSnapshot(doc(db, "users"), (doc)=> {
-       // setNome(doc.data()?.nome)
-       // setIdade(doc.data()?.idade)
-       // setCargo(doc.data()?.cargo)
-      //})
+export default function App() {
 
-      const useRef = collection(db, "users");
-      console.log()
+  const[email, setEmail] = useState("")
+  const[senha, setSenha] = useState("")
 
-      onSnapshot(useRef, (snapshot)=> {
-        let lista = [];
+  const[authUser, setAuthUser] = useState(null)
 
-        snapshot.forEach((doc) => {
-          lista.push({
-            id: doc.id,
-            nome: doc.data().nome,
-            idade: doc.data().idade,
-            cargo: doc.data().cargo,
-          })
-          
-        });
-        setUsers(lista);
-      })
-    }
-    getDados();
-  }, []);
-
-  // Função para registrar os dados e limpar os campos
-async function registraDados() {
-  // Verificar se estão preenchidos
-  if (!nome || !idade || !cargo) {
-    Alert.alert('Preencha todos os campos!');
-    return;
+  async function criarUser(){
+    const user = await createUserWithEmailAndPassword(auth, email, senha)
+    console.log(user);
   }
 
-  try {
-    // Adicionar os dados no banco
-    await addDoc(collection(db, "users"), {
-      nome: nome,
-      idade: idade,
-      cargo: cargo,
-    });
 
-    // Limpar os campos do input
-    setNome('');
-    setIdade('');
-    setCargo('');
+  //async function loginUser(){
+  // const user = await signInWithEmailAndPassword(auth, email, senha)
+  // console.log(user);
+  // console.log("Usuário Logado");
+  //}
 
-    Alert.alert("Dados registrados com sucesso!");
-  } catch (error) {
-    console.error("Erro ao registrar os dados:", error);
-    Alert.alert("Erro ao registrar os dados. Tente novamente!");
+   function loginUser(){
+    signInWithEmailAndPassword(auth, email, senha).then((user)=> {
+      console.log(user);
+      console.log("Usuário Logado");
+    })
+    .catch((err) => {console.log(err)})
+  
   }
-}
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>FireBase</Text>
-      {mostrarFormulario && (
-        <View>
-          <View>
-            <Text style={styles.txt}>Nome</Text>
-            <TextInput
-              value={nome}
-              onChangeText={(text) => setNome(text)}
-              placeholder="Digite seu nome"
-              style={styles.input}
-            />
-          </View>
-          <View>
-            <Text style={styles.txt}>Idade</Text>
-            <TextInput
-              value={idade}
-              onChangeText={(text) => setIdade(text)}
-              placeholder="Digite sua idade"
-              keyboardType='numeric'
-              style={styles.input}
-            />
-          </View>
-          <View>
-            <Text style={styles.txt}>Cargo</Text>
-            <TextInput
-              value={cargo}
-              onChangeText={(text) => setCargo(text)}
-              placeholder="Digite seu cargo"
-              style={styles.input}
-            />
-          </View>
-            <TouchableOpacity 
-              style={styles.btn} 
-              onPress={registraDados}
-              disabled={!nome || !idade || !cargo}>
+      <Text>Usuário Logado: </Text>
 
-              <Text style={styles.textBtn}>Adicionar</Text>
+     {/*<FormUsers></FormUsers>*/}
 
-            </TouchableOpacity>
-        </View>
-      )}
-      <TouchableOpacity 
-        onPress={()=> setMostrarFormulario(!mostrarFormulario)}>
-      <Text  
-        style={styles.texto}>
-          {mostrarFormulario ? 'Esconder Formulário' : 'Mostrar Formulário'}
-        </Text>
-      </TouchableOpacity>
+     <Text style={styles.txt}>Email: </Text>
+     <TextInput 
+     style={styles.login} 
+     placeholder='Digite seu email...' 
+     value={email}
+     onChangeText={(texto)=> setEmail(texto)}
+/>
 
-      <Text style={styles.txt2}>Usuários: </Text>
+     <Text style={styles.txt}>Senha: </Text>
+     <TextInput 
+     style={styles.login} 
+     placeholder='Digite sua senha...' 
+     value={senha}
+     onChangeText={(texto)=> setSenha(texto)}
+     secureTextEntry={true}
+     />
 
-      <FlatList 
-        data={users} 
-        keyExtractor={(item)=> String(item.id)} 
-        renderItem={({ item }) => <UserList data={item} />} 
-      > 
-      </FlatList>
+     <TouchableOpacity 
+     style={styles.btn} 
+     onPress={criarUser}>
+      <Text style={styles.txtBtn}>Criar conta</Text>
+     </TouchableOpacity>
+     <TouchableOpacity 
+     style={styles.btn} 
+     onPress={loginUser}>
+      <Text style={styles.txtBtn}>Login</Text>
+     </TouchableOpacity>
     </View>
   );
 }
@@ -136,59 +73,27 @@ async function registraDados() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
+    marginTop: 40,
   },
-  titulo: {
-    alignSelf: 'center',
-    fontWeight: 'bold',
-    fontSize: 25,
-    margin: 10,
-    marginTop: 100,
- },
- txt: {
-  alignSelf: 'flex-start',
-  marginLeft: 20,
-  fontWeight: 'bold',
-  fontSize: 19,
-},
-  input: {
-    marginLeft: 20,
-    width: '90%',
-    height: 40,
+  txt: {
+    marginLeft: 15,
+    fontSize: 18,
+    color: '#000',
+  },
+  login: {
     borderWidth: 1,
-    borderRadius: 3,
-    margin: 10,
-    backgroundColor: '#f5f5f5',
-    color: '#111',
+    margin: 15,
   },
   btn: {
-    width: 250,
-    height: 40,
-    margin: 20,
-    backgroundColor: '#000',
-    alignSelf: 'center',
-    borderRadius: 3,
+     backgroundColor: '#000',
+     margin: 15,
+     padding: 8,
+     width: 200,
+     alignItems: 'center',
+     alignSelf: 'center',
   },
-  textBtn: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    fontWeight: 'bold',
-    padding: 8,
-    color: '#fff'
+  txtBtn: {
+     color: '#fff',
+     
   },
-  texto: {
-    alignSelf: 'center',
-    color: 'red',
-    marginTop: -5,
-    fontWeight: 'bold',
-    margin: 10,
-  },
-  txt2: {
-    margin: 10,
-    alignSelf: 'flex-start',
-    marginLeft: 10,
-    fontWeight: 'bold',
-    fontSize: 19,
-  },
-});
+})
