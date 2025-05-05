@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, FlatList, Alert } from 'react-native';
-import { doc, onSnapshot, collection, addDoc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from './firebaseConnection';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { doc, onSnapshot, collection, addDoc, updateDoc } from 'firebase/firestore';
+
+import { db, auth } from './firebaseConnection';
 import { UserList } from './users';
-//import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import { signOut } from 'firebase/auth';
 
 // Aula 23 - Banco
 export default function FormUsers() {
@@ -12,8 +13,10 @@ export default function FormUsers() {
   const [idade, setIdade] = useState("")
   const [cargo, setCargo] = useState("");
   const [mostrarFormulario, setMostrarFormulario] = useState(true);
-  const [users, setUsers] = useState([])
-  const [isEditing, setIsEditing]  = useState('')
+  const [users, setUsers] = useState([]);
+  const [isEditing, setIsEditing]  = useState('');
+  const[authUser, setAuthUser] = useState(null);
+
 
   useEffect(()=> {
     async function getDados() {
@@ -91,6 +94,16 @@ async function registraDados() {
     setIdade("")
    }
 
+   async function logOutUser() {
+    try {
+      await signOut(auth);
+      setAuthUser(null);
+      alert("Logout successful!");
+    } catch (error) {
+      alert("Failed to logout: " + error.message);
+    }
+  }
+  
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>FireBase</Text>
@@ -163,6 +176,12 @@ async function registraDados() {
         renderItem={({ item }) => <UserList data={item} editar={(item)=> editUser(item)}/>} 
       > 
       </FlatList>
+
+      <TouchableOpacity 
+        style={styles.btnSair} 
+        onPress={logOutUser}>
+          <Text style={styles.textSair}>Sair</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -224,5 +243,20 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontWeight: 'bold',
     fontSize: 19,
+  },
+  btnSair: {
+    backgroundColor: 'red',
+    margin: 14,
+    padding: 8,
+    alignSelf: 'flex-start',
+    borderRadius: 4,
+    width: 150,
+    height: 40,
+  },
+  textSair:{
+    alignSelf: 'center',
+    justifyContent: 'center',
+    fontWeight: 'bold',
+    color: '#fff'
   },
 });
