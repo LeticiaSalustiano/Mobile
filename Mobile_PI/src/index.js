@@ -1,30 +1,35 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Home from './src/Home';
-import Sobre from './src/Sobre';
-import Cadastro from './src/Cadastro';
+import { AppRegistry } from "react-native";
+import { name as appName } from "../app.json"; // Verifique se o caminho está correto
+import Home from "./Home";
+import Sobre from "./Sobre";
+import Cadastro from "./Cadastro";
+import CustomDrawer from "./CustomDrawer";
 
-
-
-import CustomDrawer from './src/CustomDrawer';
 const Drawer = createDrawerNavigator();
 
-export default function App() {
-    return(
+function App() {
+    return (
         <Drawer.Navigator
-        drawerContent={CustomDrawer}
-        screenOptions={{
-            drawerStyle: {
-                backgroundColor: "#bbeef9"
-            },
-            drawerActiveBackgroundColor: "#14c5ec",
-            drawerActiveTintColor: "#000",
-            drawerInactiveBackgroundColor: '#edfbfe',
-            drawerInactiveTintColor: '#000'
-        }}>
-            <Drawer.Screen name="Home" component={Home}/>
-            <Drawer.Screen name="Sobre" component={Sobre}/>
-            <Drawer.Screen name="Cadastro" component={Cadastro}/>
+            drawerContent={CustomDrawer}
+            screenOptions={{
+                drawerStyle: {
+                    backgroundColor: "#bbeef9"
+                },
+                drawerActiveBackgroundColor: "#14c5ec",
+                drawerActiveTintColor: "#000",
+                drawerInactiveBackgroundColor: '#edfbfe',
+                drawerInactiveTintColor: '#000'
+            }}
+        >
+            <Drawer.Screen name="Home" component={Home} />
+            <Drawer.Screen name="Sobre" component={Sobre} />
+            <Drawer.Screen name="Cadastro" component={Cadastro} />
         </Drawer.Navigator>
     );
 }
+
+AppRegistry.registerComponent(appName, () => App);
+
+export default App;
