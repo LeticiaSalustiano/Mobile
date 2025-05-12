@@ -18,7 +18,20 @@ function AuthRoutes(){
 
           <AuthStack.Screen 
           name="SingUp"
-          component={SingUp}/>
+          component={SingUp}
+          options={{
+            headerStyle: {
+              backgroundColor: '#3b3dbf',
+              borderBottomWidth: 1,
+              borderBottomColor: '#00b94a'
+            },
+            headerTintColor: '#fff',
+            headerTitle: 'Voltar',
+            headerBackTitleVisible: false,
+            
+          }}
+          
+          />
        </AuthStack.Navigator>
     )
 }

@@ -1,59 +1,41 @@
 import React from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView, Image, TextInput } from "react-native";
+import { Platform } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
+//Import dos Styles:
+import { Background, Container, Logo, InputArea, TextoInput, SubmitBtn, SubmitTxt, Link, LinkTxt } from "../routes/style";
 
 export default function SingIn(){
 
     const navigation = useNavigation();
 
     return(
-        <View style={styles.background}>
-            <KeyboardAvoidingView style={styles.container}>
-                <Image 
-                style={styles.logo}
-                source={require('../../assets/Logo.png')} />
+        <Background>
+            <Container behavior={Platform.OS==='ios'?'padding':'padding'}>
+                <Logo
+                source={require('../../assets/Logo.png')}/>
 
-                <View style={styles.inputArea}>
-                    <TextInput 
-                    style={styles.textIput}
-                    placeholder="Digite seu Email"
-                    ></TextInput>
-                </View>
+                <InputArea>
+                    <TextoInput
+                    placeholder="Digite seu Email"/>
+                </InputArea>
 
-                <View style={styles.inputArea}>
-                    <TextInput 
-                    style={styles.textIput}
-                    placeholder="Digite sua Senha"></TextInput>
-                </View>
+                <InputArea>
+                    <TextoInput          
+                    placeholder="Digite sua Senha"/>
+                </InputArea>
 
-            </KeyboardAvoidingView>
-        </View>
+                <SubmitBtn activeOpacity={0.5}>
+                    <SubmitTxt>Acessar</SubmitTxt>
+                </SubmitBtn>
+
+                <Link onPress={()=> navigation.navigate('SingUp')}>
+                    <LinkTxt>Criar uma nova conta!</LinkTxt>
+                </Link>
+
+            </Container>
+        </Background>
     )
 }
 
-const styles = StyleSheet.create({
-    background: {
-        flex: 1, 
-        backgroundColor: "#f0f4ff",   
-    },
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    logo: {
-        marginBottom: 25,
-    },
-    inputArea: {
-        flexDirection: 'row',
-    },
-    textIput: {
-        backgroundColor: '#fff',
-        width: '90%',
-        fontSize: 17,
-        padding: 10,
-        borderRadius: 8,
-        marginBottom: 15,
-        color: '#121212'
-    },
-});
+
