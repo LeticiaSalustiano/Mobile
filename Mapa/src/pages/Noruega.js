@@ -16,6 +16,9 @@ export default function Noruega() {
 
       <View style={styles.mapaContainer}>
         <MapView
+            mapType='hybrid'
+            showsTraffic={true}
+            zoomEnabled={true}
           style={styles.mapa}
           initialRegion={{
             latitude: 59.9139,
@@ -39,9 +42,9 @@ export default function Noruega() {
       </View>
 
       <View style={styles.curiosidades}>
-        <Text style={styles.curiosidade}>❄️ Curiosidade: A Noruega inventou o queijo marrom (Brunost).</Text>
-        <Text style={styles.curiosidade}>🌍 Curiosidade: O país tem uma das estradas mais bonitas do mundo!</Text>
-        <Text style={styles.curiosidade}>🚢 Curiosidade: Os vikings originaram-se da Noruega.</Text>
+        <Text style={styles.curiosidade}>❄️ Curiosidade: A Noruega inventou o queijo marrom o famoso Queijo Brunost.</Text>
+        <Text style={styles.curiosidade}>🌍 Curiosidade: O país tem uma das estradas mais bonitas do mundo inteiro!</Text>
+        <Text style={styles.curiosidade}>🚢 Curiosidade: Os vikings são originalmente de origem norueguesa.</Text>
       </View>
 
       <TouchableOpacity style={styles.botaoExplorar}>
@@ -102,10 +105,10 @@ const styles = StyleSheet.create({
   info: {
     textAlign: 'center',
     fontSize: 18,
-    color: "#0047AB", // Azul da bandeira
+    color: "#444", 
     paddingHorizontal: 20,
     marginTop: 7,
-    marginLeft: -20,
+    marginLeft: -23,
   },
   curiosidade: {
     fontSize: 16,

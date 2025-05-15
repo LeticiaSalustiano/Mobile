@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import MapView from 'react-native-maps';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,10 +16,10 @@ const Stack = createStackNavigator();
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Os 6 melhores países do mundo</Text>
+      <Text style={styles.titulo}>🌎 Viagem pelo Mundo</Text>
 
       <MapView
-        style={{ width: 350, height: 350 }}
+        style={styles.mapa}
         initialRegion={{
           latitude: -23.9549098,
           longitude: -46.3868863,
@@ -28,35 +28,28 @@ function HomeScreen({ navigation }) {
         }}
       />
 
-    <View style={styles.area}>
-      <View style={styles.lugares}>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Suica')}>
-          <Text style={styles.btnTxt}>Suíça</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Noruega')}>
-          <Text style={styles.btnTxt}>Noruega</Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={styles.subtitulo}>Escolha um destino:</Text>
 
-      <View style={styles.lugares2}>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Canada')}>
-          <Text style={styles.btnTxt}>Canadá</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Finlandia')}>
-          <Text style={styles.btnTxt}>Finlândia</Text>
-        </TouchableOpacity>
-      </View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scroll}>
+        {[
+          { name: 'Suíça', screen: 'Suica', image: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Zermatt_-_View_of_Matterhorn.jpg' },
+          { name: 'Noruega', screen: 'Noruega', image: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Fjords_Norway.jpg' },
+          { name: 'Canadá', screen: 'Canada', image: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Moraine_Lake_Canada.jpg' },
+          { name: 'Finlândia', screen: 'Finlandia', image: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Northern_Lights_in_Finland.jpg' },
+          { name: 'Alemanha', screen: 'Alemanha', image: 'https://upload.wikimedia.org/wikipedia/commons/0/0c/Neuschwanstein_Castle.jpg' },
+          { name: 'Austrália', screen: 'Australia', image: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Sydney_Opera_House.jpg' },
+        ].map((pais) => (
+          <TouchableOpacity key={pais.name} style={styles.card} onPress={() => navigation.navigate(pais.screen)}>
+            <Image source={{ uri: pais.image }} style={styles.imagemPais} />
+            <Text style={styles.cardTexto}>{pais.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
 
-      <View style={styles.lugares3}>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Alemanha')}>
-          <Text style={styles.btnTxt}>Alemanha</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Australia')}>
-          <Text style={styles.btnTxt}>Austrália</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.botaoExplorar}>
+        <Text style={styles.botaoTexto}>Explorar mais destinos</Text>
+      </TouchableOpacity>
     </View>
-  </View>
   );
 }
 
@@ -79,46 +72,72 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f4ff',
+    backgroundColor: '#e3f2fd',
     alignItems: 'center',
+    paddingTop: 40,
   },
   titulo: {
     fontWeight: 'bold',
-    padding: 30,
-    fontSize: 20,
+    fontSize: 28,
+    color: '#004d92',
+  },
+  subtitulo: {
+    fontSize: 18,
+    marginTop: 20,
+    color: '#555',
+    textAlign: 'center',
+  },
+  mapa: {
+    marginTop: 20,
+    width: 350,
+    height: 200,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+  },
+  scroll: {
+    marginTop: 20,
+  },
+  card: {
+    width: 180,
+    height: 120,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginHorizontal: 10,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+  },
+  imagemPais: {
+    width: '100%',
+    height: '80%',
+  },
+  cardTexto: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 16,
+    padding: 5,
+    color: '#333',
+  },
+  botaoExplorar: {
     marginTop: 30,
+    backgroundColor: '#004d92',
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
-  area: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    padding: 30,
-
-  },
-  lugares: {
-    flexDirection: 'row',
-    marginTop: 50,
-  },
-  lugares2: {
-    flexDirection: 'row', 
-    padding: 31,
-  },
-  lugares3: {
-    padding: 1,
-    flexDirection: 'row', 
-  },
-  btn: {
-    width: 120,
-    height: 40,
-    marginRight: 30,
-    marginLeft: 25,
-    backgroundColor: 'gray',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 3,
-  },
-  btnTxt: {
-    color: '#f3f3f3',
+  botaoTexto: {
+    color: '#fff',
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });
+

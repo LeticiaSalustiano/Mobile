@@ -20,6 +20,9 @@ export default function Suica() {
       {/* Mapa */}
       <View style={styles.mapaContainer}>
         <MapView
+            mapType='hybrid'
+            showsTraffic={true}
+            zoomEnabled={true}
           style={styles.mapa}
           initialRegion={{
             latitude: 46.94809, 
@@ -122,6 +125,7 @@ const styles = StyleSheet.create({
   },
   curiosidades: {
     marginTop: -15,
+    marginLeft: 10,
   },
   coords: {
     fontSize: 13,
