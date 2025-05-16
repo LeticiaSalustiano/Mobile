@@ -18,7 +18,7 @@ export default function SingIn(){
     function handleSignIn(){
         //alert('Acessar')
         //console.log(email, password)
-        singIn()
+        singIn(email, password)
      }
 
 

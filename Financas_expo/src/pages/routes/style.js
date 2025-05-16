@@ -27,7 +27,7 @@ export const TextoInput = styled.TextInput`
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 15px;
-    color: 121212;
+    color: #121212,
 `;
 
 export const SubmitBtn = styled.TouchableOpacity`
@@ -41,8 +41,8 @@ export const SubmitBtn = styled.TouchableOpacity`
 `;
 
 export const SubmitTxt = styled.Text`
-   color: #fff;
    font-size: 20px;
+   color: #fff;
 `;
 
 export const Link = styled.TouchableOpacity`

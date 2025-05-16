@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../services/api";
 
 import { useNavigation } from "@react-navigation/native";
@@ -8,9 +9,32 @@ export const AuthContext = createContext({});
 function AuthProvider({ children }) { 
     const [user, setUser] = useState(null);
     const [loadingAuth, setLoadingAuth] = useState(false);
-    const [signedAuth, setSignedAuth] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const navigation = useNavigation();
+
+    useEffect(()=> {
+        async function loadStorage() {
+        const storageUser = await AsyncStorage.getItem('@finToken');
+        if(storageUser){
+            //console.log("Logado");
+
+            const response = await api.get('./me', {
+                headers: {
+                    'Authorization': `Baerer ${storageUser}`
+                }
+            })
+            .catch(()=>{setUser(null);})
+
+            api.defaults.headers['Authorization'] = `Bearer ${storageUser}`;
+            setUser(response.data);
+            setLoading(false);
+          
+        }
+        setLoading(false);
+    }
+      loadStorage();
+    }, [])
 
  async function singUp(nome,email,password) {
     setLoadingAuth(true);
@@ -31,26 +55,40 @@ function AuthProvider({ children }) {
  }
 
  async function singIn(email, password) {
-    setSignedAuth(true);
-    console.log('Login aceito', email, password)
+    //console.log('Email: ', email, 'Senha: ', password)
+    setLoadingAuth(true);
 
     try{
-        const response = await api.post('/login', {
+         const response = await api.post('./login', {
             email:email,
-            password:password,
-        })
-        setSignedAuth(false);
+            password:password
+})
 
-   } catch(err){
-    setSignedAuth(false);
-    console.log("Erro de Login", err)
-   }
+    const{id, name, token} = response.data;
+
+    const data = {id, name, email, token};
+
+    await AsyncStorage.setItem('@finToken', token);
+
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+    setUser({id, name, email})
+
+    }catch(err){
+        console.log("Erro ao logar", err);
+        setLoadingAuth(false);
+    }
  }
 
- 
+     async function signOut() {
+        await AsyncStorage.clear()
+        .then(()=>{
+            setUser(null);
+        })
+     }
 
     return (
-        <AuthContext.Provider value={{ signed: !! user, user, singUp,singIn, loadingAuth, setSignedAuth }}>
+        <AuthContext.Provider value={{ signed: !! user, user, singUp, singIn, signOut, loadingAuth, loading }}>
             {children} 
         </AuthContext.Provider>
     );
