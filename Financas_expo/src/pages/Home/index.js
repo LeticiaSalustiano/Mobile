@@ -5,14 +5,17 @@ import { AuthContext } from "../../contexts/auth";
 
 export default function Home(){
 
-    const { signOut } = useContext(AuthContext);
+    const { user, signOut } = useContext(AuthContext);
 
     return(
         <View>
-            <Text>{name}</Text>
+            <Text style={{margin: 5, fontSize: 18, fontWeight: 'bold'}}>Olá {user.name}, Bem vindo de volta!</Text>
             <Button
             title="Sair da conta"
             onPress={()=>signOut()}/>
         </View>
     )
 }
+
+
+
