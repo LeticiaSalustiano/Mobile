@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Platform, ActivityIndicator } from "react-native";
 
-import { Background, Container, InputArea, TextoInput, SubmitBtn, SubmitTxt } from "../routes/style";
+import { Background, Container, InputArea, TextoInput, SubmitBtn, SubmitTxt } from "../../style";
 
 import { AuthContext } from "../../contexts/auth";
 

@@ -1,19 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, Button } from "react-native";
 
 import { AuthContext } from "../../contexts/auth";
 
+import { format } from "date-fns";
+
+import { Background } from './styles';
+import Header from "../../components/header";
+
+import api from "../../services/api";
+
 export default function Home(){
 
-    const { user, signOut } = useContext(AuthContext);
+    const [listBalance, setListBalance] = useState([]);
+    const [dateMovements, setDateMovements] = useState(new Date());
+
+    useEffect(()=> {
+        let isActive = true;
+        async function getMovements() {
+            let dateFormat = format(dateMovements, 'dd/mm/yyyy');
+
+            const balance = await api.get('/balance', {
+                params:{date:dateFormat}
+            })
+            console.log(balance.data);
+        }
+        getMovements();
+    }, [])
 
     return(
-        <View>
-            <Text style={{margin: 5, fontSize: 18, fontWeight: 'bold'}}>Olá {user.name}, Bem vindo de volta!</Text>
-            <Button
-            title="Sair da conta"
-            onPress={()=>signOut()}/>
-        </View>
+        <Background>
+            <Header title='Minhas movimentações'></Header>
+        </Background>
     )
 }
 

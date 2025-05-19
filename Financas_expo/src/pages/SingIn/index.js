@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../contexts/auth";
 
 //Import dos Styles:
-import { Background, Container, Logo, InputArea, TextoInput, SubmitBtn, SubmitTxt, Link, LinkTxt } from "../routes/style";
+import { Background, Container, Logo, InputArea, TextoInput, SubmitBtn, SubmitTxt, Link, LinkTxt } from "../../style";
 
 export default function SingIn(){
 
