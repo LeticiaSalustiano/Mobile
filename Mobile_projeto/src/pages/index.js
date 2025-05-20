@@ -1,11 +1,6 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import Home from "./Home";
-import Sobre from "./Sobre";
-import Cadastro from "./Cadastro";
-import CustomDrawer from "./CustomDrawer";
-
 const Drawer = createDrawerNavigator();
 
 function App() {
@@ -22,9 +17,7 @@ function App() {
                 drawerInactiveTintColor: '#000'
             }}
         >
-            <Drawer.Screen name="Home" component={Home} />
-            <Drawer.Screen name="Sobre" component={Sobre} />
-            <Drawer.Screen name="Cadastro" component={Cadastro} />
+           
         </Drawer.Navigator>
     );
 }
