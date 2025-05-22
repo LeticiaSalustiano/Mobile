@@ -1,6 +1,7 @@
-import { Component, setState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Component } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 
 export default class App extends Component {
   constructor(props){
@@ -8,123 +9,235 @@ export default class App extends Component {
     this.state = {
       region: {
         latitude: -23.5475, 
-        longitude: -46.6361, 
+        longitude: -46.6361,
         latitudeDelta: 0.0922, 
         longitudeDelta: 0.0421    
       },
       descricao: '',
       titulo: '',
       markers:[
-        {key:0, coords:{latitude: -23.5475, longitude: -46.6361}},
-        {key:1, coords:{latitude: -22.9028, longitude: -43.2075 }},
-        {key:2, coords:{latitude: -12.9711, longitude: -38.5108}},
-        {key:3, coords:{latitude: -19.9208, longitude: -43.9378}},
-        {key:4, coords:{latitude: -3.7172, longitude: -38.5431}},
-        {key:5, coords:{latitude: -25.4278, longitude: -49.2731 }},
-        {key:6, coords:{latitude: -3.1019, longitude: -60.0250}}
-      ]
+        {key:0, coords:{latitude: -23.5475, longitude: -46.6361}, titulo: 'São Paulo', descricao: 'Centro financeiro do Brasil.'},
+        {key:1, coords:{latitude: -22.9035, longitude: -43.2096}, titulo: 'Rio de Janeiro', descricao: 'Famoso pelo Cristo Redentor.'},
+        {key:2, coords:{latitude: -12.9711, longitude: -38.5108}, titulo: 'Salvador', descricao: 'Berço da cultura afro-brasileira.'},
+        {key:3, coords:{latitude: -19.9208, longitude: -43.9378}, titulo: 'Belo Horizonte', descricao: 'Conhecida por sua gastronomia.'},
+        {key:4, coords:{latitude: -3.7172, longitude: -38.5431}, titulo: 'Fortaleza', descricao: 'Praias paradisíacas.'},
+        {key:5, coords:{latitude: -25.4278, longitude: -49.2731}, titulo: 'Curitiba', descricao: 'Referência em urbanismo.'},
+        {key:6, coords:{latitude: -3.1019, longitude: -60.0250}, titulo: 'Manaus', descricao: 'Entrada da Floresta Amazônica.'},
+        {key:7, coords:{latitude: -8.0476, longitude: -34.8770}, titulo: 'Recife', descricao: 'Conhecida como a "Veneza Brasileira".'}  
+      ],
+      modalVisible: false,
+      tempLatitude: null,
+      tempLongitude: null,
+      tempTitulo: '',
+      tempDescricao: ''
     };
 
     this.trocarCidade = this.trocarCidade.bind(this);
     this.latitudeClicada = this.latitudeClicada.bind(this);
+    this.salvarMarcador = this.salvarMarcador.bind(this);
+    this.mapRef = null; // Referência para o MapView
   }
 
-  latitudeClicada(e){
-    alert('Latitude:  ' + e.nativeEvent.coordinate.latitude + '  Longitude: ' + e.nativeEvent.coordinate.longitude)
+  latitudeClicada(e) {
+    if (!e.nativeEvent || !e.nativeEvent.coordinate) {
+      console.warn('Evento inválido, sem coordenadas.');
+      return;
+    }
 
-     let state = this.state;
-      state.markers.push({
-      key:state.markers.length,
-      coords:{
-        latitude:e.nativeEvent.coordinate.latitude,
-        longitude:e.nativeEvent.coordinate.longitude
-      }
+    this.setState({
+      modalVisible: true,
+      tempLatitude: e.nativeEvent.coordinate.latitude,
+      tempLongitude: e.nativeEvent.coordinate.longitude,
+      tempTitulo: '',
+      tempDescricao: ''
     });
-    this.setState(state);
   }
 
-  trocarCidade(latitude, longitude, descricao, titulo){
+  salvarMarcador() {
+    const { tempLatitude, tempLongitude, tempTitulo, tempDescricao } = this.state;
+
+    this.setState((prevState) => ({
+      markers: [
+        ...prevState.markers,
+        {
+          key: prevState.markers.length,
+          coords: {
+            latitude: tempLatitude,
+            longitude: tempLongitude
+          },
+          titulo: tempTitulo || `Lat: ${tempLatitude}, Lon: ${tempLongitude}`,
+          descricao: tempDescricao || `Coordenadas: ${tempLatitude}, ${tempLongitude}`
+        }
+      ],
+      modalVisible: false
+    }));
+  }
+
+  trocarCidade(latitude, longitude, descricao, titulo) {
     this.setState({
       region: {
-        latitude: latitude,
-        longitude: longitude,
+        latitude,
+        longitude,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421    
       },
-      descricao: descricao,
-      titulo: titulo
+      descricao,
+      titulo,
+      selectedDestination: { latitude, longitude } // Salva o destino escolhido
     });
-    state.region = region;
-    this.setState(state);
+  
+    // Animação para a nova região no mapa
+    this.mapRef.animateToRegion({
+      latitude,
+      longitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421
+    }, 1500);
   }
-
+  
   render(){
-    const { region, descricao, titulo, markers } = this.state;
-
-    
+    const { region, markers, modalVisible, tempTitulo, tempDescricao } = this.state;
 
     return (
       <View style={styles.container}>
-        <Text style={styles.titulo}>Top 7 principais cidades do Brasil</Text>
-        <MapView 
-           style={styles.mapa} 
+        <Text style={styles.titulo}>Seu app do Maps</Text>
+        <MapView
+           ref={(ref) => { this.mapRef = ref; }}
+           style={styles.mapa}
            region={region}
+           showsUserLocation
+           loadingEnabled
            mapType='hybrid'
            showsTraffic={true}
-           onPress={
-            this.latitudeClicada }
-        >
-        {markers.map((marker)=>{
-          return(
-            <Marker 
-            key={marker.key}
-            coordinate={marker.coords}
-            title={titulo}
-            description={`${region.latitude}, ${region.longitude}`} // Correção: exibe coordenadas corretamente
-            image={require('./assets/pin3.png')}/>
-          );
-        })}
+           onPress={this.latitudeClicada}
+>
+      {markers.map((marker) => (
+        <Marker 
+           key={marker.key}
+           coordinate={marker.coords}
+           title={marker.titulo}
+           description={marker.descricao}
+           image={require('./assets/pin3.png')}
+        />
+  ))}
 
-      </MapView>
+      {this.state.destLocation && (
+       <MapViewDirections
+           origin={this.state.region} 
+           destination={this.state.destLocation} 
+           apikey='AIzaSyBj5M9TPhBuQSQbohgB1uDZCAkf1UKriYo'
+           strokeWidth={5}
+           strokeColor="#FF6347"
+           onReady={result =>{
+        this.mapRef.fitToCoordinates(result.coordinates, {
+          edgePadding:{
+            right:50,
+            left:50,
+            top:50,
+            bottom:80
+          }
+        })
+      }}
+    />
+  )}
+</MapView>
 
-        <Text>{region.latitude} | {region.longitude}</Text>
+        {/* SCROLLVIEW COM AS CIDADES DA BAIXADA PARA TRAÇAR ROTAS */}
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.box}>
+          <View style={styles.localView}>
+            <TouchableOpacity style={styles.localBtn} onPress={()=> {
+              this.setState({destLocation: {
+                latitude:-23.959261,
+                longitude:-46.3319156
+              }})
+            }}>
+              <Text style={styles.localText}>Santos</Text>
+            </TouchableOpacity>
+          </View>
 
-        <Text style={styles.descricao}>{descricao}</Text>
+          <View style={styles.localView}>
+            <TouchableOpacity style={styles.localBtn} onPress={()=> {
+              this.setState({destLocation: {
+                latitude:-23.9947943,
+                longitude:-46.2570896
+              }})
+            }}>
+              <Text style={styles.localText}>Guarujá</Text>
+            </TouchableOpacity>
+          </View>
 
-        <View style={styles.botoes}>
-          <TouchableOpacity style={styles.botao} onPress={() => this.trocarCidade(-23.5475, -46.6361, 'São Paulo é o centro financeiro do Brasil, com uma cultura vibrante e inúmeras atrações turísticas.', 'São Paulo')}> 
-            <Text style={styles.textoBotao}>São Paulo</Text>
-          </TouchableOpacity>
+          <View style={styles.localView}>
+            <TouchableOpacity style={styles.localBtn} onPress={()=> {
+              this.setState({destLocation: {
+                latitude:-23.9603404,
+                longitude:-46.3970159
+              }})
+            }}>
+              <Text style={styles.localText}>São Vicente</Text>
+            </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity style={styles.botao} onPress={() => this.trocarCidade(-22.9028, -43.2075, 'Rio de Janeiro é famoso por suas praias e pelo icônico Cristo Redentor.', 'Rio de Janeiro')}>
-            <Text style={styles.textoBotao}>Rio de Janeiro</Text>
-          </TouchableOpacity>
+          <View style={styles.localView}>
+            <TouchableOpacity style={styles.localBtn} onPress={()=> {
+              this.setState({destLocation: {
+                latitude:-24.0031566,
+                longitude:-46.4179811
+              }})
+            }}>
+              <Text style={styles.localText}>P. Grande</Text>
+            </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity style={styles.botao} onPress={() => this.trocarCidade(-12.9711, -38.5108, 'Salvador é berço da cultura afro-brasileira e possui o famoso Pelourinho.', 'Salvador')}>
-            <Text style={styles.textoBotao}>Salvador</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.localView}>
+            <TouchableOpacity style={styles.localBtn} onPress={()=> {
+              this.setState({destLocation: {
+                latitude:-23.891885,
+                longitude:-46.4249356
+              }})
+            }}>
+              <Text style={styles.localText}>Cubatão</Text>
+            </TouchableOpacity>
+          </View>          
+        </ScrollView>
 
-        <View style={styles.botoes}>
-          <TouchableOpacity style={styles.botao} onPress={() => this.trocarCidade(-19.9208, -43.9378, 'Belo Horizonte é conhecida por sua gastronomia e suas belas montanhas.', 'Belo Horizonte')}>
-            <Text style={styles.textoBotao}>Belo Horizonte</Text>
-          </TouchableOpacity>
+        {/*Cidades do Brasil */}
+        <ScrollView contentContainerStyle={styles.botoesContainer}>
+          {markers.map((marker, index) => (
+            index % 2 === 0 ? (
+              <View key={index} style={styles.botoesRow}>
+                <TouchableOpacity style={styles.botao} onPress={() => this.trocarCidade(marker.coords.latitude, marker.coords.longitude, marker.descricao, marker.titulo)}>
+                  <Text style={styles.textoBotao}>{marker.titulo}</Text>
+                </TouchableOpacity>
+                {markers[index + 1] && (
+                  <TouchableOpacity style={styles.botao} onPress={() => this.trocarCidade(markers[index + 1].coords.latitude, markers[index + 1].coords.longitude, markers[index + 1].descricao, markers[index + 1].titulo)}>
+                    <Text style={styles.textoBotao}>{markers[index + 1].titulo}</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ) : null
+          ))}
 
-          <TouchableOpacity style={styles.botao} onPress={() => this.trocarCidade(-3.7172, -38.5431, 'Fortaleza tem algumas das praias mais paradisíacas do Brasil, como Jericoacoara.', 'Fortaleza')}>
-            <Text style={styles.textoBotao}>Fortaleza</Text>
-          </TouchableOpacity>
+          <Text style={styles.descricao}>{region.latitude} | {region.longitude}</Text>
+        </ScrollView>
 
-          <TouchableOpacity style={styles.botao} onPress={() => this.trocarCidade(-25.4278, -49.2731, 'Curitiba é referência em urbanismo e sustentabilidade, com parques e transporte eficiente.', 'Curitiba')}>
-            <Text style={styles.textoBotao}>Curitiba</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.botoes}>
-          <TouchableOpacity style={styles.botao} onPress={() => this.trocarCidade(-3.1019, -60.0250, 'Manaus é porta de entrada para a Floresta Amazônica e abriga o famoso Teatro Amazonas.', 'Amazonas')}>
-            <Text style={styles.textoBotao}>Manaus</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+             <Modal animationType="slide" transparent={true} visible={modalVisible}>
+                <View style={styles.modalContainer}>
+                 <View style={styles.modalView}>
+                   <Text style={styles.modalTitulo}>Adicionar um Marcador</Text>
+                    <TextInput style={styles.input} placeholder="Título" value={tempTitulo} onChangeText={(text) => this.setState({ tempTitulo: text })} />
+                    <TextInput style={styles.input} placeholder="Descrição" value={tempDescricao} onChangeText={(text) => this.setState({ tempDescricao: text })} />
+                  <View style={styles.modalButtons}>
+                    <TouchableOpacity style={styles.cancelar} onPress={() => this.setState({ modalVisible: false })} >
+                      <Text style={styles.Txt}>Cancelar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.salvar} onPress={this.salvarMarcador} >
+                      <Text style={styles.Txt}>Salvar</Text>
+                   </TouchableOpacity>
+                  </View>
+                 </View>
+                </View>
+             </Modal>
+                </View>
     );
   }
 }
@@ -132,7 +245,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f0f4ff',
     alignItems: 'center',
   },
   titulo: {
@@ -140,41 +253,114 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 23,
     color: '#333',
-    marginTop: 30,
+    margin: 20,
   },
   mapa: {
-    width: '95%',
-    height: 400,
+    width: '100%',
+    height: 430,
     borderRadius: 10,
-    marginTop: -20
   },
-  descricao: {
-    margin: 10,
-    fontSize: 16,
-    textAlign: 'center',
-    fontStyle: 'italic',
-    color: '#444',
+  botoesContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 70,
   },
-  botoes: {
+  botoesRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap-reverse',
-    justifyContent: 'center',
-    marginTop: -10,
+    justifyContent: 'space-around',
+    width: '80%',
+    marginBottom: 10,
   },
   botao: {
-    margin: 10,
-    padding: 12,
+    flex: 1,
+    marginHorizontal: 5,
+    padding: 10,
     backgroundColor: '#FF6347',
     borderRadius: 5,
-    width: 130,
     alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    elevation: 3,
   },
   textoBotao: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  modalContainer: { 
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: 'rgba(0,0,0,0.5)', 
+  }, 
+  modalView: { 
+    width: 300, 
+    padding: 20, 
+    backgroundColor: 'white', 
+    borderRadius: 10, 
+    alignItems: 'center', 
+  }, 
+  modalTitulo: { 
+    fontSize: 18, 
+    fontWeight: 'bold', 
+    marginBottom: 10, 
+  }, 
+  input: { 
+    width: '100%', 
+    padding: 10, 
+    marginVertical: 5, 
+    borderWidth: 1, 
+    borderColor: '#ccc', 
+    borderRadius: 5, 
+  }, 
+  modalButtons: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    width: '100%', marginTop: 10, 
+  }, 
+  cancelar: { 
+    backgroundColor: '#FF6347', 
+    width: '32%', 
+    height: 36, 
+    borderRadius: 3, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+  }, 
+  salvar: {
+   marginRight: 80, 
+   backgroundColor: '#FF6347', 
+   width: '32%', 
+   borderRadius: 3, 
+   alignItems: 'center', 
+   justifyContent: 'center', 
+  }, 
+  Txt: { 
+    color: '#fff', 
+    fontWeight: 'bold', 
+  },
+  box: {
+    position: 'absolute',
+    top: 500,
+  },
+  localView: {
+    height: 40,
+    padding: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  localBtn: {
+    backgroundColor: '#FF6347',
+    height: 40,
+    padding: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4
+  },
+  localText: {
+    color: 'white',
+    width: 75,
+    textAlign:'center'
+  },
+  descricao: {
+    marginTop: 10,
+    fontWeight: 'bold'
   }
 });
