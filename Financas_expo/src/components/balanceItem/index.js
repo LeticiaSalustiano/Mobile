@@ -4,6 +4,11 @@ import { Container, Label, Balance } from "./styles";
 
 export default function BalanceItem({data}){
 
+    const valorFormatdo = new Intl.NumberFormat('pt-Br',{
+        style: 'currency',
+        currency: 'BRL',
+    }).format(data.saldo);
+
     const labelName = useMemo(()=> {
         if(data.tag === 'saldo'){
             return{
@@ -26,7 +31,7 @@ export default function BalanceItem({data}){
     return(
         <Container bg={labelName.color}>
             <Label> {labelName.label} </Label>
-            <Balance>R$ {data.saldo}</Balance>
+            <Balance>{valorFormatdo}</Balance>
         </Container>
     )
 }

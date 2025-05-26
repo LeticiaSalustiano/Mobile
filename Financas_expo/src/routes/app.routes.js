@@ -18,13 +18,12 @@ function AppRoutes(){
             },
             drawerActiveBackgroundColor: "#3b3dbf",
             drawerActiveTintColor: "#fff",
-
-            drawerInactiveBackgroundColor: "#0ff2ff",
+      
             drawerInactiveTintColor: "#121212",
            }}>
             
            <AppDrawer.Screen
-             name="Minhas movimentações"
+             name="Home"
              component={Home}/>
 
             <AppDrawer.Screen
