@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import {  KeyboardAvoidingView, Platform } from "react-native";
 import { Background, Btn, BtnTxt, Input, Titulo, Imagem } from "./styles";
 
 export default function ApoioMembro() {
@@ -8,8 +8,11 @@ export default function ApoioMembro() {
     const [habilidades, setHabilidades] = useState('');
 
     return (
-       <Background>
-            <Imagem source={require('../assets/pet-friendly.png')} />
+        <KeyboardAvoidingView 
+                behavior={Platform.OS === "ios" ? "padding" : "height"} 
+                style={{ flex: 1 }}
+            >
+             <Background>
               <Titulo>Quero ser um membro Voluntário!</Titulo>
               
                 <Input 
@@ -32,6 +35,7 @@ export default function ApoioMembro() {
                 <BtnTxt>Enviar Cadastro</BtnTxt>
             </Btn>
         </Background>
+    </KeyboardAvoidingView>
     );
 }
 

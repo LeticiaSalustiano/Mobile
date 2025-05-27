@@ -15,11 +15,11 @@ export default function Tipo() {
                <BtnTxt>Resgate</BtnTxt>
              </Btn>
 
-             <Btn >
+             <Btn onPress={() => navegacao.navigate('ApoioMembro')}>
                <BtnTxt>Apoio</BtnTxt>
              </Btn>
 
-             <Btn>
+             <Btn onPress={() => navegacao.navigate('VeterinarioMembro')}>
                <BtnTxt>Veterinário</BtnTxt>
              </Btn>
          </BtnArea>  

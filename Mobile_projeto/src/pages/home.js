@@ -13,7 +13,7 @@ export default function Home() {
             <Titulo>Bem Vindo(a) ao SafePet</Titulo>
             <Texto>Aqui contribuimos com a saude e a vida dos nossos pets e apoiamos a causa.</Texto>
         <BtnArea>      
-           <Btn>
+           <Btn onPress={() => navegacao.navigate('Login')}>
               <BtnTxt>Login</BtnTxt>
            </Btn> 
 

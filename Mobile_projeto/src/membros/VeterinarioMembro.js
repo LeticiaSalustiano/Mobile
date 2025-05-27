@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { KeyboardAvoidingView, Platform } from "react-native";
 import { Background, Btn, BtnTxt, Input, Titulo, Imagem } from "./styles";
 
 export default function VeterinarioMembro() {
@@ -8,8 +8,11 @@ export default function VeterinarioMembro() {
     const [crm, setCrm] = useState('');
 
     return (
-       <Background>
-             <Imagem source={require('../assets/pet-friendly.png')} />
+        <KeyboardAvoidingView 
+            behavior={Platform.OS === "ios" ? "padding" : "height"} 
+            style={{ flex: 1 }}
+           >
+         <Background>
                 <Titulo>Quero ser um membro Veterinário!</Titulo>
        
                 <Input 
@@ -30,7 +33,8 @@ export default function VeterinarioMembro() {
             <Btn>
                 <BtnTxt>Enviar Cadastro</BtnTxt>
             </Btn>
-        </Background>
+          </Background>
+          </KeyboardAvoidingView>
     );
 }
 

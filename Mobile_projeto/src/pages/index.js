@@ -13,6 +13,7 @@ function App() {
                 },
                 drawerActiveBackgroundColor: "#14c5ec",
                 drawerActiveTintColor: "#000",
+                
                 drawerInactiveBackgroundColor: '#edfbfe',
                 drawerInactiveTintColor: '#000'
             }}
