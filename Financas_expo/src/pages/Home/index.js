@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
-import { View, Text, Button, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { TouchableOpacity } from "react-native";
 import { Background, ListBalance, Title, Area, List } from './styles';
 
-import { AuthContext } from "../../contexts/auth";
 import Header from "../../components/header";
 import api from "../../services/api";
 import BalanceItem from "../../components/balanceItem";
@@ -11,7 +10,6 @@ import HistoricoList from "../../components/historicoList";
 import { useIsFocused } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import { format } from "date-fns";
-import { it } from "date-fns/locale";
 
 export default function Home(){
 
@@ -22,7 +20,7 @@ export default function Home(){
 
     const isFocused = useIsFocused();
 
-   // const [signOut, user] = useState(AuthContext);
+   //const [signOut, user] = useState(AuthContext);
     
     useEffect(()=> {
        let isActive = true;
@@ -43,12 +41,27 @@ export default function Home(){
          setListBalance(balance.data);
        }
        getMoviments();
-    }, [isFocused])
+    }, [isFocused, dateMovements])
+
+    async function handleDelete(id) {
+      alert('Deletou index' + id)
+
+      try{
+         await api.delete('/receives/delete',{ 
+            params:{
+               item_id: id
+            }
+         })
+         setDateMovements(new Date());
+      }catch(err){
+         console.log(err);
+      }
+    }
     
     return(
       <Background>
             <Header title='Minhas movimentações'></Header>           
-           {/* <Button title='Sair da conta' onPress={()=> signOut()}></Button>*/}
+           {/*<Button title='Sair da conta' onPress={()=> signOut()}></Button>*/}
 
            <ListBalance
               data={listBalance}
@@ -68,7 +81,7 @@ export default function Home(){
       <List
          data={movements}
          keyExtractor={item=> item.id}
-         renderItem={({item})=> (<HistoricoList data={item}/>)}
+         renderItem={({item})=> (<HistoricoList data={item} deleteItem={handleDelete}/>)}
          showsVerticalScrollIndicator={false}
          contentContainerStyle={{paddingBottom: 20}}>     
       </List>

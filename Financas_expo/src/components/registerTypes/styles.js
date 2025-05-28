@@ -16,7 +16,7 @@ export const RegisterTypeBotao = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    border-radius: 5px;
+    border-radius: 4px;
     border-width: 1px;
     border-color: ${props => props.checked ? '#3d3dbf' : 'transparent'};
     margin-bottom: 14px;

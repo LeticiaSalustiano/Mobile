@@ -10,25 +10,32 @@ import RegisterTypes from "../../components/registerTypes";
 import api from "../../services/api";
 import Header from '../../components/header';
 
-export default function New(){
-    const[labInput, setLabInput] = useState('');
-    const[valueInput, setValueInput] = useState('');
-    const[type, setType] = useState('receita');
+export default function New() {
+    const [labInput, setLabInput] = useState('');
+    const [valueInput, setValueInput] = useState('');
+    const [type, setType] = useState('receita');
 
     const navigation = useNavigation();
 
+    const formatarValor = (valor) => {
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(valor);
+    };
+
     function handleSubmit() {
         Keyboard.dismiss();
-        if(isNaN(parseFloat(valueInput)) || type === null) {
+        if (isNaN(parseFloat(valueInput)) || type === null) {
             alert('Preencha todos os campos corretamente');
             return;
         }
         Alert.alert(
             'Confirmando dados',
-            `Tipos: ${type} - Valor: ${parseFloat(valueInput)}`, 
+            `Tipos: ${type} - Valor: ${formatarValor(parseFloat(valueInput))}`, 
             [
-                {text: 'Cancelar', style: 'cancel'}, 
-                {text: 'Continuar', onPress: ()=> handleAdd()}
+                { text: 'Cancelar', style: 'cancel' }, 
+                { text: 'Continuar', onPress: () => handleAdd() }
             ]
         );
     }
@@ -40,7 +47,7 @@ export default function New(){
             value: Number(valueInput),
             type: type,
             date: format(new Date(), 'dd/MM/yyyy')
-        })
+        });
         setLabInput('');
         setValueInput('');
         navigation.navigate('Home');
@@ -59,7 +66,7 @@ export default function New(){
                     <Input 
                         value={valueInput} 
                         onChangeText={(text)=> setValueInput(text)}
-                        placeholder="Valor desejado" 
+                        placeholder="Valor desejado Ex: 20.40" 
                         keyboardType="numeric"
                     />
                     <RegisterTypes type={type} sendTypeChanged={(item)=> setType(item)}/>
