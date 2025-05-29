@@ -11,7 +11,7 @@ export default function Home() {
         <Background>
             <Imagem source={require('../assets/pet-friendly.png')} />
             <Titulo>Bem Vindo(a) ao SafePet</Titulo>
-            <Texto>Aqui contribuimos com a saude e a vida dos nossos pets e apoiamos a causa.</Texto>
+            <Texto>Aqui contribuimos com a saúde e a vida dos nossos pets e apoiamos a causa.</Texto>
         <BtnArea>      
            <Btn onPress={() => navegacao.navigate('Login')}>
               <BtnTxt>Login</BtnTxt>

@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const Background = styled.View`
    flex: 1;
-   background-color: #bbeef9;
    padding: 20px;
    justify-content: center;
    align-items: center;
+   background-color: #bbeef9;
 `;
 
 export const Container = styled.View`
@@ -16,7 +16,7 @@ export const Imagem = styled.Image`
     width: 200px;
     height: 200px;
     margin: 5px;
-    margin-top: -200px;
+    margin-top: -60px;
     align-self: center;
 `;
 
@@ -25,6 +25,7 @@ export const Titulo = styled.Text`
    font-weight: bold; 
    margin-bottom: 20px; 
    margin-top: 20px;
+   text-align: center;
 `;
 
 export const Input = styled.TextInput` 
