@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { TouchableOpacity } from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import { TouchableOpacity, Modal } from "react-native";
 import { Background, ListBalance, Title, Area, List } from './styles';
 
 import Header from "../../components/header";
 import api from "../../services/api";
 import BalanceItem from "../../components/balanceItem";
 import HistoricoList from "../../components/historicoList";
+import CalendarModal from "../../components/calendarModal";
+import { AuthContext } from "../../contexts/auth";
 
 import { useIsFocused } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
@@ -15,12 +17,13 @@ export default function Home(){
 
     const [listBalance, setListBalance] = useState([]);
     const [dateMovements, setDateMovements] = useState(new Date());
-
     const [movements, setMovements]= useState([]);
+    const [modalVisible, setModalVisible] = useState(false)
 
     const isFocused = useIsFocused();
 
-   //const [signOut, user] = useState(AuthContext);
+
+
     
     useEffect(()=> {
        let isActive = true;
@@ -57,6 +60,11 @@ export default function Home(){
          console.log(err);
       }
     }
+
+    function filterDatesMovements(dateSelected){
+      setDateMovements(dateSelected)
+        //console.log(dateSelected)
+    }
     
     return(
       <Background>
@@ -72,7 +80,7 @@ export default function Home(){
            ></ListBalance>
 
    <Area>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> setModalVisible(true)}>
           <Icon name="calendar" size={25} color="#121212" marginTop={10}></Icon>  
         </TouchableOpacity>
           <Title>Últimas Movimentações</Title>
@@ -85,6 +93,15 @@ export default function Home(){
          showsVerticalScrollIndicator={false}
          contentContainerStyle={{paddingBottom: 20}}>     
       </List>
+
+      <Modal
+         visible={modalVisible}
+         animationType="slide"
+         transparent={true}>
+           <CalendarModal 
+           setVisible={()=> setModalVisible(false)}
+           handleFilter={filterDatesMovements}/>
+      </Modal>
    </Background>
     )
 }

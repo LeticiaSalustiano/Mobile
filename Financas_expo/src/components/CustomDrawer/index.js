@@ -1,9 +1,9 @@
-import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
+import { DrawerContentScrollView, DrawerItemList, DrawerItem } from "@react-navigation/drawer";
 import React, { useContext } from "react";
 
 import { AuthContext } from "../../contexts/auth";
 
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image } from "react-native";
 
 export default function CustomDrawer(props){
 
@@ -18,10 +18,12 @@ export default function CustomDrawer(props){
 
              <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold'}}>Bem-vindo!</Text>
              <Text style={{alignSelf: 'center', fontSize: 17, marginBottom: 15 }}>{user && user.name}</Text>
-           <DrawerItemList {...props}/>
-
-          
         </View>
+
+           <DrawerItemList {...props}/>
+           <DrawerItem {...props} label="Sair do App" onPress={()=> signOut()}/>
+          
+        
     </DrawerContentScrollView>
     )
 }

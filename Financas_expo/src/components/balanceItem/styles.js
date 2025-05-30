@@ -19,6 +19,12 @@ export const Label = styled.Text`
    font-weight: bold;
 `;
 
+export const Descricao = styled.Text`
+   color: #000;
+   font-size: 18px;
+   margin-top: 10px;
+`;
+
 export const Balance = styled.Text`
    color: #fff;
    font-size: 30px;
