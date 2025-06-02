@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Container, TipoText, Tipo, IconView, ValorText } from "./styles"; 
 import  Icon  from "react-native-vector-icons/Feather";
-import { TouchableWithoutFeedback, Alert } from "react-native";
+import { TouchableWithoutFeedback, Alert, Text } from "react-native";
 
 export default function HistoricoList({data, deleteItem}){
 
@@ -33,6 +33,7 @@ export default function HistoricoList({data, deleteItem}){
            <ValorText>
               {valorFormatdo}
            </ValorText>
+           <Text style={{marginTop: 3,}}>{data.description}</Text>
         </Container>
     </TouchableWithoutFeedback>
     )

@@ -26,7 +26,7 @@ export default function BalanceItem({data}){
                 color: 'ef463a'
             } 
         }
-    }, [data])
+    }, [data]);
 
     return(
         <Container bg={labelName.color}>
