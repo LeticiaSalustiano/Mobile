@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { FlatList, Alert } from "react-native";
+import { FlatList, Alert, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Background, Header, Card, PetNome, Info, Horario, Btn, BtnArea, BtnTxt } from "../styles";
+import Icone from '@expo/vector-icons/Feather';
 
 const Consultas = () => {
     const [consultas, setConsultas] = useState([
@@ -28,9 +29,18 @@ const Consultas = () => {
         Alert.alert("Consulta Finalizada", "Esta consulta foi concluída!");
     };
 
+  
+
     return (
         <Background>
-            <Header>Agenda de Consultas</Header>
+         <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity style={{marginRight: 10}}>
+                <Icone name="arrow-left" size={25}></Icone>
+            </TouchableOpacity>
+
+              <Header>Agenda de Consultas</Header>
+         </View>
+         
             <FlatList
                 data={consultas}
                 showsVerticalScrollIndicator={false}

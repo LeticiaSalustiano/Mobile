@@ -76,7 +76,7 @@ export const BtnArea2 = styled.View`
 `;
 
 export const HorariosArea = styled.View`
-   margin-top: 30px;
+   margin-top: 10px;
 `;
 
 export const HorarioBtn = styled.TouchableOpacity`

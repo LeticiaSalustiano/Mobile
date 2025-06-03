@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Alert } from "react-native";
+import { FlatList, Alert, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Background, Header, Input, BtnArea, Btn, BtnTxt, HorariosArea, HorarioBtn, HorarioTxt } from "./styles";
 
@@ -38,6 +38,9 @@ const Agendamento = () => {
             <Input placeholder="Doença ou Sintomas" value={doenca} onChangeText={setDoenca} />
 
             <HorariosArea>
+                <View style={{padding: 5}}>
+                    <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>Horários dispiníveis</Text>
+                </View>
                 <FlatList
                     data={horariosDisponiveis}
                     keyExtractor={(item) => item.id}

@@ -11,6 +11,9 @@ import Login from '../login';
 import Inicial from '../LoginMembros/Veterinário/inicial';
 import Consultas from '../LoginMembros/Veterinário/consultas';
 import Agendamento from '../LoginMembros/Veterinário/agendamento';
+import Resgate from '../LoginMembros/Resgate/Resgate';
+import Andamento from '../LoginMembros/Resgate/Tabela';
+import Solicitacoes from '../LoginMembros/Resgate/Solicita';
 
 const Drawer = createDrawerNavigator();
 
@@ -93,6 +96,29 @@ export default function Rotas() {
          } }} 
       />
 
+
+      <Drawer.Screen 
+      name="Resgate" 
+      component={Resgate} 
+      />
+
+     <Drawer.Screen 
+      name="Andamento" 
+      component={Andamento} 
+      options={{ 
+         drawerItemStyle: { 
+            display: 'none' 
+         } }} 
+      />
+
+      <Drawer.Screen 
+      name="Solicitacoes" 
+      component={Solicitacoes} 
+      options={{ 
+         drawerItemStyle: { 
+            display: 'none' 
+         } }} 
+      />
 
     </Drawer.Navigator>
   );
