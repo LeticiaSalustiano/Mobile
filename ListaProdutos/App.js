@@ -1,96 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from '@expo/vector-icons/Feather';
+
+import Lista from './src/Lista';
+import Carrinho from './src/Home';
 
 const Stack = createNativeStackNavigator();
 
-const ProductListScreen = ({ navigation }) => {
-  const [products, setProducts] = useState([]);
+const App = () => {
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    const fetchedProducts = [
-      { id: '1', name: 'Café', price: 'R$ 04,00' },
-      { id: '2', name: 'Pão de queijo', price: 'R$ 03,50' },
-      { id: '3', name: 'Pão na chapa', price: 'R$ 07,00' },
-    ];
-    setProducts(fetchedProducts);
-  }, []);
-
-  const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
-  };
-
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={products}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.price}>{item.price}</Text>
-            <TouchableOpacity style={styles.addButton} onPress={() => addToCart(item)}>
-              <Ionicons name="add-circle-outline" size={24} color="blue" />
-            </TouchableOpacity>
-          </View>
-        )}
-      />
-    </View>
-  );
-};
-
-const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Produtos"
-          component={ProductListScreen}
-          options={{
+        <Stack.Screen 
+          name="Lista"
+          options={({ navigation }) => ({
             headerRight: () => (
-              <View style={styles.cartContainer}>
-                <Ionicons style={{fontSize: 30, marginRig: 90}} name="cart-outline" size={24} color="black" />
-              </View>
+              <TouchableOpacity onPress={() => navigation.navigate('Carrinho')}>
+                <View style={styles.cartContainer}>
+                  <Icon style={{ marginLeft: 60, marginTop: 4 }} name="shopping-cart" size={30} color="black" />
+                  {cart.length > 0 && (
+                    <View style={styles.cartBadge}>
+                      <Text style={styles.cartBadgeText}>{cart.length}</Text>
+                    </View>
+                  )}
+                </View>
+              </TouchableOpacity>
             ),
-          }}
-        />
+          })}
+        >
+          {props => <Lista {...props} cart={cart} setCart={setCart} />}
+        </Stack.Screen>
+
+        <Stack.Screen name="Carrinho">
+          {props => <Carrinho {...props} cart={cart} setCart={setCart} />}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    padding: 20, 
-    backgroundColor: '#fff' 
+  cartContainer: {
+    position: 'relative',
+    marginRight: 15,
   },
-  item: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    padding: 10, 
-    borderBottomWidth: 1, 
-    borderBottomColor: '#ddd' 
+  cartBadge: {
+    position: 'absolute',
+    top: -5,
+    right: -5,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  name: { 
-    fontSize: 16, 
-    flex: 1 
-  },
-  price: { 
-    fontSize: 14, 
-    color: 'green' 
-  },
-  addButton: { 
-    marginLeft: 10 
-  },
-  cartContainer: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    marginRight: 20,
+  cartBadgeText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 12,
   },
 });
 
 export default App;
+
+
