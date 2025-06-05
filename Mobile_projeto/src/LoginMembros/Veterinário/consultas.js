@@ -34,7 +34,7 @@ const Consultas = () => {
     return (
         <Background>
          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity style={{marginRight: 10}}>
+            <TouchableOpacity style={{marginRight: 10}} onPress={() => navigation.goBack()}>
                 <Icone name="arrow-left" size={25}></Icone>
             </TouchableOpacity>
 

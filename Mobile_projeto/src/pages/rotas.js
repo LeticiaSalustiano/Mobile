@@ -12,9 +12,11 @@ import Inicial from '../LoginMembros/Veterinário/inicial';
 import Consultas from '../LoginMembros/Veterinário/consultas';
 import Agendamento from '../LoginMembros/Veterinário/agendamento';
 import Resgate from '../LoginMembros/Resgate/Resgate';
-import Andamento from '../LoginMembros/Resgate/Tabela';
 import Solicitacoes from '../LoginMembros/Resgate/Solicita';
-
+import Andamento from '../LoginMembros/Resgate/Tabela';
+import Horas from '../LoginMembros/Voluntario/Horas';
+import Funcao from '../LoginMembros/Voluntario/Funcao';
+import Funcionarios from '../LoginMembros/Voluntario/Funcionarios';
 const Drawer = createDrawerNavigator();
 
 export default function Rotas() {
@@ -22,7 +24,10 @@ export default function Rotas() {
     <Drawer.Navigator>
       <Drawer.Screen 
          name="Tela inicial" 
-         component={Home} />
+         component={Home} 
+         options={{
+            title: "SafePet"
+         }}/>
 
       <Drawer.Screen 
          name="Saiba Mais" 
@@ -50,6 +55,7 @@ export default function Rotas() {
          name="ResgateMembro" 
          component={ResgateMembro} 
          options={{ 
+            title: "Agente",
             drawerItemStyle: { 
                display: 'none' 
             } }} 
@@ -59,6 +65,7 @@ export default function Rotas() {
          name="VeterinarioMembro" 
          component={VeterinarioMembro} 
          options={{ 
+            title: "Agente",
             drawerItemStyle: { 
                display: 'none' 
             } }} 
@@ -68,6 +75,7 @@ export default function Rotas() {
          name="ApoioMembro" 
          component={ApoioMembro} 
          options={{ 
+            title: "Agente",
             drawerItemStyle: { 
                display: 'none' 
             } }} 
@@ -76,6 +84,9 @@ export default function Rotas() {
          <Drawer.Screen 
          name="Inicial" 
          component={Inicial} 
+         options={{
+            title: "Tela Veterinario"
+         }}
          />
 
       <Drawer.Screen 
@@ -96,7 +107,6 @@ export default function Rotas() {
          } }} 
       />
 
-
       <Drawer.Screen 
       name="Resgate" 
       component={Resgate} 
@@ -115,6 +125,33 @@ export default function Rotas() {
       name="Solicitacoes" 
       component={Solicitacoes} 
       options={{ 
+         title: "Resgate",
+         drawerItemStyle: { 
+            display: 'none' 
+         } }} 
+      />
+
+      <Drawer.Screen 
+      name="Funcionarios" 
+      component={Funcionarios} 
+      options={{ title: "Área do Voluntário" }} 
+      />
+
+     <Drawer.Screen 
+      name="Horas" 
+      component={Horas} 
+      options={{ 
+         title: "Horas",
+         drawerItemStyle: { 
+            display: 'none' 
+         } }} 
+      />
+
+     <Drawer.Screen 
+      name="Funcao" 
+      component={Funcao} 
+      options={{ 
+         title: "Funções",
          drawerItemStyle: { 
             display: 'none' 
          } }} 

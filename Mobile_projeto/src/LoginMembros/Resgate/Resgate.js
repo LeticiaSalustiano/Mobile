@@ -1,31 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Background, Header, Tabela, Linha, Texto, BtnArea, Btn, BtnTxt, Area, } from "./styles";
+import { Background, Header, Texto, BtnArea, Btn, BtnTxt, Area, StatusResumo, Icone } from "./styles";
+
+import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 
 const Resgate = () => {
+  const navigation = useNavigation();
 
-    const navigation = useNavigation();
+  const [nomeAgente, setNomeAgente] = useState("Agente Silva"); // Nome pode vir via props, context ou storage
+  const [chamadosEmAndamento, setChamadosEmAndamento] = useState(3); // Pode ser atualizado dinamicamente
 
-    return (
+  // Simular chamada à API
+  useEffect(() => {
+    // Ex: fetchChamados().then(data => setChamadosEmAndamento(data.length));
+  }, []);
+
+  return (
     <Background>
-           <Header>Seja bem Vindo!</Header>
-           <Texto>Seu nome</Texto>
+      <Header>Seja bem-vindo, {nomeAgente}!</Header>
+      <Texto>Monitoramento de Resgates da ONG</Texto>
 
-        <Area>
+      <StatusResumo>
+        <Texto>📋 Resgates em andamento: {chamadosEmAndamento}</Texto>
+      </StatusResumo>
 
-          <BtnArea>
-              <Btn onPress={() => navigation.navigate("Solicitacoes")}>
-                <BtnTxt>Chamados</BtnTxt>
-              </Btn>
+      <Area>
+        <BtnArea>
+          <Btn onPress={() => navigation.navigate("Solicitacoes")}>
+            <Icone>
+              <MaterialIcons name="assignment" size={22} color="#fff" />
+            </Icone>
+            <BtnTxt>Chamados</BtnTxt>
+          </Btn>
 
-              <Btn onPress={() => navigation.navigate("Andamento")}>
-                <BtnTxt>Tabela</BtnTxt>
-              </Btn>
-         </BtnArea>
-       </Area>
+          <Btn onPress={() => navigation.navigate("Andamento")}>
+            <Icone>
+              <FontAwesome5 name="table" size={20} color="#fff" />
+            </Icone>
+            <BtnTxt>Andamento</BtnTxt>
+          </Btn>
+        </BtnArea>
+      </Area>
     </Background>
-    );
+  );
 };
 
 export default Resgate;
-
