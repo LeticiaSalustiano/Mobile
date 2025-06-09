@@ -44,11 +44,11 @@ const Carrinho = ({ cart, setCart }) => {
 
         <View style={{flexDirection: 'column'}}>
           <View style={styles.item}>
-            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.name}>{item.quantity} {item.name}</Text>
             <Text style={styles.price}>{item.price}</Text>
-            <Text style={styles.quantity}>{item.quantity}</Text>
+            <Text style={styles.quantity}></Text>
        
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', marginTop: -10}}>
         
             <TouchableOpacity onPress={() => decreaseQuantity(item.id)} style={styles.iconButton}>
               <Icon name="minus-circle" size={24} color="blue" />
@@ -104,13 +104,11 @@ const styles = StyleSheet.create({
   },
   iconButton: { 
     marginHorizontal: 5,
-    marginTop: 15
-    
   },
   total: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 40,
     textAlign: 'right',
   },
 });

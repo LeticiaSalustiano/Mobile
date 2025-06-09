@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     texto: {
         textAlign: 'center',
         fontSize: 16,
-        color: '#444',
-        paddingHorizontal: 20,
+        color: '#000',
+        paddingHorizontal: 10,
         marginTop: 7,
         marginRight: 190,
         

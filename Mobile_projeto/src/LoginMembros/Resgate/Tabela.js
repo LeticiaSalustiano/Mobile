@@ -75,17 +75,17 @@ const Andamento = () => {
       </Area>
 
       <BtnArea>
-      <Btn onPress={atualizarChamados}>
-        <BtnRow>
-          <Feather name="refresh-ccw" size={18} color="#fff" />
-          <BtnTxt2>Atualizar</BtnTxt2>
-        </BtnRow>
-      </Btn>
-
-
+        <Btn onPress={atualizarChamados}>
+          <BtnRow>
+            <Feather name="refresh-ccw" size={18} color="#fff" />
+            <BtnTxt2>Atualizar</BtnTxt2>
+          </BtnRow>
+        </Btn>
         <Btn onPress={() => navigation.navigate("Solicitacoes")}>
-          <Feather name="list" size={18} color="#fff" />
-          <BtnTxt2 style={{ marginLeft: 5 }}>Resgates</BtnTxt2>
+          <BtnRow>
+            <Feather name="list" size={18} color="#fff" />
+            <BtnTxt2 style={{ marginLeft: 5 }}>Resgates</BtnTxt2>
+          </BtnRow>
         </Btn>
       </BtnArea>
     </Background>

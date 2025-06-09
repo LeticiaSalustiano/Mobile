@@ -21,7 +21,7 @@ const App = () => {
             headerRight: () => (
               <TouchableOpacity onPress={() => navigation.navigate('Carrinho')}>
                 <View style={styles.cartContainer}>
-                  <Icon style={{ marginLeft: 60, marginTop: 4 }} name="shopping-cart" size={30} color="black" />
+                  <Icon style={{ marginLeft: 60, marginTop: 4 }} name="shopping-cart" size={27} color="black" />
                   {cart.length > 0 && (
                     <View style={styles.cartBadge}>
                       <Text style={styles.cartBadgeText}>{cart.length}</Text>
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
   },
   cartBadge: {
     position: 'absolute',
-    top: -5,
-    right: -5,
+    top: 1,
+    right: -9,
     backgroundColor: 'red',
     borderRadius: 10,
     width: 20,
