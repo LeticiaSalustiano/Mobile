@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Background, Header, Texto, BtnArea, Btn, BtnTxt, Area, StatusResumo, Icone } from "./styles";

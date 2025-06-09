@@ -1,9 +1,9 @@
+
 import styled from "styled-components";
 
 export const Background = styled.View`
    flex: 1;
    padding: 20px;
-   justify-content: center;
    align-items: center;
    background-color: #bbeef9;
 `;
@@ -62,27 +62,49 @@ export const Texto = styled.Text`
     font-size: 18px;
 `;
 
+export const Subtitulo = styled.Text` 
+    color: #000;
+    font-size: 18px;
+    font-weight: bold; 
+`;
+
 export const Area = styled.View`
    flex: 1;
    margin-top: 20px;
 `;
 
 export const Tabela = styled.View`
-   background-color: #fff;
-   padding: 15px;
-   border-radius: 10px;
-   margin-bottom: 15px;
-   shadow-color: #000;
-   shadow-offset: 0px 2px;
-   shadow-opacity: 0.1;
-   shadow-radius: 4px;
-   elevation: 3;
-   border-left-width: 5px;
-   border-left-color: #fff;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  elevation: 2;
+  shadow-color: #000;
+  shadow-offset: 0px 1px;
+  shadow-opacity: 0.1;
+  shadow-radius: 2px;
 `;
 
 export const Linha = styled.View`
    flex-direction: row;
    align-items: center;
    padding-vertical: 5px;
+`;
+
+export const LinhaHorario = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  elevation: 2;
+  shadow-color: #000;
+  shadow-offset: 0px 1px;
+  shadow-opacity: 0.1;
+  shadow-radius: 2px;
 `;

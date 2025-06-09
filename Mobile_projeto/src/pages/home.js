@@ -1,3 +1,4 @@
+
 import React from "react";
 
 import { Background, Titulo, Texto, Btn, BtnTxt, Imagem, BtnArea } from "../../styles";

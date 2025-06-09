@@ -1,49 +1,50 @@
 import React, { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
-import { Background, Btn, BtnTxt, Input, Titulo, Imagem } from "./styles";
+import { Background, Btn, BtnTxt, Input, Titulo } from "./styles";
 
 export default function ResgateMembro() {
     const [nome, setNome] = useState('');
     const [contato, setContato] = useState('');
     const [experiencia, setExperiencia] = useState('');
 
-   
+    const validarEEnviar = () => {
+        if (!nome.trim() || !contato.trim()) {
+            Alert.alert("Erro", "Por favor, preencha o nome e o contato.");
+            return;
+        }
+        Alert.alert("Sucesso", "Cadastro enviado com sucesso!");
+        setNome('');
+        setContato('');
+        setExperiencia('');
+    };
+
     return (
-        <KeyboardAvoidingView 
-            behavior={Platform.OS === "ios" ? "padding" : "height"} 
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{ flex: 1 }}
         >
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <Background>
                     <Titulo>Quero ser um membro resgatador!</Titulo>
 
-                    <Input 
+                    <Input
                         placeholder="Nome completo"
                         value={nome}
-                        onChangeText={(text) => {
-                            console.log("Nome:", text); // Depuração
-                            setNome(text);
-                        }}
+                        onChangeText={setNome}
                     />
-                    <Input 
+                    <Input
                         placeholder="Contato (Telefone ou Email)"
                         value={contato}
-                        onChangeText={(text) => {
-                            console.log("Contato:", text); // Depuração
-                            setContato(text);
-                        }}
+                        onChangeText={setContato}
                         keyboardType="email-address"
                     />
-                    <Input 
+                    <Input
                         placeholder="Experiência com resgates (opcional)"
                         value={experiencia}
-                        onChangeText={(text) => {
-                            console.log("Experiência:", text); // Depuração
-                            setExperiencia(text);
-                        }}
+                        onChangeText={setExperiencia}
                     />
 
-                    <Btn>
+                    <Btn onPress={validarEEnviar}>
                         <BtnTxt>Enviar Cadastro</BtnTxt>
                     </Btn>
                 </Background>
@@ -51,3 +52,4 @@ export default function ResgateMembro() {
         </KeyboardAvoidingView>
     );
 }
+

@@ -17,6 +17,10 @@ import Horas from '../LoginMembros/Voluntario/Horas';
 import Funcao from '../LoginMembros/Voluntario/Funcao';
 import Funcionarios from '../LoginMembros/Voluntario/Funcionarios';
 import CustomDrawer from '../CustomDrawer';
+import HomeAdm from '../LoginMembros/Adm/HomeAdm';
+import UsuariosAdm from '../LoginMembros/Adm/GerenciarUsuarios';
+import ConteudoAdm from '../LoginMembros/Adm/GerenciarConteudo';
+
 const Drawer = createDrawerNavigator();
 
 export default function Rotas() {
@@ -25,7 +29,7 @@ export default function Rotas() {
          drawerContent={(props)=> <CustomDrawer {...props}/>}
          screenOptions={{
             headerStyle:{
-               backgroundColor: '#bbeef9',
+               backgroundColor: '#fff',
             },
             drawerStyle:{
                backgroundColor: "#fff",
@@ -191,6 +195,37 @@ export default function Rotas() {
             } 
          }} 
       />
+
+      <Drawer.Screen 
+               name="Adm" 
+               component={HomeAdm} 
+               options={{ 
+                  title: "Adm" 
+               }} 
+            />
+
+      <Drawer.Screen 
+               name="Conteudo" 
+               component={ConteudoAdm} 
+               options={{ 
+                  title: "Conteudo" ,
+                  drawerItemStyle: { 
+                     display: 'none' 
+                  } 
+               }} 
+            />
+
+      <Drawer.Screen 
+               name="Usuarios" 
+               component={UsuariosAdm} 
+               options={{ 
+                  title: "Usuarios" ,
+                  drawerItemStyle: { 
+                     display: 'none' 
+                  } 
+               }} 
+            />
+
 
       </Drawer.Navigator>
   );

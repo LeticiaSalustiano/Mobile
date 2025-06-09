@@ -1,51 +1,40 @@
 import React from "react";
-import { FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Feather as Icone } from "@expo/vector-icons";
 import {
   Background,
   Btn,
   BtnTxt,
   Container,
   Texto,
-  Titulo
-} from "./styles"; // Agora sem importar Header!
-import { Area } from "../Resgate/styles";
-
-const dadosHoras = [
-  { id: '1', user: '', dia:'seg', data: '09/06', horas: '09:00 / 13:00' },
-  { id: '2', user: '', dia:'ter', data: '10/06', horas: '10:00 / 14:00' },
-  { id: '3', user: '', dia:'quar', data: '11/06', horas: '11:00 / 15:00' },
-  { id: '4', user: '', dia:'qui', data: '12/06', horas: '12:00 / 16:00' },
-  { id: '4', user: '', dia:'sex', data: '13/06', horas: '13:00 / 17:00' },
-];
+  Titulo,
+  Subtitulo,
+} from "./styles";
 
 const Funcionarios = () => {
   const navigation = useNavigation();
-  const nomeUsuario = "João da ONG";
+  const nomeUsuario = "Ana";
 
   return (
     <Background>
-      <Titulo>Seja bem-vindo!</Titulo>
-      <Texto>{nomeUsuario}</Texto>
+      <Icone name="user" size={64} color="#14c5ec" style={{ marginBottom: 7, marginTop: 13 }} />
+
+      <Titulo>Bem-vinda de volta, {nomeUsuario}!</Titulo>
+      <Subtitulo style={{ textAlign: "center", marginTop: 10 }}>
+        Obrigado por fazer parte da nossa missão! 
+      </Subtitulo>
 
       <Container>
-        <Texto style={{ marginBottom: 10 }}>Horas Trabalhadas:</Texto>
-
-      <FlatList
-          data={dadosHoras}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Texto>- {item.dia}: {item.horas}</Texto>
-          )}
-          contentContainerStyle={{ marginBottom: 15 }}
-        />
+        <Texto style={{ marginBottom: 20, textAlign: "center" }}>
+          O que você gostaria de acessar hoje?
+        </Texto>
 
         <Btn onPress={() => navigation.navigate("Horas")}>
-          <BtnTxt>Ver Detalhes das Horas</BtnTxt>
+          <BtnTxt>📅 Ver Detalhes das Horas</BtnTxt>
         </Btn>
 
         <Btn onPress={() => navigation.navigate("Funcao")}>
-          <BtnTxt>Ver Funções Diárias</BtnTxt>
+          <BtnTxt>🛠️ Ver Funções Diárias</BtnTxt>
         </Btn>
       </Container>
     </Background>

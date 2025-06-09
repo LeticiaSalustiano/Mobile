@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, KeyboardAvoidingView, Platform } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform, Text } from "react-native";
 import { Background, Container, Titulo, Input, Btn, BtnTxt, Imagem } from "./style";
 import { StyleSheet } from "react-native";
 
@@ -9,27 +9,33 @@ export default function Login() {
     const [erroEmail, setErroEmail] = useState(false);
     const [erroSenha, setErroSenha] = useState(false);
 
-
     const validarLogin = () => {
+        let valid = true;
+
         if (!email.trim()) {
             setErroEmail(true);
+            valid = false;
         } else {
             setErroEmail(false);
         }
     
         if (!senha.trim()) {
             setErroSenha(true);
+            valid = false;
         } else {
             setErroSenha(false);
         }
     
-        if (!email.trim() || !senha.trim()) {
+        if (!valid) {
             Alert.alert("Erro", "Por favor, preencha todos os campos.");
             return;
         }
     
         Alert.alert("Sucesso", "Login realizado com sucesso!");
-    };    
+        // Opcional: limpar campos após login
+        // setEmail('');
+        // setSenha('');
+    };
 
     return (
         <KeyboardAvoidingView 
@@ -46,7 +52,11 @@ export default function Login() {
                         placeholder="Digite seu email"
                         onChangeText={setEmail}
                         value={email}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
                     />
+                    {erroEmail && <Text style={styles.erroTexto}>Por favor, insira um email válido.</Text>}
 
                     <Input
                         style={[styles.input, erroSenha && styles.inputErro]}
@@ -55,6 +65,7 @@ export default function Login() {
                         onChangeText={setSenha}
                         value={senha}
                     />
+                    {erroSenha && <Text style={styles.erroTexto}>Por favor, insira sua senha.</Text>}
 
                     <Btn onPress={validarLogin}>
                         <BtnTxt>Entrar</BtnTxt>
@@ -72,12 +83,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         borderColor: "#030303",
-        marginBottom: 10,
+        marginBottom: 5,
         backgroundColor: "#f0f8ff"
     },
     inputErro: {
         borderColor: "red",
     },
+    erroTexto: {
+        color: "red",
+        marginBottom: 10,
+        fontSize: 14,
+    },
 });
-
 
