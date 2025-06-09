@@ -38,7 +38,7 @@ const Lista = ({ cart, setCart, navigation }) => {
           </View>
         )}
       />
-      <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={{ marginBottom: 20, }}>
+      <TouchableOpacity onPress={() => navigation.navigate('Carrinho')} style={{ marginBottom: 30, alignItems: 'flex-end' }}>
         <Text style={{ fontSize: 16, color: 'blue' }}>Visualizar Carrinho</Text>
       </TouchableOpacity>
     </View>
