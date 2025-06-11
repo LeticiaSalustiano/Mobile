@@ -10,8 +10,15 @@ export const Header = styled.Text`
    font-size: 22px;
    font-weight: bold;
    text-align: center;
-   margin-bottom: 20px;
+   margin-bottom: 2px;
    color: #000;
+`;
+
+export const Subtitulo = styled.Text`
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+  margin-bottom: 12px;
 `;
 
 export const Tabela = styled.View`

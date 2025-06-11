@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Background, Header, Tabela, Linha, Texto, BtnArea, Btn, BtnTxt } from "./styles";
+import { Background, Header, Tabela, Linha, Texto, BtnArea, Btn, BtnTxt, Subtitulo } from "./styles";
 
 const horariosIniciais = [
     { id: "1", horario: "09:00 AM - 28/05/2025", status: "Disponível" },
@@ -25,7 +25,9 @@ const Inicial = () => {
 
     return (
         <Background>
-            <Header>Horários de Consultas</Header>
+            <Header>Bem vindo de volta</Header>
+            <Subtitulo>Seu nome</Subtitulo>
+            <Header>Horários Consultas</Header>
 
             <BtnArea>
                 <Btn onPress={() => setMostrarDisponiveis(!mostrarDisponiveis)}>
