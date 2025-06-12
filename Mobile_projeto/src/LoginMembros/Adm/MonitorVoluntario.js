@@ -1,43 +1,116 @@
-//Nesta página eu quero fazer com que o adm faça o monitoramento dos Voluntarios
+import React, { useState } from "react";
+import {
+  AreaHeader,
+  UsuariosContainer,
+  UsuariosTitulo,
+  Tabela2,
+  Linha2,
+  TextoUser,
+  TextoTipo,
+  TextoMotivo,
+  TextoTipo3,
+  TextoMotivo3,
+  TextoUser3
+} from "./styles";
+import Icone from "@expo/vector-icons/Feather";
+import { FlatList, TouchableOpacity, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import React, {useState} from "react";
-import { Area, AreaHeader, UsuariosContainer, UsuariosTitulo, Tabela2, Linha2, TextoMotivo, TextoTipo, TextoUser } from "./styles";
-import Icone from '@expo/vector-icons/Feather';
-import { FlatList } from "react-native";
+export default function MonitoraVoluntario() {
+  const navigation = useNavigation();
 
-   export default function MonitoraVoluntario(){
-     
-    //situacao é se o voluntario está ativo ou não, e tempo é o tempo que ele está na Ong (quantidade de anos ou meses)
-    const [monitorados, setMonitorados] = useState ([
-        {id: '1', user: '', situacao: '', tempo: ''},
-        {id: '2', user: '', situacao: '', tempo: ''},
-        {id: '3', user: '', situacao: '', tempo: ''}
-    ]);
+  // Simulação de voluntários
+  const [monitorados, setMonitorados] = useState([
+    { id: "1", user: "Juliana", situacao: "Ativo", tempo: "2 anos", horas: 140 },
+    { id: "2", user: "Marcos", situacao: "Inativo", tempo: "8 meses", horas: 80 },
+    { id: "3", user: "Clara", situacao: "Ativo", tempo: "1 ano", horas: 160 }
+  ]);
 
-    return (
-        <UsuariosContainer>
-         <AreaHeader>
-         {/*Fazer um botão para que volte a pagina anterior GerenciarUsuarios.js*/}
-            <Icone name="arrow-left" size={25}/>
-           <UsuariosTitulo style={{marginTop: -3}}> Usuarios Voluntario</UsuariosTitulo>
-         </AreaHeader>
+  const destaques = monitorados.filter((v) => v.horas >= 100);
 
-         {/*Fazer uma tabela com as legendas (EX. 'nome, situação, tempo), em cima e os dados da const embaixo para que apareçam para o Adm*/}
-         <Tabela2>
-            <FlatList
-               data={monitorados}
-               keyExtractor={(item) => item.id}
-               renderItem={({ item }) => (
-              <Linha2>
-                <TextoUser numberOfLines={1} ellipsizeMode="tail">{item.user} </TextoUser>
-                <TextoTipo numberOfLines={1} ellipsizeMode="tail">| {item.situacao} </TextoTipo>
-                <TextoMotivo numberOfLines={1} ellipsizeMode="tail">| {item.tempo} </TextoMotivo>
-               </Linha2>
-             )}
-            />
-         </Tabela2>
+  const navegarPara = (tela) => () => {
+    navigation.navigate(tela);
+  };
 
-         {/*Fazer outra tabela para visualizar os voluntários destaques do mês e o total de horas trabalhadas e implementar pendências*/}
-        </UsuariosContainer>
-    );
+  // Função auxiliar para retornar a cor da situação
+  const corSituacao = (situacao) => {
+    switch (situacao) {
+      case "Ativo":
+        return "#2e7d32"; // verde
+      case "Inativo":
+        return "#d32f2f"; // vermelho
+      default:
+        return "#000"; // padrão
+    }
+  };
+
+  return (
+    <UsuariosContainer>
+      {/* Cabeçalho */}
+      <AreaHeader>
+        <TouchableOpacity onPress={navegarPara("Usuarios")}>
+          <Icone name="arrow-left" size={25} />
+        </TouchableOpacity>
+        <UsuariosTitulo style={{ marginTop: -3 }}>Usuários Voluntários</UsuariosTitulo>
+      </AreaHeader>
+
+      {/* Tabela com cabeçalho */}
+      <Tabela2>
+        <Linha2 style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <TextoUser3 style={{ fontWeight: "bold", marginLeft: 8 }}>Nome</TextoUser3>
+          <TextoTipo3 style={{ fontWeight: "bold", marginLeft: -10 }}>Situação</TextoTipo3>
+          <TextoMotivo3 style={{ fontWeight: "bold", marginLeft: -10 }}>Tempo</TextoMotivo3>
+          <TextoMotivo3 style={{ fontWeight: "bold", marginLeft: -10 }}>Info</TextoMotivo3>
+        </Linha2>
+
+        <FlatList
+          data={monitorados}
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={
+            <Text style={{ textAlign: "center", marginTop: 20, fontStyle: "italic" }}>
+              Nenhum voluntário encontrado.
+            </Text>
+          }
+          renderItem={({ item }) => (
+            <Linha2 style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <TextoUser>{item.user}</TextoUser>
+              <TextoTipo style={{color: corSituacao(item.situacao)}}>{item.situacao}</TextoTipo>
+              <TextoMotivo>{item.tempo}</TextoMotivo>
+
+               {/* Botão de detalhes */}
+               <TouchableOpacity onPress={() => alert(`Mais detalhes de ${item.user}`)} style={{ marginLeft: -10}}>
+                <Icone name="info" size={20} color="#14c5ec" />
+              </TouchableOpacity>
+            </Linha2>
+          )}
+        />
+      </Tabela2>
+
+      {/* Destaques do Mês */}
+      <Tabela2>
+        <UsuariosTitulo style={{ marginTop: 20 }}>Destaques do Mês</UsuariosTitulo>
+        {destaques.length > 0 ? (
+          destaques.map((vol) => (
+            <Linha2 key={vol.id}>
+              <TextoUser>{vol.user}</TextoUser>
+              <TextoMotivo> • Horas trabalhadas: </TextoMotivo>
+              <TextoUser>{vol.horas}h</TextoUser>
+            </Linha2>
+          ))
+        ) : (
+          <Text style={{ padding: 10, fontStyle: "italic", textAlign: "center" }}>
+            Nenhum destaque no momento.
+          </Text>
+        )}
+      </Tabela2>
+
+      {/* Pendências */}
+      <Tabela2>
+        <UsuariosTitulo style={{ marginTop: 20 }}>Pendências</UsuariosTitulo>
+        <Text style={{ padding: 10, fontStyle: "italic", textAlign: "center" }}>
+          Nenhuma pendência no momento.
+        </Text>
+      </Tabela2>
+    </UsuariosContainer>
+  );
 }

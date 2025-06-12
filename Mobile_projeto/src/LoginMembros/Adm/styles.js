@@ -246,7 +246,7 @@ export const TextoTipo = styled.Text`
   font-size: 17px;
   color: #000;
   text-align: center;
-  max-width: 65px; 
+  max-width: 95px; 
   font-weight: bold;
 `;
 
@@ -254,7 +254,7 @@ export const TextoMotivo = styled.Text`
   font-size: 17px;
   color: #000;
   text-align: center;
-  max-width: 205px;
+  max-width: 300px;
 `;
 
 export const TextoUser2 = styled.Text`
@@ -309,3 +309,52 @@ export const ConteudoTexto = styled.Text`
   color: #6d4c41;
   text-align: center;
 `;
+
+//Resgate
+
+export const TextoUser3 = styled.Text`
+  font-size: 17px;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+`;
+
+export const TextoTipo3 = styled.Text`
+  font-size: 17px;
+  color: #000;
+  text-align: center;
+  max-width: 95px; 
+  font-weight: bold;
+`;
+
+export const TextoMotivo3 = styled.Text`
+  font-size: 17px;
+  color: #000;
+  text-align: center;
+  max-width: 200px;
+`;
+
+//Usuarios
+
+export const TextoUser4 = styled.Text`
+  font-size: 17px;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+`;
+
+export const TextoTipo4 = styled.Text`
+  font-size: 17px;
+  color: #000;
+  text-align: center;
+  max-width: 80px; 
+  font-weight: bold;
+`;
+
+export const TextoMotivo4 = styled.Text`
+  font-size: 17px;
+  color: #000;
+  text-align: center;
+  max-width: 60px;
+`;
+

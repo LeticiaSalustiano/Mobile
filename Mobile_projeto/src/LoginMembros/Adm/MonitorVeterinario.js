@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TouchableOpacity, FlatList, View, Text } from "react-native";
 import {
-  Area,
   AreaHeader,
   UsuariosContainer,
   UsuariosTitulo,
@@ -43,11 +42,15 @@ export default function MonitoraVeterinario() {
     }
   };
 
+  const navegarPara = (tela) => () => {
+    navigation.navigate(tela);
+  };
+
   return (
     <UsuariosContainer>
       {/* Cabeçalho */}
       <AreaHeader>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={navegarPara("Usuarios")}>
           <Icone name="arrow-left" size={25} />
         </TouchableOpacity>
         <UsuariosTitulo style={{ marginTop: -3 }}>Usuarios Veterinário</UsuariosTitulo>
@@ -56,9 +59,10 @@ export default function MonitoraVeterinario() {
       {/* Tabela com cabeçalho */}
       <Tabela2>
         <Linha2>
-          <TextoUser style={{ fontWeight: "bold" }}>Nome |</TextoUser>
-          <TextoTipo2 style={{ fontWeight: "bold" }}>Situação |</TextoTipo2>
-          <TextoMotivo style={{ fontWeight: "bold" }}>Qtd | Solicitado</TextoMotivo>
+          <TextoUser style={{ fontWeight: "bold", marginLeft: 8 }}>Nome </TextoUser>
+          <TextoTipo2 style={{ fontWeight: "bold", marginLeft: -20 }}>Situação </TextoTipo2>
+          <TextoMotivo style={{ fontWeight: "bold", marginLeft: -25 }}>Qtd  </TextoMotivo>
+          <Textoquan style={{ fontWeight: "bold" }}> Solicitado</Textoquan>
           <View style={{ width: 30 }} /> {/* Espaço para ícone */}
         </Linha2>
 
@@ -68,12 +72,12 @@ export default function MonitoraVeterinario() {
           renderItem={({ item }) => (
             <Linha2>
               <TextoUser2 numberOfLines={1} ellipsizeMode="tail">{item.user}</TextoUser2>
-              <TextoTipo2 style={{ color: corSituacao(item.situacao), marginLeft: -50 }}>{item.situacao}</TextoTipo2>
-              <TextoMotivo2>{item.quantidade} </TextoMotivo2>
-              <Textoquan>{item.solicitado}</Textoquan>
+              <TextoTipo2 style={{ color: corSituacao(item.situacao), marginLeft: -60 }}>{item.situacao}</TextoTipo2>
+              <TextoMotivo2 style={{ marginLeft: -20}}>{item.quantidade} </TextoMotivo2>
+              <Textoquan style={{ marginLeft: 10}}>{item.solicitado}</Textoquan>
 
               {/* Botão de detalhes */}
-              <TouchableOpacity onPress={() => alert(`Mais detalhes de ${item.user}`)}>
+              <TouchableOpacity onPress={() => alert(`Mais detalhes de ${item.user}`)} style={{ marginLeft: -10}}>
                 <Icone name="info" size={20} color="#14c5ec" />
               </TouchableOpacity>
             </Linha2>
@@ -88,7 +92,7 @@ export default function MonitoraVeterinario() {
           destaques.map((vet) => (
             <Linha2 key={vet.id}>
               <TextoUser>{vet.user}</TextoUser>
-              <TextoMotivo>• Pets tratados: {vet.quantidade}</TextoMotivo>
+              <TextoMotivo> • Pets tratados: {vet.quantidade}</TextoMotivo>
             </Linha2>
           ))
         ) : (

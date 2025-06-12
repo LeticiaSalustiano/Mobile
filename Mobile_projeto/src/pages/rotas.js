@@ -68,10 +68,10 @@ export default function Rotas() {
             <Drawer.Screen name="Funcao" component={Funcao} options={{ title: "Funções", drawerItemStyle: { display: 'none' } }} />
             <Drawer.Screen name="Adm" component={HomeAdm} options={{ title: "Adm" }} />
             <Drawer.Screen name="Conteudo" component={ConteudoAdm} options={{ title: "Financeiro" ,drawerItemStyle: {  display: 'none' } }} />
-            <Drawer.Screen  name="Usuarios" component={UsuariosAdm} options={{ title: "Usuarios" ,drawerItemStyle: { display: 'none' } }} />
-            <Drawer.Screen  name="MonitoraResgate" component={MonitoraResgate} options={{ title: "Monitorando" ,drawerItemStyle: { display: 'none' } }} />
-            <Drawer.Screen  name="MonitoraVeterinario" component={MonitoraVeterinario} options={{ title: "Monitorando" ,drawerItemStyle: { display: 'none' } }} />
-            <Drawer.Screen  name="MonitoraVoluntario" component={MonitoraVoluntario} options={{ title: "Monitorando" ,drawerItemStyle: { display: 'none' } }} />
+            <Drawer.Screen  name="Usuarios" component={UsuariosAdm} options={{ title: "Usuarios"  }} />
+            <Drawer.Screen  name="MonitoraResgate" component={MonitoraResgate} options={{ title: "Monitorando"  }} />
+            <Drawer.Screen  name="MonitoraVeterinario" component={MonitoraVeterinario} options={{ title: "Monitorando"  }} />
+            <Drawer.Screen  name="MonitoraVoluntario" component={MonitoraVoluntario} options={{ title: "Monitorando"  }} />
       </Drawer.Navigator>
   );
 }
