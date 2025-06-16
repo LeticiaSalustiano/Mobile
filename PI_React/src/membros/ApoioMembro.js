@@ -1,21 +1,63 @@
 import React, { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { Background, Btn, BtnTxt, Input, Titulo } from "./styles";
+import { db } from "../conexao/firebaseConfig"; // caminho ajustado conforme sua estrutura
+import { collection, addDoc } from "firebase/firestore";
+
+import { useNavigation } from "@react-navigation/native";
 
 export default function ApoioMembro() {
+    const navigation = useNavigation();
+
     const [nome, setNome] = useState('');
     const [contato, setContato] = useState('');
+    const [email, setEmail] = useState('');
     const [habilidades, setHabilidades] = useState('');
 
-    const validarEEnviar = () => {
-        if (!nome.trim() || !contato.trim()) {
-            Alert.alert("Erro", "Por favor, preencha o nome e o contato.");
+    const validarEEnviar = async () => {
+        const nomeValido = nome.trim().length >= 3;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const telefoneRegex = /^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$/;
+        const contatoValido = emailRegex.test(contato) || telefoneRegex.test(contato);
+        const habilidadesValida = habilidades.trim() === "" || habilidades.trim().length >= 5;
+    
+        if (!nomeValido) {
+            Alert.alert("Erro", "Nome deve ter pelo menos 3 caracteres.");
             return;
         }
-        Alert.alert("Sucesso", "Cadastro enviado com sucesso!");
-        setNome('');
-        setContato('');
-        setHabilidades('');
+    
+        if (!contatoValido) {
+            Alert.alert("Erro", "Informe um email ou telefone válido.");
+            return;
+        }
+    
+        if (!habilidadesValida) {
+            Alert.alert("Erro", "Descreva melhor suas habilidades (mínimo 5 caracteres) ou deixe em branco.");
+            return;
+        }
+    
+        try {
+            await addDoc(collection(db, "users"), {
+                nome: nome.trim(),
+                email: email.trim(), 
+                contato: contato.trim(),
+                habilidades: habilidades.trim(),
+                tipo: "Voluntario",
+                dataCadastro: new Date()
+            });
+    
+            Alert.alert("Sucesso", "Cadastro enviado com sucesso!");
+            setNome('');
+            setContato('');
+            setEmail('');
+            setHabilidades('');
+
+            navigation.navigate("Funcionarios");
+
+        } catch (error) {
+            console.error("Erro ao salvar no Firebase:", error);
+            Alert.alert("Erro", "Não foi possível enviar o cadastro.");
+        }
     };
 
     return (
@@ -32,12 +74,18 @@ export default function ApoioMembro() {
                     onChangeText={setNome}
                 />
                 <Input
-                    placeholder="Contato (Telefone ou Email)"
+                    placeholder="Contato (Telefone)"
                     value={contato}
                     onChangeText={setContato}
                 />
                 <Input
-                    placeholder="Habilidades (ex: redes sociais, eventos, suporte administrativo)"
+                    placeholder="Email (Email)"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                />
+                <Input
+                    placeholder="Habilidades (opcional)"
                     value={habilidades}
                     onChangeText={setHabilidades}
                 />
@@ -49,4 +97,3 @@ export default function ApoioMembro() {
         </KeyboardAvoidingView>
     );
 }
-
