@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Background, Header, Tabela, Linha, Texto, BtnArea, Btn, BtnTxt, Subtitulo } from "./styles";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../conexao/firebaseConfig";
 
 const horariosIniciais = [
     { id: "1", horario: "09:00 AM - 28/05/2025", status: "Disponível" },
@@ -17,7 +19,34 @@ const horariosIniciais = [
 
 const Inicial = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const emailParam = route.params?.email;
+
     const [mostrarDisponiveis, setMostrarDisponiveis] = useState(false);
+    const [nomeUsuario, setNomeUsuario] = useState("Carregando...");
+
+    useEffect(() => {
+        const buscarNome = async () => {
+            try {
+                const q = query(collection(db, "users"), where("email", "==", emailParam));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    const dados = querySnapshot.docs[0].data();
+                    setNomeUsuario(dados.nome);
+                } else {
+                    setNomeUsuario("Usuário não encontrado");
+                }
+            } catch (error) {
+                console.error("Erro ao buscar usuário:", error);
+                setNomeUsuario("Erro ao carregar nome");
+            }
+        };
+
+        if (emailParam) {
+            buscarNome();
+        }
+    }, [emailParam]);
 
     const horariosFiltrados = mostrarDisponiveis
         ? horariosIniciais.filter((item) => item.status === "Disponível")
@@ -26,7 +55,7 @@ const Inicial = () => {
     return (
         <Background>
             <Header>Bem vindo de volta</Header>
-            <Subtitulo>Seu nome</Subtitulo>
+            <Subtitulo>{nomeUsuario}</Subtitulo>
             <Header>Horários Consultas</Header>
 
             <BtnArea>
@@ -51,10 +80,10 @@ const Inicial = () => {
             </Tabela>
 
             <BtnArea>
-                <Btn onPress={() => navigation.navigate("Consultas")}>
+                <Btn onPress={() => navigation.navigate("Consultas", { email: emailParam })}>
                     <BtnTxt>Consultas</BtnTxt>
                 </Btn>
-                <Btn onPress={() => navigation.navigate("Agendamento")}>
+                <Btn onPress={() => navigation.navigate("Agendamento", { email: emailParam })}>
                     <BtnTxt>Agendar</BtnTxt>
                 </Btn>
             </BtnArea>

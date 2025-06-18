@@ -75,7 +75,7 @@ export const Btn = styled.TouchableOpacity`
 
 export const BtnTxt = styled.Text`
    color: #fff;
-   font-size: 16px;
+   font-size: 15px;
    font-weight: bold;
 `;
 

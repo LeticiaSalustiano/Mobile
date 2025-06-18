@@ -61,13 +61,11 @@ const Andamento = () => {
     <Background>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <TouchableOpacity style={{ marginRight: 10 }} onPress={navegarPara("Resgate")}>
-          <Feather name="arrow-left" size={25} />
+          <Feather name="arrow-left" size={25}/>
         </TouchableOpacity>
         <Header>Chamados</Header>
       </View>
-
       <Texto>Aqui você encontra os estados dos resgates</Texto>
-
       <Area>
         <FlatList
           data={chamados}
@@ -77,15 +75,14 @@ const Andamento = () => {
           showsVerticalScrollIndicator={false}
         />
       </Area>
-
       <BtnArea>
-        <Btn onPress={atualizarChamados}>
+        <Btn onPress={atualizarChamados} activeOpacity={0.7}>
           <BtnRow>
             <Feather name="refresh-ccw" size={18} color="#fff" />
             <BtnTxt2>Atualizar</BtnTxt2>
           </BtnRow>
         </Btn>
-        <Btn onPress={() => navigation.navigate("Solicitacoes")}>
+        <Btn onPress={() => navigation.navigate("Solicitacoes")} activeOpacity={0.7}>
           <BtnRow>
             <Feather name="list" size={18} color="#fff" />
             <BtnTxt2 style={{ marginLeft: 5 }}>Resgates</BtnTxt2>

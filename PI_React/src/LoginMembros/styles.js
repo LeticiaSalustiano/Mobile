@@ -8,8 +8,9 @@ export const Background = styled.View`
 
 export const Container = styled.View`
   flex: 1;
+  align-items: center;
+  justify-content: center;
   background-color: #bbeef9;
-
 `;
 
 export const Header = styled.Text`
@@ -66,7 +67,7 @@ export const Horario = styled.Text`
 `;
 
 export const BtnArea = styled.View`
-   flex-direction: collum;
+   flex-direction: column;
    justify-content: center;
    margin-top: 20px;
    margin-bottom: 20px;
@@ -78,8 +79,8 @@ export const Btn = styled.TouchableOpacity`
    padding: 15px;
    align-items: center;
    border-radius: 5px;
-   width: 70%;
-   margin-top: 20px;
+   width: 300px;
+   margin-top: 10px;
 `;
 
 export const BtnTxt = styled.Text`

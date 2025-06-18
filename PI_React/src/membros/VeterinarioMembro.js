@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { Background, Btn, BtnTxt, Input, Titulo } from "./styles";
-import { db } from "../conexao/firebaseConfig"; // ajuste esse caminho se necessário
+import { db } from "../conexao/firebaseConfig"; 
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
@@ -49,6 +49,7 @@ export default function VeterinarioMembro() {
                 email: email.trim(),
                 experiencia: experiencia.trim(),
                 tipo: "Veterinario",
+                aprovado: false,
                 dataCadastro: new Date()
             });
 
@@ -57,8 +58,7 @@ export default function VeterinarioMembro() {
             setContato('');
             setEmail('');
             setExperiencia('');
-
-            navigation.navigate("Inicial");
+            navigation.navigate("Inicial", { email: email.trim() });
 
         } catch (error) {
             console.error("Erro ao salvar no Firebase:", error);

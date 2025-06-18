@@ -51,17 +51,17 @@ const Solicitacoes = () => {
 
       {/* Botões de ações rápidas */}
       <BtnArea>
-        <Btn onPress={() => Alert.alert("Histórico", "Aqui seria mostrado o histórico.")}>
+        <Btn onPress={() => Alert.alert("Histórico", "Aqui seria mostrado o histórico.")} activeOpacity={0.7}>
           <BtnTxt>Ver Histórico</BtnTxt>
         </Btn>
-        <Btn onPress={() => Alert.alert("Locais", "Aqui seriam mostrados os locais de resgate.")}>
+        <Btn onPress={() => Alert.alert("Locais", "Aqui seriam mostrados os locais de resgate.")} activeOpacity={0.7}>
           <BtnTxt>Locais de Resgate</BtnTxt>
         </Btn>
       </BtnArea>
 
       {/* Botão principal */}
-      <View style={{ flex: 1, justifyContent: "center" }}>
-        <Btn onPress={abrirSolicitacao}>
+      <View style={{ height: 60, justifyContent: "center", marginTop: -10 }}>
+        <Btn onPress={abrirSolicitacao} activeOpacity={0.7}>
           <BtnTxt>Solicitar Veterinário</BtnTxt>
         </Btn>
       </View>

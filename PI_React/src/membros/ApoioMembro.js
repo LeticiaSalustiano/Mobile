@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { Background, Btn, BtnTxt, Input, Titulo } from "./styles";
-import { db } from "../conexao/firebaseConfig"; // caminho ajustado conforme sua estrutura
+import { db } from "../conexao/firebaseConfig"; 
 import { collection, addDoc } from "firebase/firestore";
 
 import { useNavigation } from "@react-navigation/native";
@@ -43,6 +43,7 @@ export default function ApoioMembro() {
                 contato: contato.trim(),
                 habilidades: habilidades.trim(),
                 tipo: "Voluntario",
+                aprovado: false,
                 dataCadastro: new Date()
             });
     
@@ -51,8 +52,7 @@ export default function ApoioMembro() {
             setContato('');
             setEmail('');
             setHabilidades('');
-
-            navigation.navigate("Funcionarios");
+            navigation.navigate("Funcionarios", { email: email.trim() });
 
         } catch (error) {
             console.error("Erro ao salvar no Firebase:", error);
