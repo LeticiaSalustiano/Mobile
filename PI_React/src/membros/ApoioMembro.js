@@ -52,7 +52,7 @@ export default function ApoioMembro() {
             setContato('');
             setEmail('');
             setHabilidades('');
-            navigation.navigate("Funcionarios", { email: email.trim() });
+            navigation.navigate("SafePet", { email: email.trim() });
 
         } catch (error) {
             console.error("Erro ao salvar no Firebase:", error);

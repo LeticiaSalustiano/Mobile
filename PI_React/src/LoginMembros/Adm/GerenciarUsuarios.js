@@ -115,8 +115,6 @@ export default function UsuariosAdm() {
         <UsuariosTitulo style={{ marginTop: -3, marginLeft: 10 }}>Gerenciar Usuários</UsuariosTitulo>
       </AreaHeader>
 
-      <UsuarioSubtitulo>Aqui você monitora seus Agentes</UsuarioSubtitulo>
-
       {/* Tabela de Usuarios */}
       <Tabela2>
         <Linha2 style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>

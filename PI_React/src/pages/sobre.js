@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     imagem: {
         width: '50%',
         height: 199,
-      
+        marginLeft: 190
     },
     titulo: {
         fontSize: 20,

@@ -58,7 +58,7 @@ export default function VeterinarioMembro() {
             setContato('');
             setEmail('');
             setExperiencia('');
-            navigation.navigate("Inicial", { email: email.trim() });
+            navigation.navigate("SafePet", { email: email.trim() });
 
         } catch (error) {
             console.error("Erro ao salvar no Firebase:", error);

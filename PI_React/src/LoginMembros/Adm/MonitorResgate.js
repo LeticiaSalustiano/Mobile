@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AreaHeader,
   UsuariosContainer,
@@ -13,31 +13,60 @@ import {
   TextoMotivo3
 } from "./styles";
 import Icone from "@expo/vector-icons/Feather";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../conexao/firebaseConfig";
 
 export default function MonitoraResgate() {
   const navigation = useNavigation();
+  const [monitorados, setMonitorados] = useState([]);
 
-  const [monitorados, setMonitorados] = useState([
-    { id: "1", user: "Valentin", situacao: "Em rota", quantidade: 5, solicita: 1 },
-    { id: "2", user: "Maria", situacao: "Disponível", quantidade: 8, solicita: 2 },
-    { id: "3", user: "julian", situacao: "Retornando", quantidade: 3, solicita: 0 }
-  ]);
+  const carregarAgentes = async () => {
+    try {
+      const q = query(
+        collection(db, "users"),
+        where("tipo", "==", "Resgatador"),
+        where("aprovado", "==", true)
+      );
+
+      const snapshot = await getDocs(q);
+      const lista = [];
+
+      snapshot.forEach((doc) => {
+        const dados = doc.data();
+        lista.push({
+          id: doc.id,
+          user: dados.nome || "Sem nome",
+          situacao: dados.situacao || "Disponível",
+          quantidade: dados.quantidade || 0, // total de resgates feitos
+          solicita: dados.solicita || 0 // número de solicitações em aberto
+        });
+      });
+
+      setMonitorados(lista);
+    } catch (error) {
+      console.error("Erro ao buscar agentes de resgate:", error);
+    }
+  };
+
+  useEffect(() => {
+    carregarAgentes();
+  }, []);
 
   const destaques = monitorados.filter((agente) => agente.quantidade >= 5);
 
-  // Função auxiliar para retornar a cor da situação
   const corSituacao = (situacao) => {
     switch (situacao) {
       case "Disponível":
-        return "#2e7d32"; // verde
+        return "#2e7d32";
       case "Em rota":
-        return "#d32f2f"; // vermelho
+        return "#d32f2f";
       case "Retornando":
-        return "#f9a825"; // amarelo
+        return "#f9a825";
       default:
-        return "#000"; // padrão
+        return "#000";
     }
   };
 
@@ -47,7 +76,6 @@ export default function MonitoraResgate() {
 
   return (
     <UsuariosContainer>
-      {/* Cabeçalho */}
       <AreaHeader>
         <TouchableOpacity onPress={navegarPara("Usuarios")}>
           <Icone name="arrow-left" size={25} />
@@ -55,13 +83,12 @@ export default function MonitoraResgate() {
         <UsuariosTitulo style={{ marginTop: -3 }}>Usuários Resgate</UsuariosTitulo>
       </AreaHeader>
 
-      {/* Tabela com cabeçalho */}
       <Tabela2>
-        <Linha2 style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between'}}>
-          <TextoUser3 style={{ fontWeight: "bold" }}>Nome </TextoUser3>
-          <TextoTipo3 style={{ fontWeight: "bold" }}>Situação </TextoTipo3>
-          <TextoMotivo3 style={{ fontWeight: "bold" }}>Res </TextoMotivo3>
-          <TextoMotivo3 style={{ fontWeight: "bold" }}>Sol</TextoMotivo3>
+        <Linha2 style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <TextoUser3 style={{ fontWeight: "bold" }}>Nome</TextoUser3>
+          <TextoTipo3 style={{ fontWeight: "bold" }}>Situação</TextoTipo3>
+          <TextoMotivo3 style={{ fontWeight: "bold" }}>Rsgt</TextoMotivo3>
+          <TextoMotivo3 style={{ fontWeight: "bold" }}>Slctd</TextoMotivo3>
           <TextoMotivo3 style={{ fontWeight: "bold" }}>Info</TextoMotivo3>
         </Linha2>
 
@@ -69,19 +96,20 @@ export default function MonitoraResgate() {
           data={monitorados}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={
-            <Text style={{ textAlign: "center", marginTop: 20, fontStyle: "italic",  }}>
-              Nenhum agente de resgate encontrado.
+            <Text style={{ textAlign: "center", marginTop: 20, fontStyle: "italic" }}>
+              Nenhum agente de resgate aprovado encontrado.
             </Text>
           }
           renderItem={({ item }) => (
-            <Linha2 style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Linha2 style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
               <TextoUser numberOfLines={1}>{item.user}</TextoUser>
-              <TextoTipo style={{ color: corSituacao(item.situacao), marginLeft: -30}}>{item.situacao}</TextoTipo>
-              <TextoMotivo style={{marginLeft: -10}}>{item.quantidade}</TextoMotivo>
-              <TextoMotivo style={{marginRight: 10}}>{item.solicita}</TextoMotivo>
+              <TextoTipo style={{ color: corSituacao(item.situacao), marginLeft: -19 }}>
+                {item.situacao}
+              </TextoTipo>
+              <TextoMotivo style={{ marginLeft: -20 }}>{item.quantidade}</TextoMotivo>
+              <TextoMotivo style={{ marginRight: 9 }}>{item.solicita}</TextoMotivo>
 
-              {/* Botão de detalhes */}
-              <TouchableOpacity onPress={() => alert(`Mais detalhes de ${item.user}`)} style={{ marginLeft: -10}}>
+              <TouchableOpacity onPress={() => alert(`Mais detalhes de ${item.user}`)} style={{ marginLeft: -10 }}>
                 <Icone name="info" size={20} color="#14c5ec" />
               </TouchableOpacity>
             </Linha2>
@@ -107,12 +135,12 @@ export default function MonitoraResgate() {
       </Tabela2>
 
       {/* Pendências */}
-            <Tabela2>
-              <UsuariosTitulo style={{ marginTop: 20 }}>Pendências</UsuariosTitulo>
-              <Text style={{ padding: 10, fontStyle: "italic", textAlign: "center" }}>
-                Nenhuma pendência no momento.
-              </Text>
-            </Tabela2>
+      <Tabela2>
+        <UsuariosTitulo style={{ marginTop: 20 }}>Pendências</UsuariosTitulo>
+        <Text style={{ padding: 10, fontStyle: "italic", textAlign: "center" }}>
+          Nenhuma pendência no momento.
+        </Text>
+      </Tabela2>
     </UsuariosContainer>
   );
 }

@@ -10,10 +10,9 @@ export default function CustomDrawer(props){
         <View style={{ justifyContent: 'center', marginTop: 25}}>
            <Image 
            source={require('../assets/Logo.png')} 
-           style={{alignSelf: 'center', marginBottom: 15,}}/>
+           style={{alignSelf: 'center', marginBottom: 15, marginTop: 25}}/>
 
-             <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold'}}>Bem-vindo!</Text>
-             <Text style={{alignSelf: 'center', fontSize: 17, marginBottom: 15 }}>Seu nome</Text>
+             <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold', marginBottom: 50}}>Seja bem-vindo!</Text>
            <DrawerItemList {...props}/>
         </View>
     </DrawerContentScrollView>

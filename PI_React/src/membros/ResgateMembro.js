@@ -67,7 +67,7 @@ export default function ResgateMembro() {
             setContato('');
             setEmail('');
             setExperiencia('');
-            navigation.navigate("Resgate", { email: email.trim() });
+            navigation.navigate("SafePet", { email: email.trim() });
     
         } catch (error) {
             console.error("Erro ao salvar no Firebase:", error);

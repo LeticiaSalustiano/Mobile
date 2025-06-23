@@ -21,11 +21,11 @@ export default function Login() {
       Alert.alert("Erro", "Por favor, insira um email válido.");
       return;
     }
+
     setErroEmail(false);
     setLoading(true);
 
     try {
-      // Buscar usuário no Firestore pelo email e aprovado == true
       const usersRef = collection(db, "users");
       const q = query(usersRef, where("email", "==", email.trim()), where("aprovado", "==", true));
       const querySnapshot = await getDocs(q);
@@ -33,33 +33,42 @@ export default function Login() {
       if (querySnapshot.empty) {
         Alert.alert("Erro", "Usuário não encontrado ou não aprovado.");
       } else {
-        // Considera o primeiro documento (email único)
         const docSnap = querySnapshot.docs[0];
         const userData = docSnap.data();
 
-        // Navegar conforme o tipo
-        switch (userData.tipo) {
-          case "Voluntário":
-            navigation.navigate("Funcionarios", { userData });
+        const tipoUsuario = userData.tipo?.trim();
+        const nome = userData.nome;
+        const email = userData.email;
+
+        if (!tipoUsuario) {
+          Alert.alert("Erro", "Tipo de usuário não especificado.");
+          return;
+        }
+
+        switch (tipoUsuario) {
+          case "Voluntario":
+            navigation.navigate("Funcionarios", { nome, email });
             break;
           case "Resgatador":
-            navigation.navigate("Resgate", { userData });
+            navigation.navigate("Resgate", { nome, email });
             break;
-          case "Veterinário":
-            navigation.navigate("Inicial", { userData });
+          case "Veterinario":
+            navigation.navigate("Inicial", { nome, email });
             break;
           case "Adm":
-            navigation.navigate("HomeAdm", { userData });
+            navigation.navigate("Adm", { nome, email });
             break;
           default:
-            Alert.alert("Erro", "Tipo de usuário desconhecido.");
+            Alert.alert("Erro", `Tipo de usuário desconhecido: ${tipoUsuario}`);
         }
       }
     } catch (error) {
       console.log("Erro no login:", error);
       Alert.alert("Erro", "Falha ao buscar usuário.");
     }
+
     setLoading(false);
+    setEmail("");
   };
 
   return (

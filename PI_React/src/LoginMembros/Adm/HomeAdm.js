@@ -4,7 +4,7 @@ import {
   Tabela, Linha, Texto, Texto2, Texto3, Botao, BotaoArea, Subtitulo
 } from "./styles";
 
-import { FlatList, Alert } from "react-native";
+import { FlatList, Alert, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icone from '@expo/vector-icons/Feather';
 
@@ -21,7 +21,7 @@ import {
 
 export default function HomeAdm() {
   const navigation = useNavigation();
-  const nomeAdm = "Administrador";
+  const nomeAdm = "Letícia";
 
   const [solicitacoes, setSolicitacoes] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
@@ -31,17 +31,20 @@ export default function HomeAdm() {
     try {
       const q = query(collection(db, "users"), where("aprovado", "==", false));
       const querySnapshot = await getDocs(q);
-
+  
+      console.log("Total de solicitações encontradas:", querySnapshot.size); // 👈
+  
       const lista = [];
       querySnapshot.forEach((docItem) => {
         lista.push({ id: docItem.id, ...docItem.data() });
       });
-
+  
       setSolicitacoes(lista);
     } catch (error) {
       console.error("Erro ao buscar solicitações:", error);
     }
   };
+  
 
   // Atualizar para aprovado: true
   const aceitarUsuario = async (id) => {
@@ -89,8 +92,12 @@ export default function HomeAdm() {
 
   return (
     <HomeContainer>
+      <TouchableOpacity style={{alignSelf: 'flex-end'}}>
+        <Icone name="x" size={25}></Icone>
+      </TouchableOpacity> 
+
       <Icone name="user" size={70} color="#14c5ec" style={{ marginBottom: 12, marginTop: 13, alignSelf: 'center' }} />
-      <HomeTitulo>Bem-vindo de volta, {nomeAdm}!</HomeTitulo>
+      <HomeTitulo>Bem-vinda de volta, {nomeAdm}!</HomeTitulo>
       <HomeSubtitulo>Use a sua tela para gerenciar o sistema.</HomeSubtitulo>
 
       <Subtitulo>Solicitações</Subtitulo>

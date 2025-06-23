@@ -88,6 +88,11 @@ export const BtnTxt = styled.Text`
    font-size: 18px;
 `;
 
-
+export const tituloPrincipal = styled.Text`
+   text-align: center;
+   font-weight: bold;
+   color: #000;
+   font-size: 25px;
+`;
 
 

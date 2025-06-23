@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icone } from "@expo/vector-icons";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../conexao/firebaseConfig";
+import { TouchableOpacity } from "react-native";
 import {
   Background,
   Btn,
@@ -16,34 +15,16 @@ import {
 const Funcionarios = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const emailParam = route.params?.email;
-  const [nomeUsuario, setNomeUsuario] = useState("Carregando...");
 
-  useEffect(() => {
-    const buscarNome = async () => {
-      try {
-        const q = query(collection(db, "users"), where("email", "==", emailParam));
-        const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
-          const dados = querySnapshot.docs[0].data();
-          setNomeUsuario(dados.nome);
-        } else {
-          setNomeUsuario("Usuário não encontrado");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar nome do usuário:", error);
-        setNomeUsuario("Erro ao carregar nome");
-      }
-    };
-
-    if (emailParam) {
-      buscarNome();
-    }
-  }, [emailParam]);
+  const nomeUsuario = route.params?.nome || "Usuário";
+  const emailUsuario = route.params?.email || "sem@email.com";
 
   return (
     <Background>
+      <TouchableOpacity style={{alignSelf: 'flex-end'}}>
+        <Icone name="x" size={25}></Icone>
+      </TouchableOpacity>         
+    
       <Icone name="user" size={64} color="#14c5ec" style={{ marginBottom: 7, marginTop: 13 }} />
 
       <Titulo>Bem-vinda de volta, {nomeUsuario}!</Titulo>
@@ -56,11 +37,11 @@ const Funcionarios = () => {
           O que você gostaria de acessar hoje?
         </Texto>
 
-        <Btn onPress={() => navigation.navigate("Horas", { email: emailParam })}>
+        <Btn onPress={() => navigation.navigate("Horas", { email: emailUsuario })}>
           <BtnTxt>📅 Ver Detalhes das Horas</BtnTxt>
         </Btn>
 
-        <Btn onPress={() => navigation.navigate("Funcao", { email: emailParam })}>
+        <Btn onPress={() => navigation.navigate("Funcao", { email: emailUsuario })}>
           <BtnTxt>🛠️ Ver Funções Diárias</BtnTxt>
         </Btn>
       </Container>
@@ -69,4 +50,3 @@ const Funcionarios = () => {
 };
 
 export default Funcionarios;
-
