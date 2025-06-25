@@ -55,8 +55,6 @@ export const Texto3 = styled.Text`
 export const BtnArea = styled.View`
   align-items: center;
   flex-direction: row;
-  padding: 20px;
-  margin-bottom: 20px;
   justify-content: center;
 `;
 
@@ -70,7 +68,7 @@ export const Btn = styled.TouchableOpacity`
 `;
 
 export const BtnTxt = styled.Text`
-  color: #fff;
+  color: #000;
   text-align: center;
   font-size: 19px;
 `;
@@ -311,7 +309,6 @@ export const ConteudoTexto = styled.Text`
 `;
 
 //Resgate
-
 export const TextoUser3 = styled.Text`
   font-size: 17px;
   font-weight: bold;
@@ -335,7 +332,6 @@ export const TextoMotivo3 = styled.Text`
 `;
 
 //Usuarios
-
 export const TextoUser4 = styled.Text`
   font-size: 17px;
   font-weight: bold;
@@ -358,3 +354,23 @@ export const TextoMotivo4 = styled.Text`
   max-width: 60px;
 `;
 
+export const Perfil = styled.View`
+  width: 120px;
+  height: 120px;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  border: 3px;
+  border-color: #14c5ec;
+`;
+
+export const BotaoSair = styled.TouchableOpacity`
+  width: 35px;
+  height: 35px;
+  align-items: center;
+  justify-content: center;
+  background-color: #14c5ec;
+  align-self: flex-end;
+  border-radius: 50px;
+`;

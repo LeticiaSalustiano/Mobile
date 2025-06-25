@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Text, TouchableOpacity } from "react-native";
+import { FlatList } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   Background,
@@ -11,8 +11,11 @@ import {
   Btn,
   BtnTxt,
   Subtitulo,
+  BotaoSair
 } from "./styles";
 import Icone from '@expo/vector-icons/Feather';
+import { signOut } from "firebase/auth";
+import { Alert } from "react-native";
 
 const horariosIniciais = [
   { id: "1", horario: "09:00 AM - 28/05/2025", status: "Disponível" },
@@ -39,18 +42,32 @@ const Inicial = () => {
     ? horariosIniciais.filter((item) => item.status === "Disponível")
     : horariosIniciais;
 
+  // Função para deslogar
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      });
+    }catch(error) {
+      console.log("Erro ao deslogar:", error);
+      Alert.alert("Erro", "Não foi possivel sair da conta");
+    }
+  }
+
   return (
     <Background>
-      <TouchableOpacity style={{alignSelf: 'flex-end'}}>
-        <Icone name="x" size={25}></Icone>
-      </TouchableOpacity> 
+      <BotaoSair activeOpacity={0.7} onPress={handleLogout}>
+        <Icone name="x" size={25} color={'#000'}></Icone>
+      </BotaoSair> 
       
       <Header style={{marginTop: -25}}>Bem vindo de volta</Header>
       <Subtitulo>{nomeUsuario}!</Subtitulo>
       <Header>Horários Consultas</Header>
 
       <BtnArea>
-        <Btn onPress={() => setMostrarDisponiveis(!mostrarDisponiveis)}>
+        <Btn onPress={() => setMostrarDisponiveis(!mostrarDisponiveis)} activeOpacity={0.7}>
           <BtnTxt>{mostrarDisponiveis ? "Mostrar Todos" : "Ver Disponíveis"}</BtnTxt>
         </Btn>
       </BtnArea>
@@ -71,10 +88,10 @@ const Inicial = () => {
       </Tabela>
 
       <BtnArea>
-        <Btn onPress={() => navigation.navigate("Consultas", { email: emailUsuario })}>
+        <Btn onPress={() => navigation.navigate("Consultas", { email: emailUsuario })} activeOpacity={0.7}>
           <BtnTxt>Consultas</BtnTxt>
         </Btn>
-        <Btn onPress={() => navigation.navigate("Agendamento", { email: emailUsuario })}>
+        <Btn onPress={() => navigation.navigate("Agendamento", { email: emailUsuario })} activeOpacity={0.7}>
           <BtnTxt>Agendar</BtnTxt>
         </Btn>
       </BtnArea>

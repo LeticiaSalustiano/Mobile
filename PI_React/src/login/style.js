@@ -2,35 +2,30 @@ import styled from "styled-components";
 
 export const Background = styled.View`
    flex: 1;
-   padding: 20px;
    justify-content: center;
    align-items: center;
    background-color: #bbeef9;
 `;
 
 export const Container = styled.View`
-    width: 80%;
+    width: 90%;
 `;
 
 export const Imagem = styled.Image`
-    width: 200px;
-    height: 200px;
-    margin: 5px;
-    margin-top: -60px;
+    width: 250px;
+    height: 250px;
     align-self: center;
 `;
 
 export const Titulo = styled.Text` 
    font-size: 20px; 
-   font-weight: bold; 
-   margin-bottom: 20px; 
-   margin-top: 20px;
+   margin-bottom: 10px; 
+   margin-top: 10px;
    text-align: center;
 `;
 
 export const Input = styled.TextInput` 
-    border-bottom-width: 1px; 
-    margin-bottom: 20px; 
+    border-width: 1px;  
     padding: 10px;
     width: 100%;
 `;
@@ -41,9 +36,10 @@ export const Btn = styled.TouchableOpacity`
     align-items: center;
     border-radius: 5px;
     margin-top: 10px;
+    margin-bottom: 90px;
 `;
 
 export const BtnTxt = styled.Text` 
-    color: #fff;
+    color: #000;
     font-size: 18px;
 `;

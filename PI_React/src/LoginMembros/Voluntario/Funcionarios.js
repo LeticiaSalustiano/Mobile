@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icone } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
 import {
   Background,
   Btn,
@@ -10,7 +9,11 @@ import {
   Texto,
   Titulo,
   Subtitulo,
+  Perfil,
+  BotaoSair
 } from "./styles";
+import { signOut } from "firebase/auth";
+import { Alert } from "react-native";
 
 const Funcionarios = () => {
   const navigation = useNavigation();
@@ -19,29 +22,39 @@ const Funcionarios = () => {
   const nomeUsuario = route.params?.nome || "Usuário";
   const emailUsuario = route.params?.email || "sem@email.com";
 
+  // Função para deslogar
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      });
+    }catch(error) {
+      console.log("Erro ao deslogar:", error);
+      Alert.alert("Erro", "Não foi possivel sair da conta");
+    }
+  }
+
   return (
     <Background>
-      <TouchableOpacity style={{alignSelf: 'flex-end'}}>
-        <Icone name="x" size={25}></Icone>
-      </TouchableOpacity>         
+      <BotaoSair activeOpacity={0.7} onPress={handleLogout}>
+        <Icone name="x" size={25} color={'#000'}></Icone>
+      </BotaoSair>   
     
-      <Icone name="user" size={64} color="#14c5ec" style={{ marginBottom: 7, marginTop: 13 }} />
+      <Perfil>
+        <Icone name="user" size={80} color="#14c5ec"/>
+      </Perfil>
 
       <Titulo>Bem-vinda de volta, {nomeUsuario}!</Titulo>
-      <Subtitulo style={{ textAlign: "center", marginTop: 10 }}>
-        Obrigado por fazer parte da nossa missão!
-      </Subtitulo>
+      <Subtitulo>Obrigado por fazer parte da nossa missão!</Subtitulo>
 
       <Container>
-        <Texto style={{ marginBottom: 20, textAlign: "center" }}>
-          O que você gostaria de acessar hoje?
-        </Texto>
-
-        <Btn onPress={() => navigation.navigate("Horas", { email: emailUsuario })}>
+        <Texto>O que você gostaria de acessar hoje?</Texto>
+        <Btn onPress={() => navigation.navigate("Horas", { email: emailUsuario })} activeOpacity={0.7}>
           <BtnTxt>📅 Ver Detalhes das Horas</BtnTxt>
         </Btn>
-
-        <Btn onPress={() => navigation.navigate("Funcao", { email: emailUsuario })}>
+        <Btn onPress={() => navigation.navigate("Funcao", { email: emailUsuario })} activeOpacity={0.7}>
           <BtnTxt>🛠️ Ver Funções Diárias</BtnTxt>
         </Btn>
       </Container>

@@ -1,13 +1,13 @@
 import React from "react";
 import { Image } from "react-native";
-import { Container, Texto, Titulo, BtnArea, Btn, BtnTxt} from "../LoginMembros/styles";
+import { Container, Texto, Titulo, BtnArea, Btn, BtnTxt } from "../LoginMembros/styles";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Home() {
     const navegacao = useNavigation();
     return(
         <Container>
-            <Image style={{ width: 250, height: 250, padding: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 30, marginBottom: 20}} source={require('../assets/pet-friendly.png')} />
+            <Image style={{ width: 270, height: 270, alignSelf: 'center', justifyContent: 'center', margin: 10}} source={require('../assets/pet-friendly.png')}/>
             <Titulo>Bem Vindo(a) ao SafePet</Titulo>
             <Texto>Aqui contribuimos com a saúde e a vida dos nossos pets e apoiamos a causa.</Texto>
             <BtnArea>      

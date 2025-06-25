@@ -25,7 +25,7 @@ export const Tabela = styled.View`
    background-color: #fff;
    padding: 10px;
    border-radius: 8px;
-   margin-bottom: 15px;
+   margin-bottom: 10px;
    shadow-color: #000;
    shadow-offset: 0px 2px;
    shadow-opacity: 0.2;
@@ -50,20 +50,21 @@ export const BtnArea = styled.View`
    flex-direction: row;
    justify-content: space-around;
    margin-top: 10px;
-   margin-bottom: 20px;
+   margin-bottom: 10px;
 `;
 
 export const Btn = styled.TouchableOpacity`
    background-color: #14c5ec;
-   padding: 15px;
    align-items: center;
    border-radius: 5px;
-   width: 45%;
+   width: 48%;
+   height: 50px;
+   justify-content: center;
 `;
 
 export const BtnTxt = styled.Text`
-   color: #fff;
-   font-size: 18px;
+   color: #000;
+   font-size: 17px;
 `;
 
 export const Input = styled.TextInput`
@@ -100,3 +101,12 @@ export const HorarioTxt = styled.Text`
    text-align: center;
 `;
 
+export const BotaoSair = styled.TouchableOpacity`
+  width: 35px;
+  height: 35px;
+  align-items: center;
+  justify-content: center;
+  background-color: #14c5ec;
+  align-self: flex-end;
+  border-radius: 50px;
+`;

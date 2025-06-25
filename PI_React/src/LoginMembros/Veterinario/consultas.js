@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FlatList, Alert, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Background, Header, Card, PetNome, Info, Horario, BtnArea, Btn, BtnTxt } from "./styles.js";
-import Icone from '@expo/vector-icons/Feather';
+import { Feather as Icone } from '@expo/vector-icons';
 
 const Consultas = () => {
     const [consultas, setConsultas] = useState([

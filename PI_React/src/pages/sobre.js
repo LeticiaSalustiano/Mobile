@@ -32,7 +32,7 @@ export default function Sobre() {
                 </View>
             </View>
 
-            <Text style={styles.final}>Site feito pelos criadores LDGL</Text>
+            <Text style={styles.final}>Site feito pelos criadores <Text style={{fontWeight: 'bold'}}>LDGL</Text></Text>
         </Container>
     );
 }
@@ -40,18 +40,20 @@ export default function Sobre() {
 const styles = StyleSheet.create({
     tituloPrincipal: {
         fontSize: 25,
-        fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 20
+        marginTop: 40,
+        marginBottom: 10
     },
     card: {
-       flexDirection: 'row',
-       marginTop: 13,
-       backgroundColor: '#14C5EC'
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginTop: 10,
+        height: 190,
+        backgroundColor: '#14C5EC'
     },
     imagem: {
         width: '50%',
-        height: 199,
+        height: "100%",
         marginLeft: 190
     },
     titulo: {
@@ -61,20 +63,17 @@ const styles = StyleSheet.create({
         marginRight: 190,
     },
     texto: {
-        textAlign: 'center',
         fontSize: 16,
         color: '#000',
-        paddingHorizontal: 10,
-        marginTop: 7,
+        marginBottom: 10,
         marginRight: 190,
-        
+        textAlign: 'center',
     },
     final: {
         textAlign: 'center',
         fontSize: 15,
         color: '#000',   
         marginTop: 15,
-        margin: 20,
-        
+        marginBottom: 70,
     }
 });

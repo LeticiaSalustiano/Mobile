@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from "react";
 import {
-  HomeContainer, HomeTitulo, HomeSubtitulo, BtnArea, Btn, BtnTxt,
-  Tabela, Linha, Texto, Texto2, Texto3, Botao, BotaoArea, Subtitulo
+  HomeContainer, 
+  HomeTitulo, 
+  HomeSubtitulo, 
+  BtnArea, 
+  Btn, 
+  BtnTxt,
+  Tabela, 
+  Linha, 
+  Texto, 
+  Texto2, 
+  Texto3, 
+  Botao, 
+  BotaoArea, 
+  Subtitulo, 
+  BotaoSair,
+  Perfil
 } from "./styles";
 
-import { FlatList, Alert, TouchableOpacity } from "react-native";
+import { FlatList, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icone from '@expo/vector-icons/Feather';
+import { signOut } from "firebase/auth";
 
 import { db } from "../../conexao/firebaseConfig";
 import {
@@ -16,8 +31,9 @@ import {
   getDocs,
   updateDoc,
   deleteDoc,
-  doc
+  doc,
 } from "firebase/firestore";
+import { View } from "react-native";
 
 export default function HomeAdm() {
   const navigation = useNavigation();
@@ -44,7 +60,6 @@ export default function HomeAdm() {
       console.error("Erro ao buscar solicitações:", error);
     }
   };
-  
 
   // Atualizar para aprovado: true
   const aceitarUsuario = async (id) => {
@@ -90,13 +105,31 @@ export default function HomeAdm() {
     carregarSolicitacoes();
   }, []);
 
+  // Função para deslogar
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      });
+    }catch(error) {
+      console.log("Erro ao deslogar:", error);
+      Alert.alert("Erro", "Não foi possivel sair da conta");
+    }
+  }
+
   return (
     <HomeContainer>
-      <TouchableOpacity style={{alignSelf: 'flex-end'}}>
-        <Icone name="x" size={25}></Icone>
-      </TouchableOpacity> 
+      <BotaoSair activeOpacity={0.7} onPress={handleLogout}>
+        <Icone name="x" size={25} color={'#000'}></Icone>
+      </BotaoSair>
 
-      <Icone name="user" size={70} color="#14c5ec" style={{ marginBottom: 12, marginTop: 13, alignSelf: 'center' }} />
+      <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <Perfil>
+          <Icone name="user" size={80} color="#14c5ec" />
+        </Perfil>
+      </View>
       <HomeTitulo>Bem-vinda de volta, {nomeAdm}!</HomeTitulo>
       <HomeSubtitulo>Use a sua tela para gerenciar o sistema.</HomeSubtitulo>
 

@@ -65,10 +65,16 @@ export default function Rotas() {
             <Drawer.Screen name="Resgate" component={Resgate} options={{ drawerItemStyle: { display: 'none' } }} />
             <Drawer.Screen name="Andamento" component={Andamento} options={{ drawerItemStyle: { display: 'none' } }} />
             <Drawer.Screen name="Solicitacoes" component={Solicitacoes} options={{ title: "Resgate",drawerItemStyle: { display: 'none' } }} />
-            <Drawer.Screen name="Funcionarios" component={Funcionarios} options={{ title: "Área do Voluntário", drawerItemStyle: { display: 'none' } }} />
+            <Drawer.Screen name="Funcionarios" component={Funcionarios} 
+               options={{ 
+                  title: "Área do Voluntário",
+                  swipeEnabled: false,
+                  drawerItemStyle: { display: 'none' } 
+               }} 
+            />
             <Drawer.Screen name="Horas" component={Horas} options={{ title: "Horas",drawerItemStyle: { display: 'none' } }} />
             <Drawer.Screen name="Funcao" component={Funcao} options={{ title: "Funções", drawerItemStyle: { display: 'none' } }} />
-            <Drawer.Screen name="Adm" component={HomeAdm} options={{ title: "Adm", drawerItemStyle: {  display: 'none' } }} />
+            <Drawer.Screen name="Adm" component={HomeAdm} options={{ title: "Adm"}} />
             <Drawer.Screen name="Conteudo" component={ConteudoAdm} options={{ title: "Financeiro" ,drawerItemStyle: {  display: 'none' } }} />
             <Drawer.Screen  name="Usuarios" component={UsuariosAdm} options={{ title: "Usuarios" ,drawerItemStyle: {  display: 'none' }  }} />
             <Drawer.Screen  name="MonitoraResgate" component={MonitoraResgate} options={{ title: "Monitorando" ,drawerItemStyle: {  display: 'none' } }} />

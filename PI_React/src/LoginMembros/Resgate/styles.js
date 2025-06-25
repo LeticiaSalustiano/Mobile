@@ -16,13 +16,8 @@ export const Header = styled.Text`
 
 export const Texto = styled.Text`
    font-size: 17px;
-   color: #444;
+   color: #000;
    text-align: center;
-`;
-
-export const Area = styled.View`
-   flex: 1;
-   margin-top: 20px;
 `;
 
 export const Tabela = styled.View`
@@ -57,6 +52,7 @@ export const TextoStatus = styled.Text`
 `;
 
 export const BtnArea = styled.View`
+   align-items: center;
    flex-direction: row;
    justify-content: space-around;
    margin-top: 10px;
@@ -65,18 +61,16 @@ export const BtnArea = styled.View`
 
 export const Btn = styled.TouchableOpacity`
    background-color: #14c5ec;
-   padding: 12px 20px;
    align-items: center;
    justify-content: center;
    border-radius: 8px;
-   margin-horizontal: 5px;
-   flex: 1;
+   width: 170px;
+   height: 70px;
 `;
 
 export const BtnTxt = styled.Text`
-   color: #fff;
-   font-size: 15px;
-   font-weight: bold;
+   color: #000;
+   font-size: 18px;
 `;
 
 export const BtnTxt2 = styled.Text`
@@ -107,5 +101,23 @@ export const Icone = styled.View`
   justify-content: center;
 `;
 
+export const BotaoSair = styled.TouchableOpacity`
+  width: 35px;
+  height: 35px;
+  align-items: center;
+  justify-content: center;
+  background-color: #14c5ec;
+  align-self: flex-end;
+  border-radius: 50px;
+`;
 
-
+export const Perfil = styled.View`
+  width: 120px;
+  height: 120px;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  border: 3px;
+  border-color: #14c5ec;
+`;

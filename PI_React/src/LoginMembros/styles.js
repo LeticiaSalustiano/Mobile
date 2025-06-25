@@ -25,14 +25,15 @@ export const Titulo = styled.Text`
    text-align: center;
    font-weight: bold;
    color: #000;
-   font-size: 22px;
+   font-size: 25px;
 `;
 
 export const Texto = styled.Text`
    text-align: center;
    color: #000;
    font-size: 17px;
-   margin-bottom: 20px;
+   margin-bottom: 10px;
+   margin-top: 5px;
 `;
 
 export const Card = styled.View`
@@ -69,8 +70,8 @@ export const Horario = styled.Text`
 export const BtnArea = styled.View`
    flex-direction: column;
    justify-content: center;
-   margin-top: 20px;
-   margin-bottom: 20px;
+   margin-top: 10px;
+   margin-bottom: 90px;
    align-items: center;
 `;
 
@@ -79,13 +80,13 @@ export const Btn = styled.TouchableOpacity`
    padding: 15px;
    align-items: center;
    border-radius: 5px;
-   width: 300px;
+   width: 350px;
    margin-top: 10px;
 `;
 
 export const BtnTxt = styled.Text`
-   color: #fff;
    font-size: 18px;
+   color: #000;
 `;
 
 export const tituloPrincipal = styled.Text`
@@ -94,5 +95,3 @@ export const tituloPrincipal = styled.Text`
    color: #000;
    font-size: 25px;
 `;
-
-
