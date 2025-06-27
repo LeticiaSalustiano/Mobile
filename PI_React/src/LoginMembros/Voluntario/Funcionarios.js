@@ -1,19 +1,7 @@
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icone } from "@expo/vector-icons";
-import {
-  Background,
-  Btn,
-  BtnTxt,
-  Container,
-  Texto,
-  Titulo,
-  Subtitulo,
-  Perfil,
-  BotaoSair
-} from "./styles";
-import { signOut } from "firebase/auth";
-import { Alert } from "react-native";
+import { Background, Btn, BtnTxt, Container, Texto, Titulo, Subtitulo, Perfil, BotaoSair } from "./styles";
 
 const Funcionarios = () => {
   const navigation = useNavigation();
@@ -22,23 +10,9 @@ const Funcionarios = () => {
   const nomeUsuario = route.params?.nome || "Usuário";
   const emailUsuario = route.params?.email || "sem@email.com";
 
-  // Função para deslogar
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'Login'}],
-      });
-    }catch(error) {
-      console.log("Erro ao deslogar:", error);
-      Alert.alert("Erro", "Não foi possivel sair da conta");
-    }
-  }
-
   return (
     <Background>
-      <BotaoSair activeOpacity={0.7} onPress={handleLogout}>
+      <BotaoSair activeOpacity={0.7}>
         <Icone name="x" size={25} color={'#000'}></Icone>
       </BotaoSair>   
     
