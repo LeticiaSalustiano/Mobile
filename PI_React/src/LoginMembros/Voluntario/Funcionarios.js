@@ -6,14 +6,17 @@ import { Background, Btn, BtnTxt, Container, Texto, Titulo, Subtitulo, Perfil, B
 const Funcionarios = () => {
   const navigation = useNavigation();
   const route = useRoute();
-
   const nomeUsuario = route.params?.nome || "Usuário";
   const emailUsuario = route.params?.email || "sem@email.com";
 
+  // Função de navegação
+  function voltarLogin() {
+    navigation.navigate("Login");
+  }
   return (
     <Background>
-      <BotaoSair activeOpacity={0.7}>
-        <Icone name="x" size={25} color={'#000'}></Icone>
+      <BotaoSair activeOpacity={0.7} onPress={voltarLogin}>
+        <Icone name="x" size={28} color={'#000'}></Icone>
       </BotaoSair>   
     
       <Perfil>

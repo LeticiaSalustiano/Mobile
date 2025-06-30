@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, Text, View } from "react-native";
 import { Background, Container, Titulo, Input, Btn, BtnTxt, Imagem } from "./style";
 import { StyleSheet } from "react-native";
-
 import { db } from "../conexao/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
-
 import { useNavigation } from "@react-navigation/native";
 
 export default function Login() {

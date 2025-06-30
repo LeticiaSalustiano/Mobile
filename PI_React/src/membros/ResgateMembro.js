@@ -7,7 +7,6 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function ResgateMembro() {
     const navigation = useNavigation();
-
     const [nome, setNome] = useState('');
     const [contato, setContato] = useState('');
     const [email, setEmail] = useState('');

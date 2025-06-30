@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Background, Header, Texto, BtnArea, Btn, BtnTxt, StatusResumo, BotaoSair, Perfil } from "./styles";
+import { Background, Header, Texto, BtnArea, BtnArea2, Btn, BtnTxt, StatusResumo, BotaoSair, Perfil } from "./styles";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Icone from '@expo/vector-icons/Feather';
 import { View } from "react-native";
@@ -8,16 +8,18 @@ import { View } from "react-native";
 const Resgate = () => {
   const navigation = useNavigation();
   const route = useRoute();
-
   const nomeUsuario = route.params?.nome || "Usuário";
   const emailUsuario = route.params?.email || "sem email";
-
   const [chamadosEmAndamento, setChamadosEmAndamento] = useState(3);
 
+  // Função de navegação
+  function voltarLogin() {
+    navigation.navigate("Login");
+  }
   return (
     <Background>
-      <BotaoSair activeOpacity={0.7}>
-        <Icone name="x" size={25} color={'#000'}></Icone>
+      <BotaoSair activeOpacity={0.7} onPress={voltarLogin}>
+        <Icone name="x" size={28} color={'#000'}></Icone>
       </BotaoSair>
 
       <View style={{alignItems: 'center', justifyContent: 'center'}}>

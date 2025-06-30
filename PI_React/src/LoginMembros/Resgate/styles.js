@@ -15,9 +15,10 @@ export const Header = styled.Text`
 `;
 
 export const Texto = styled.Text`
-   font-size: 17px;
+   font-size: 18px;
    color: #000;
    text-align: center;
+   margin-bottom: 5px;
 `;
 
 export const Tabela = styled.View`
@@ -54,7 +55,15 @@ export const TextoStatus = styled.Text`
 export const BtnArea = styled.View`
    align-items: center;
    flex-direction: row;
-   justify-content: space-around;
+   justify-content: center;
+   margin-top: 10px;
+   margin-bottom: 30px;
+`;
+
+export const BtnArea2 = styled.View`
+   align-items: center;
+   flex-direction: column;
+   justify-content: center;
    margin-top: 10px;
    margin-bottom: 30px;
 `;
@@ -63,14 +72,25 @@ export const Btn = styled.TouchableOpacity`
    background-color: #14c5ec;
    align-items: center;
    justify-content: center;
-   border-radius: 8px;
-   width: 170px;
+   border-radius: 5px;
+   width: 50%;
    height: 70px;
+   margin: 5px;
+`;
+
+export const Btn2 = styled.TouchableOpacity`
+   background-color: #14c5ec;
+   align-items: center;
+   justify-content: center;
+   border-radius: 5px;
+   width: 100%;
+   height: 60px;
+   margin: 5px;
 `;
 
 export const BtnTxt = styled.Text`
    color: #000;
-   font-size: 18px;
+   font-size: 20px;
 `;
 
 export const BtnTxt2 = styled.Text`
@@ -87,12 +107,14 @@ export const BtnRow = styled.View`
 `;
 
 export const StatusResumo = styled.View`
-  background-color: #e0f7fa;
-  padding: 15px;
-  margin-vertical: 15px;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 20px;
   border-radius: 8px;
   border-left-width: 5px;
-  border-left-color: #e0f7fa;
+  border-left-color: #14c5ec;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 export const Icone = styled.View`
@@ -102,13 +124,13 @@ export const Icone = styled.View`
 `;
 
 export const BotaoSair = styled.TouchableOpacity`
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   align-items: center;
   justify-content: center;
   background-color: #14c5ec;
   align-self: flex-end;
-  border-radius: 50px;
+  border-radius: 10px;
 `;
 
 export const Perfil = styled.View`

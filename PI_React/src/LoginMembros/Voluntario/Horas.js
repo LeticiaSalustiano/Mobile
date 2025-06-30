@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Background,
-  Container,
-  Subtitulo,
-  Texto,
-  LinhaHorario,
-  Titulo,
-} from "./styles";
+import { Background, Container, Subtitulo, Texto, LinhaHorario, Titulo } from "./styles";
 import { View, TouchableOpacity, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Feather as Icone } from "@expo/vector-icons";
@@ -39,18 +32,15 @@ const Horas = () => {
   return (
     <Background>
       {/* Cabeçalho */}
-                  <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 200 }}>
-                    <TouchableOpacity onPress={navegarPara("Funcionarios")} style={{ marginRight: 5,  }}>
-                      <Icone name="arrow-left" size={25} />
-                    </TouchableOpacity>
-                    <Titulo style={{marginTop: 4, }}>Horas Diárias</Titulo>
-                  </View>
-     
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginRight: 200 }}>
+        <TouchableOpacity onPress={navegarPara("Funcionarios")} style={{ marginRight: 5,  }}>
+          <Icone name="arrow-left" size={25} />
+        </TouchableOpacity>
+        <Titulo style={{marginTop: 4}}>Horas Diárias</Titulo>
+      </View>
 
       <Container>
-        <Subtitulo style={{ marginBottom: 15, textAlign: "center" }}>
-          Registre aqui as horas já concluídas na semana.
-        </Subtitulo>
+        <Subtitulo style={{ marginBottom: 15, textAlign: "center" }}>Registre aqui as horas já concluídas na semana.</Subtitulo>
 
         <FlatList
           data={dadosHoras}
@@ -58,13 +48,10 @@ const Horas = () => {
           renderItem={({ item }) => (
             <LinhaHorario>
               <View style={{ flex: 1 }}>
-                <Texto style={{ fontWeight: "bold" }}>
-                  {item.data} ({item.dia})
-                </Texto>
-                <Texto>{item.horas}</Texto>
+                <Texto style={{ fontWeight: "bold" }}>{item.data} ({item.dia})</Texto>
+                <Texto style={{ fontSize: 17 }}>{item.horas}</Texto>
               </View>
-
-              <TouchableOpacity onPress={() => toggleCheck(item.id)}>
+              <TouchableOpacity onPress={() => toggleCheck(item.id)} activeOpacity={0.7}>
                 <Icone
                   name={checados[item.id] ? "check-circle" : "circle"}
                   size={24}
@@ -74,11 +61,8 @@ const Horas = () => {
             </LinhaHorario>
           )}
         />
-
         {totalCheck > 0 && (
-          <Texto style={{ marginTop: 15, textAlign: "center", color: "#4CAF50" }}>
-            ✅ {totalCheck} dia(s) marcados como concluídos
-          </Texto>
+          <Texto style={{ marginTop: 15, textAlign: "center", color: "#4CAF50" }}>✅ {totalCheck} dia(s) marcados como concluídos</Texto>
         )}
       </Container>
     </Background>

@@ -102,11 +102,11 @@ export const HorarioTxt = styled.Text`
 `;
 
 export const BotaoSair = styled.TouchableOpacity`
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   align-items: center;
   justify-content: center;
   background-color: #14c5ec;
   align-self: flex-end;
-  border-radius: 50px;
+  border-radius: 10px;
 `;

@@ -71,7 +71,7 @@ export const BtnArea = styled.View`
    flex-direction: column;
    justify-content: center;
    margin-top: 10px;
-   margin-bottom: 90px;
+   margin-bottom: 100px;
    align-items: center;
 `;
 

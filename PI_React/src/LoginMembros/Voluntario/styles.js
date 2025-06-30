@@ -65,8 +65,7 @@ export const Texto = styled.Text`
 
 export const Subtitulo = styled.Text` 
   color: #000;
-  font-size: 17px;
-  font-weight: bold; 
+  font-size: 18px;
   margin-top: 10px;
   text-align: center;
 `;
@@ -124,11 +123,11 @@ export const Perfil = styled.View`
 `;
 
 export const BotaoSair = styled.TouchableOpacity`
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   align-items: center;
   justify-content: center;
   background-color: #14c5ec;
   align-self: flex-end;
-  border-radius: 50px;
+  border-radius: 10px;
 `;

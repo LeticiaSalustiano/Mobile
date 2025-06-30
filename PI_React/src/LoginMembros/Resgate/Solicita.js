@@ -1,17 +1,8 @@
-
 import React, { useState } from "react";
 import { Alert, View, TouchableOpacity, Modal, Text, Pressable } from "react-native";
-import Icone from '@expo/vector-icons/Feather';
 import { useNavigation } from "@react-navigation/native";
-import {
-  Background,
-  Header,
-  Btn,
-  BtnTxt,
-  StatusResumo,
-  Texto,
-  BtnArea
-} from "./styles";
+import { Background, Header, BtnTxt, StatusResumo, Texto, BtnArea2, Btn2 } from "./styles";
+import Icone from '@expo/vector-icons/Feather';
 
 const Solicitacoes = () => {
   const navigation = useNavigation();
@@ -37,7 +28,7 @@ const Solicitacoes = () => {
     <Background>
       {/* Cabeçalho */}
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <TouchableOpacity onPress={navegarPara("Resgate")} style={{ marginRight: 5 }}>
+        <TouchableOpacity onPress={navegarPara("Resgate")} style={{ marginRight: 5 }} activeOpacity={0.7}>
           <Icone name="arrow-left" size={25} />
         </TouchableOpacity>
         <Header>Locais Resgate</Header>
@@ -50,37 +41,23 @@ const Solicitacoes = () => {
       </StatusResumo>
 
       {/* Botões de ações rápidas */}
-      <BtnArea>
-        <Btn onPress={() => Alert.alert("Histórico", "Aqui seria mostrado o histórico.")} activeOpacity={0.7}>
+      <BtnArea2>
+        <Btn2 onPress={() => Alert.alert("Histórico", "Aqui seria mostrado o histórico.")} activeOpacity={0.7}>
           <BtnTxt>Ver Histórico</BtnTxt>
-        </Btn>
-        <Btn onPress={() => Alert.alert("Locais", "Aqui seriam mostrados os locais de resgate.")} activeOpacity={0.7}>
+        </Btn2>
+        <Btn2 onPress={() => Alert.alert("Locais", "Aqui seriam mostrados os locais de resgate.")} activeOpacity={0.7}>
           <BtnTxt>Locais de Resgate</BtnTxt>
-        </Btn>
-      </BtnArea>
-
-      {/* Botão principal */}
-      <View style={{ height: 60, justifyContent: "center", marginTop: -10 }}>
-        <Btn onPress={abrirSolicitacao} activeOpacity={0.7}>
+        </Btn2>
+        <Btn2 onPress={abrirSolicitacao} activeOpacity={0.7}>
           <BtnTxt>Solicitar Veterinário</BtnTxt>
-        </Btn>
-      </View>
+        </Btn2>
+      </BtnArea2>
 
       {/* Modal de seleção */}
       <Modal visible={modalVisible} transparent={true} animationType="slide">
-        <View style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "rgba(0,0,0,0.5)"
-        }}>
-          <View style={{
-            backgroundColor: "#fff",
-            padding: 20,
-            borderRadius: 10,
-            width: "90%"
-          }}>
-            <Text style={{ fontWeight: "bold", fontSize: 18, marginBottom: 10 }}>Gravidade:</Text>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#bbeef9" }}>
+          <View style={{ backgroundColor: "#fff", padding: 20, borderRadius: 10, width: "90%" }}>
+            <Text style={{ fontWeight: "bold", fontSize: 18, marginBottom: 5 }}>Gravidade:</Text>
             {["Emergência", "Urgente", "Não urgente"].map(opcao => (
               <Pressable key={opcao} onPress={() => setGravidade(opcao)}>
                 <Text style={{
@@ -92,8 +69,7 @@ const Solicitacoes = () => {
                 }}>{opcao}</Text>
               </Pressable>
             ))}
-
-            <Text style={{ fontWeight: "bold", fontSize: 18, marginVertical: 10 }}>Tipo de Pet:</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18, marginBottom: 5, marginTop: 20 }}>Tipo de Pet:</Text>
             {["Cachorro", "Gato", "Outro"].map(pet => (
               <Pressable key={pet} onPress={() => setTipoPet(pet)}>
                 <Text style={{
@@ -105,7 +81,6 @@ const Solicitacoes = () => {
                 }}>{pet}</Text>
               </Pressable>
             ))}
-
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15 }}>
               <Pressable onPress={() => setModalVisible(false)}>
                 <Text style={{ color: "#f00" }}>Cancelar</Text>
@@ -122,5 +97,3 @@ const Solicitacoes = () => {
 };
 
 export default Solicitacoes;
-
-

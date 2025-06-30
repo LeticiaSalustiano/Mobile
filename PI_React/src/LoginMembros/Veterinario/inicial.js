@@ -1,21 +1,8 @@
 import React, { useState } from "react";
 import { FlatList } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import {
-  Background,
-  Header,
-  Tabela,
-  Linha,
-  Texto,
-  BtnArea,
-  Btn,
-  BtnTxt,
-  Subtitulo,
-  BotaoSair
-} from "./styles";
+import { Background, Header, Tabela, Linha, Texto, BtnArea, Btn, BtnTxt, Subtitulo, BotaoSair } from "./styles";
 import Icone from '@expo/vector-icons/Feather';
-import { signOut } from "firebase/auth";
-import { Alert } from "react-native";
 
 const horariosIniciais = [
   { id: "1", horario: "09:00 AM - 28/05/2025", status: "Disponível" },
@@ -32,34 +19,19 @@ const horariosIniciais = [
 const Inicial = () => {
   const navigation = useNavigation();
   const route = useRoute();
-
   const nomeUsuario = route.params?.nome || "Usuário";
   const emailUsuario = route.params?.email || "sem@email.com";
-
   const [mostrarDisponiveis, setMostrarDisponiveis] = useState(false);
+  const horariosFiltrados = mostrarDisponiveis ? horariosIniciais.filter((item) => item.status === "Disponível") : horariosIniciais;
 
-  const horariosFiltrados = mostrarDisponiveis
-    ? horariosIniciais.filter((item) => item.status === "Disponível")
-    : horariosIniciais;
-
-  // Função para deslogar
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'Login'}],
-      });
-    }catch(error) {
-      console.log("Erro ao deslogar:", error);
-      Alert.alert("Erro", "Não foi possivel sair da conta");
-    }
+  // Função de navegação
+  function voltarLogin() {
+    navigation.navigate("Login");
   }
-
   return (
     <Background>
-      <BotaoSair activeOpacity={0.7} onPress={handleLogout}>
-        <Icone name="x" size={25} color={'#000'}></Icone>
+      <BotaoSair activeOpacity={0.7} onPress={voltarLogin}>
+        <Icone name="x" size={28} color={'#000'}></Icone>
       </BotaoSair> 
       
       <Header style={{marginTop: -25}}>Bem vindo de volta</Header>
