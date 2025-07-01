@@ -57,15 +57,14 @@ export const BtnArea = styled.View`
    flex-direction: row;
    justify-content: center;
    margin-top: 10px;
-   margin-bottom: 30px;
+   margin-bottom: 10px;
+   gap: 10px;
 `;
 
 export const BtnArea2 = styled.View`
    align-items: center;
    flex-direction: column;
    justify-content: center;
-   margin-top: 10px;
-   margin-bottom: 30px;
 `;
 
 export const Btn = styled.TouchableOpacity`
@@ -75,7 +74,6 @@ export const Btn = styled.TouchableOpacity`
    border-radius: 5px;
    width: 50%;
    height: 70px;
-   margin: 5px;
 `;
 
 export const Btn2 = styled.TouchableOpacity`
@@ -89,15 +87,13 @@ export const Btn2 = styled.TouchableOpacity`
 `;
 
 export const BtnTxt = styled.Text`
-   color: #000;
+   color: #fff;
    font-size: 20px;
 `;
 
 export const BtnTxt2 = styled.Text`
-   color: #fff;
-   font-size: 16px;
-   font-weight: bold;
-   margin-left: 8px;
+   color: #000;
+   font-size: 20px;
 `;
 
 export const BtnRow = styled.View`
@@ -142,4 +138,15 @@ export const Perfil = styled.View`
   border-radius: 50%;
   border: 3px;
   border-color: #14c5ec;
+`;
+
+export const BotaoMapa = styled.TouchableOpacity`
+   background-color: #14c5ec;
+   align-items: center;
+   justify-content: center;
+   border-radius: 5px;
+   width: 100%;
+   height: 60px;
+   flex-direction: row;
+   gap: 10px;
 `;

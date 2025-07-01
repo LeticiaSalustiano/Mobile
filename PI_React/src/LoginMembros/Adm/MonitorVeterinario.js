@@ -17,14 +17,11 @@ import Icone from "@expo/vector-icons/Feather";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../conexao/firebaseConfig";
-
 export default function MonitoraVeterinario() {
   const navigation = useNavigation();
   const [monitorados, setMonitorados] = useState([]);
 
-  const carregarVeterinarios = async () => {
+  /*const carregarVeterinarios = async () => {
     try {
       const q = query(
         collection(db, "users"),
@@ -73,7 +70,7 @@ export default function MonitoraVeterinario() {
 
   const navegarPara = (tela) => () => {
     navigation.navigate(tela);
-  };
+  };*/
 
   return (
     <UsuariosContainer>

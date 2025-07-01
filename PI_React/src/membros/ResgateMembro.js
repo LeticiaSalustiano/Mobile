@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { Background, Btn, BtnTxt, Input, Titulo } from "./styles";
-import { db } from "../conexao/firebaseConfig"; 
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
 export default function ResgateMembro() {
@@ -39,40 +37,9 @@ export default function ResgateMembro() {
             Alert.alert("Erro", "Descreva melhor sua experiência (mínimo 5 caracteres) ou deixe em branco.");
             return;
         }
+    };
     
-        try {
-            // 🔍 Verificar se já existe um usuário com o mesmo email
-            const q = query(collection(db, "users"), where("email", "==", email.trim()));
-            const querySnapshot = await getDocs(q);
-    
-            if (!querySnapshot.empty) {
-                Alert.alert("Erro", "Este e-mail já está cadastrado.");
-                return;
-            }
-    
-            // ✅ Se passou pela verificação, salva no banco
-            await addDoc(collection(db, "users"), {
-                nome: nome.trim(),
-                contato: contato.trim(),
-                email: email.trim(),
-                experiencia: experiencia.trim(),
-                tipo: "Resgatador",
-                aprovado: false,
-                dataCadastro: new Date()
-            });
-    
-            Alert.alert("Sucesso", "Cadastro enviado com sucesso!");
-            setNome('');
-            setContato('');
-            setEmail('');
-            setExperiencia('');
-            navigation.navigate("SafePet", { email: email.trim() });
-    
-        } catch (error) {
-            console.error("Erro ao salvar no Firebase:", error);
-            Alert.alert("Erro", "Não foi possível enviar o cadastro.");
-        }
-    }
+            
     
     return (
         <KeyboardAvoidingView

@@ -16,14 +16,13 @@ import Icone from "@expo/vector-icons/Feather";
 import { FlatList, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../conexao/firebaseConfig";
+;
 
 export default function MonitoraVoluntario() {
   const navigation = useNavigation();
   const [monitorados, setMonitorados] = useState([]);
 
-  // Buscar voluntários aprovados do Firestore
+  /* Buscar voluntários aprovados do Firestore
   const carregarVoluntarios = async () => {
     try {
       const q = query(
@@ -71,7 +70,7 @@ export default function MonitoraVoluntario() {
       default:
         return "#000";
     }
-  };
+  };*/
 
   return (
     <UsuariosContainer>
@@ -100,8 +99,8 @@ export default function MonitoraVoluntario() {
           }
           renderItem={({ item }) => (
             <Linha2 style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TextoUser style={{marginLeft: 13}}>{item.user}</TextoUser>
-              <TextoTipo style={{ color: corSituacao(item.situacao), marginLeft: -24 }}>{item.situacao}</TextoTipo>
+              <TextoUser style={{marginLeft: 13}}></TextoUser>
+              <TextoTipo style={{ color: corSituacao(item.situacao), marginLeft: -24 }}></TextoTipo>
               <TextoMotivo>{item.funcoesRalizadas}</TextoMotivo>
 
               <TouchableOpacity onPress={() => alert(`Mais detalhes de ${item.user}`)} style={{ marginLeft: -10 }}>

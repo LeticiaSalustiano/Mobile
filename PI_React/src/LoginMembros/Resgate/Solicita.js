@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, View, TouchableOpacity, Modal, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Background, Header, BtnTxt, StatusResumo, Texto, BtnArea2, Btn2 } from "./styles";
+import { Background, Header, StatusResumo, Texto, BtnArea2, Btn2, BtnTxt2 } from "./styles";
 import Icone from '@expo/vector-icons/Feather';
 
 const Solicitacoes = () => {
@@ -43,13 +43,13 @@ const Solicitacoes = () => {
       {/* Botões de ações rápidas */}
       <BtnArea2>
         <Btn2 onPress={() => Alert.alert("Histórico", "Aqui seria mostrado o histórico.")} activeOpacity={0.7}>
-          <BtnTxt>Ver Histórico</BtnTxt>
+          <BtnTxt2>Ver Histórico</BtnTxt2>
         </Btn2>
         <Btn2 onPress={() => Alert.alert("Locais", "Aqui seriam mostrados os locais de resgate.")} activeOpacity={0.7}>
-          <BtnTxt>Locais de Resgate</BtnTxt>
+          <BtnTxt2>Locais de Resgate</BtnTxt2>
         </Btn2>
         <Btn2 onPress={abrirSolicitacao} activeOpacity={0.7}>
-          <BtnTxt>Solicitar Veterinário</BtnTxt>
+          <BtnTxt2>Solicitar Veterinário</BtnTxt2>
         </Btn2>
       </BtnArea2>
 

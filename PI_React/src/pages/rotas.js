@@ -1,6 +1,5 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
 import Home from './home';
 import Sobre from './sobre';
 import Tipo from './tipo';
@@ -13,7 +12,7 @@ import Consultas from '../LoginMembros/Veterinario/consultas';
 import Agendamento from '../LoginMembros/Veterinario/agendamento';
 import Resgate from '../LoginMembros/Resgate/Resgate';
 import Solicitacoes from '../LoginMembros/Resgate/Solicita';
-import Andamento from '../LoginMembros/Resgate/Tabela';
+import Andamento from '../LoginMembros/Resgate/Andamento';
 import Horas from '../LoginMembros/Voluntario/Horas';
 import Funcao from '../LoginMembros/Voluntario/Funcao';
 import Funcionarios from '../LoginMembros/Voluntario/Funcionarios';
@@ -59,19 +58,14 @@ export default function Rotas() {
             <Drawer.Screen name="ResgateMembro" component={ResgateMembro} options={{ title: "Agente",drawerItemStyle: { display: 'none' } }}/>
             <Drawer.Screen name="VeterinarioMembro" component={VeterinarioMembro} options={{ title: "Agente", drawerItemStyle: { display: 'none' } }} />
             <Drawer.Screen name="ApoioMembro" component={ApoioMembro} options={{ title: "Agente",drawerItemStyle: { display: 'none' } }} />
-            <Drawer.Screen name="Inicial" component={Inicial} options={{title: "Tela Veterinario", drawerItemStyle: { display: 'none' }}}/>
+            <Drawer.Screen name="Inicial" component={Inicial} options={{title: "Tela Veterinario"}}/>
             <Drawer.Screen name="Consultas" component={Consultas} options={{ drawerItemStyle: { display: 'none' } }} />
             <Drawer.Screen name="Agendamento" component={Agendamento} options={{ drawerItemStyle: { display: 'none' } }} />
-            <Drawer.Screen name="Resgate" component={Resgate} options={{ drawerItemStyle: { display: 'none' } }} />
+            <Drawer.Screen name="Resgate" component={Resgate}  />
             <Drawer.Screen name="Andamento" component={Andamento} options={{ drawerItemStyle: { display: 'none' } }} />
             <Drawer.Screen name="Solicitacoes" component={Solicitacoes} options={{ title: "Resgate",drawerItemStyle: { display: 'none' } }} />
-            <Drawer.Screen name="Funcionarios" component={Funcionarios} 
-               options={{ 
-                  title: "Área do Voluntário",
-                  swipeEnabled: false,
-                  drawerItemStyle: { display: 'none' } 
-               }} 
-            />
+            <Drawer.Screen name="Funcionarios" component={Funcionarios} options={{ title: "Área do Voluntário", swipeEnabled: false,
+                  }} />
             <Drawer.Screen name="Horas" component={Horas} options={{ title: "Horas",drawerItemStyle: { display: 'none' } }} />
             <Drawer.Screen name="Funcao" component={Funcao} options={{ title: "Funções", drawerItemStyle: { display: 'none' } }} />
             <Drawer.Screen name="Adm" component={HomeAdm} options={{ title: "Adm"}} />

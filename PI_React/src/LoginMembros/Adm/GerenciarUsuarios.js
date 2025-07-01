@@ -26,8 +26,6 @@ import {
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import Icone from "@expo/vector-icons/Feather";
-import { db } from "../../conexao/firebaseConfig";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 
@@ -45,65 +43,6 @@ export default function UsuariosAdm() {
 
   const navegarPara = (tela) => () => {
     navigation.navigate(tela);
-  };
-
-  // Busca usuarios aprovados no Firestore
-  const buscarUsuariosAprovados = async () => {
-    try {
-      const q = query(collection(db, "users"), where("aprovado", "==", true));
-      const querySnapshot = await getDocs(q);
-      const lista = [];
-
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        lista.push({
-          id: doc.id,
-          user: data.nome || "Sem nome",
-          email: data.email || "Sem email",
-          tipo: data.tipo || "Sem tipo",
-          motivo: data.motivo || "Usuário aprovado"
-        });
-      });
-
-      setPrincipais(lista);
-    } catch (error) {
-      console.error("Erro ao buscar usuários aprovados:", error);
-    }
-  };
-
-  // Atualiza sempre que a tela estiver ativa
-  useFocusEffect(
-    useCallback(() => {
-      buscarUsuariosAprovados();
-    }, [])
-  );
-
-  const removerUsuario = (id) => {
-    setPrincipais((prev) => prev.filter((user) => user.id !== id));
-    // Para remover no Firestore, use deleteDoc(doc(db, "users", id)) (adicione depois)
-  };
-
-  const editarUsuario = (usuario) => {
-    setUsuarioEditando(usuario);
-    setNome(usuario.user);
-    setEmail(usuario.email);
-    setTipo(usuario.tipo);
-    setModalVisible(true);
-  };
-
-  const salvarEdicao = () => {
-    if (usuarioEditando) {
-      setPrincipais((prev) =>
-        prev.map((item) =>
-          item.id === usuarioEditando.id
-            ? { ...item, user: nome, email: email, tipo: tipo }
-            : item
-        )
-      );
-      setModalVisible(false);
-      setUsuarioEditando(null);
-      // Para salvar no Firestore, use updateDoc(doc(db, "users", usuarioEditando.id), { ... }) (adicione depois)
-    }
   };
 
   return (
@@ -133,14 +72,14 @@ export default function UsuariosAdm() {
           }
           renderItem={({ item }) => (
             <Linha2 style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TextoUser4 numberOfLines={1}>{item.user}</TextoUser4>
-              <TextoTipo4 numberOfLines={1} ellipsizeMode="tail"> {item.email}</TextoTipo4>
-              <TextoMotivo4 style={{ marginLeft: 10 }} numberOfLines={1} ellipsizeMode="tail"> {item.tipo}</TextoMotivo4>
+              <TextoUser4 numberOfLines={1}></TextoUser4>
+              <TextoTipo4 numberOfLines={1} ellipsizeMode="tail"> </TextoTipo4>
+              <TextoMotivo4 style={{ marginLeft: 10 }} numberOfLines={1} ellipsizeMode="tail"> </TextoMotivo4>
               <BotaoArea>
-                <Botao onPress={() => removerUsuario(item.id)} activeOpacity={0.7}>
+                <Botao activeOpacity={0.7}>
                   <Icone name="trash" size={20} color="#FF0000" />
                 </Botao>
-                <Botao onPress={() => editarUsuario(item)} activeOpacity={0.7}>
+                <Botao activeOpacity={0.7}>
                   <Icone name="edit-3" size={20} color="#14c5ec" />
                 </Botao>
               </BotaoArea>
@@ -153,16 +92,13 @@ export default function UsuariosAdm() {
       <UsuariosTitulo2 style={{ fontSize: 20 }}>Últimos Agentes do Mês</UsuariosTitulo2>
 
       <Tabela2>
-        {principais.length > 0 ? (
-          principais.map((item) => (
-            <Linha2 key={item.id}>
-              <TextoUser>{item.user}</TextoUser>
-              <TextoMotivo> • {item.motivo}</TextoMotivo>
+            <Linha2>
+              <TextoUser></TextoUser>
+              <TextoMotivo> </TextoMotivo>
             </Linha2>
-          ))
-        ) : (
+        
           <TextoUser style={{ textAlign: "center", padding: 10 }}>Nenhum agente encontrado.</TextoUser>
-        )}
+       
       </Tabela2>
 
       {/* Navegação */}
@@ -202,7 +138,7 @@ export default function UsuariosAdm() {
               </Picker>
             </View>
             <AreaBtn style={{ marginTop: 10 }}>
-              <Button onPress={salvarEdicao}>
+              <Button>
                 <TxtBtn>Salvar</TxtBtn>
               </Button>
               <Button onPress={() => setModalVisible(false)}>

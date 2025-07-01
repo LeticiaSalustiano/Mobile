@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Background, Header, Tabela, Linha, Texto, TextoStatus, BtnArea, Btn, BtnTxt, Area, BtnRow, BtnTxt2,  } from "./styles";
+import { Background, Header, Tabela, Linha, Texto, TextoStatus, BtnArea, Btn, Area, BtnRow, BtnTxt2,  } from "./styles";
 import { View, TouchableOpacity, FlatList } from "react-native";
 import Feather from '@expo/vector-icons/Feather'; 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";

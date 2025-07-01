@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { Background, Btn, BtnTxt, Input, Titulo } from "./styles";
-import { db } from "../conexao/firebaseConfig"; 
-import { collection, addDoc } from "firebase/firestore";
-
 import { useNavigation } from "@react-navigation/native";
 
 export default function ApoioMembro() {
@@ -36,28 +33,7 @@ export default function ApoioMembro() {
             return;
         }
     
-        try {
-            await addDoc(collection(db, "users"), {
-                nome: nome.trim(),
-                email: email.trim(), 
-                contato: contato.trim(),
-                habilidades: habilidades.trim(),
-                tipo: "Voluntario",
-                aprovado: false,
-                dataCadastro: new Date()
-            });
-    
-            Alert.alert("Sucesso", "Cadastro enviado com sucesso!");
-            setNome('');
-            setContato('');
-            setEmail('');
-            setHabilidades('');
-            navigation.navigate("SafePet", { email: email.trim() });
-
-        } catch (error) {
-            console.error("Erro ao salvar no Firebase:", error);
-            Alert.alert("Erro", "Não foi possível enviar o cadastro.");
-        }
+       
     };
 
     return (

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Background, Header, Texto, BtnArea, BtnArea2, Btn, BtnTxt, StatusResumo, BotaoSair, Perfil } from "./styles";
+import { Background, Header, Texto, BtnArea, Btn, BtnTxt, StatusResumo, BotaoSair, Perfil, BotaoMapa } from "./styles";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Icone from '@expo/vector-icons/Feather';
 import { View } from "react-native";
@@ -15,6 +15,9 @@ const Resgate = () => {
   // Função de navegação
   function voltarLogin() {
     navigation.navigate("Login");
+  }
+  function verMapa() {
+    navigation.navigate('Mapa');
   }
   return (
     <Background>
@@ -38,17 +41,21 @@ const Resgate = () => {
       <BtnArea>
         <Btn onPress={() => navigation.navigate("Solicitacoes")} activeOpacity={0.7}>
           <Icone>
-            <MaterialIcons name="assignment" size={22} color="#fff" />
+            <MaterialIcons name="assignment" size={25} color="#fff" />
           </Icone>
           <BtnTxt>Chamados</BtnTxt>
         </Btn>
         <Btn onPress={() => navigation.navigate("Andamento")} activeOpacity={0.7}>
           <Icone>
-            <FontAwesome5 name="table" size={20} color="#fff" />
+            <FontAwesome5 name="table" size={25} color="#fff" />
           </Icone>
           <BtnTxt>Andamento</BtnTxt>
         </Btn>
       </BtnArea>
+      <BotaoMapa activeOpacity={0.7} >
+        <Icone name="map" size={25} color="#fff"/>
+        <BtnTxt>Mapa</BtnTxt>
+      </BotaoMapa>
     </Background>
   );
 };

@@ -1,38 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  HomeContainer, 
-  HomeTitulo, 
-  HomeSubtitulo, 
-  BtnArea, 
-  Btn, 
-  BtnTxt,
-  Tabela, 
-  Linha, 
-  Texto, 
-  Texto2, 
-  Texto3, 
-  Botao, 
-  BotaoArea, 
-  Subtitulo, 
-  BotaoSair,
-  Perfil
-} from "./styles";
-
+import { HomeContainer, HomeTitulo, HomeSubtitulo, BtnArea, Btn, BtnTxt, Tabela, Linha, Texto, Texto2, Texto3, Botao, BotaoArea, Subtitulo, BotaoSair, Perfil } from "./styles";
 import { FlatList, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icone from '@expo/vector-icons/Feather';
-import { signOut } from "firebase/auth";
 
-import { db } from "../../conexao/firebaseConfig";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
 import { View } from "react-native";
 
 export default function HomeAdm() {
@@ -42,7 +13,7 @@ export default function HomeAdm() {
   const [solicitacoes, setSolicitacoes] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
 
-  // Buscar usuários com aprovado == false
+  /*// Buscar usuários com aprovado == false
   const carregarSolicitacoes = async () => {
     try {
       const q = query(collection(db, "users"), where("aprovado", "==", false));
@@ -117,11 +88,11 @@ export default function HomeAdm() {
       console.log("Erro ao deslogar:", error);
       Alert.alert("Erro", "Não foi possivel sair da conta");
     }
-  }
+  }*/
 
   return (
     <HomeContainer>
-      <BotaoSair activeOpacity={0.7} onPress={handleLogout}>
+      <BotaoSair activeOpacity={0.7} >
         <Icone name="x" size={25} color={'#000'}></Icone>
       </BotaoSair>
 
