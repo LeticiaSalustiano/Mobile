@@ -1,40 +1,45 @@
 import React, { useState } from "react";
-import { Alert, KeyboardAvoidingView, Platform } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform, TouchableOpacity, View } from "react-native";
 import { Background, Btn, BtnTxt, Input, Titulo } from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import { isValidEmail, isValidTelefone } from "./Cadastro/validacao";
+import Icone from '@expo/vector-icons/Feather';
 
 export default function ApoioMembro() {
     const navigation = useNavigation();
 
     const [nome, setNome] = useState('');
-    const [contato, setContato] = useState('');
     const [email, setEmail] = useState('');
+    const [telefone, setTelefone] = useState('');
     const [habilidades, setHabilidades] = useState('');
-
-    const validarEEnviar = async () => {
-        const nomeValido = nome.trim().length >= 3;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const telefoneRegex = /^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$/;
-        const contatoValido = emailRegex.test(contato) || telefoneRegex.test(contato);
-        const habilidadesValida = habilidades.trim() === "" || habilidades.trim().length >= 5;
-    
-        if (!nomeValido) {
-            Alert.alert("Erro", "Nome deve ter pelo menos 3 caracteres.");
-            return;
-        }
-    
-        if (!contatoValido) {
-            Alert.alert("Erro", "Informe um email ou telefone válido.");
-            return;
-        }
-    
-        if (!habilidadesValida) {
-            Alert.alert("Erro", "Descreva melhor suas habilidades (mínimo 5 caracteres) ou deixe em branco.");
-            return;
-        }
-    
-       
-    };
+    const [senha, setSenha] = useState('');
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [mostrarConfirmar, setMostrarConfirmar] = useState(false);
+   
+    const handleCadastro = () => {
+      if (!nome || !email || !telefone || !senha || !confirmarSenha || !habilidades) {
+        Alert.alert('Erro', 'Preencha todos os campos.');
+        return;
+      }
+   
+      if (!isValidEmail(email)) {
+        Alert.alert('Erro', 'Email inválido.');
+        return;
+      }
+   
+      if (!isValidTelefone(telefone)) {
+        Alert.alert('Erro', 'Telefone inválido.');
+        return;
+      }
+   
+      if (senha !== confirmarSenha) {
+        Alert.alert('Erro', 'As senhas não coincidem.');
+        return;
+      }
+   
+      Alert.alert('Sucesso', 'Cadastro realizado!');
+    };  
 
     return (
         <KeyboardAvoidingView
@@ -50,9 +55,9 @@ export default function ApoioMembro() {
                     onChangeText={setNome}
                 />
                 <Input
-                    placeholder="Contato (Telefone)"
-                    value={contato}
-                    onChangeText={setContato}
+                    placeholder="Telefone"
+                    value={telefone}
+                    onChangeText={setTelefone}
                 />
                 <Input
                     placeholder="Email (Email)"
@@ -66,7 +71,33 @@ export default function ApoioMembro() {
                     onChangeText={setHabilidades}
                 />
 
-                <Btn onPress={validarEEnviar}>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+                <Input
+                placeholder="Senha"
+                value={senha}
+                onChangeText={setSenha}
+                secureTextEntry={!mostrarSenha}
+                style= {{flex: 1}}
+                />
+                <TouchableOpacity onPress={() => setMostrarSenha(!mostrarSenha)}> 
+                    <Icone name={mostrarConfirmar ? 'eye-off' : 'eye'} size={20} color={"#888"}></Icone>
+                </TouchableOpacity>
+            </View>  
+
+            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+                <Input
+                placeholder="Confirmar senha"
+                value={confirmarSenha}
+                onChangeText={setConfirmarSenha}
+                secureTextEntry={!mostrarConfirmar}
+                style= {{flex: 1}}
+                />
+                <TouchableOpacity onPress={() => setMostrarConfirmar(!mostrarConfirmar)}> 
+                    <Icone name={mostrarConfirmar ? 'eye-off' : 'eye'} size={20} color={"#888"}></Icone>
+                </TouchableOpacity>
+            </View>  
+            
+                <Btn onPress={handleCadastro}>
                     <BtnTxt>Enviar Cadastro</BtnTxt>
                 </Btn>
             </Background>

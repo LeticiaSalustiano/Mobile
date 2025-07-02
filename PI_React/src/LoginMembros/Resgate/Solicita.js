@@ -3,6 +3,7 @@ import { Alert, View, TouchableOpacity, Modal, Text, Pressable } from "react-nat
 import { useNavigation } from "@react-navigation/native";
 import { Background, Header, StatusResumo, Texto, BtnArea2, Btn2, BtnTxt2 } from "./styles";
 import Icone from '@expo/vector-icons/Feather';
+import MapaResgates from "./mapaResgates";
 
 const Solicitacoes = () => {
   const navigation = useNavigation();
@@ -31,14 +32,10 @@ const Solicitacoes = () => {
         <TouchableOpacity onPress={navegarPara("Resgate")} style={{ marginRight: 5 }} activeOpacity={0.7}>
           <Icone name="arrow-left" size={25} />
         </TouchableOpacity>
-        <Header>Locais Resgate</Header>
+        <Header style={{marginBottom: 10}}>Locais Resgate</Header>
       </View>
 
-      {/* Resumo de Status */}
-      <StatusResumo>
-        <Texto>Última solicitação: Emergência (Cachorro)</Texto>
-        <Texto>Status: A caminho</Texto>
-      </StatusResumo>
+      <MapaResgates />  
 
       {/* Botões de ações rápidas */}
       <BtnArea2>

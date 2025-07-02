@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, Alert, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Background, Header, Card, PetNome, Info, Horario, BtnArea, Btn, BtnTxt } from "./styles.js";
+import { Background, Header, Card, PetNome, Info, Horario, Area, Btn, BtnTxt } from "./styles.js";
 import { Feather as Icone } from '@expo/vector-icons';
 
 const Consultas = () => {
@@ -51,7 +51,7 @@ const Consultas = () => {
                 <Icone name="arrow-left" size={25}></Icone>
             </TouchableOpacity>
 
-              <Header>Agenda de Consultas</Header>
+              <Header style={{marginBottom: 10,}}>Agenda de Consultas</Header>
          </View>
          
             <FlatList
@@ -66,17 +66,17 @@ const Consultas = () => {
                         <Info>🩺 Doença: {item.doenca}</Info>
                         <Horario>⏰ Horário: {item.horario}</Horario>
 
-                        <BtnArea>
-                            <Btn onPress={() => confirmarExcluirConsulta(item.id)}>
-                                <BtnTxt>Excluir</BtnTxt>
-                            </Btn>
-                            <Btn onPress={() => remarcarConsulta(item.id)}>
-                                <BtnTxt>Remarcar</BtnTxt>
-                            </Btn>
-                            <Btn onPress={() => finalizarConsulta(item.id)}>
-                                <BtnTxt>Finalizada</BtnTxt>
-                            </Btn>
-                        </BtnArea>
+                        <Area>
+                            <TouchableOpacity  onPress={() => confirmarExcluirConsulta(item.id)}>
+                                <Icone name="trash" size={20} color={'red'}></Icone>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{marginLeft: 10,}} onPress={() => remarcarConsulta(item.id)}>
+                                <Icone name="edit-2" size={20} color={'black'}></Icone>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{marginLeft: 10,}} onPress={() => finalizarConsulta(item.id)}>
+                               <Icone name="check" size={23} color={'green'}></Icone>
+                            </TouchableOpacity>
+                        </Area>
                     </Card>
                 )}
             />

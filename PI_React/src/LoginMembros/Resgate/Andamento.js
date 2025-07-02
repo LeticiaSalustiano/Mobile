@@ -79,7 +79,7 @@ const Andamento = () => {
         <Btn onPress={atualizarChamados} activeOpacity={0.7}>
           <BtnRow>
             <Feather name="refresh-ccw" size={18} color="#fff" />
-            <BtnTxt2>Atualizar</BtnTxt2>
+            <BtnTxt2> Atualizar</BtnTxt2>
           </BtnRow>
         </Btn>
         <Btn onPress={() => navigation.navigate("Solicitacoes")} activeOpacity={0.7}>

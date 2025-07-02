@@ -5,9 +5,10 @@ import { Background, BtnArea, Btn, BtnTxt } from "../LoginMembros/styles";
 
 export default function Tipo() {
   const navegacao = useNavigation();
+  
   return(
     <Background>
-      <Text style={styles.titulo}>Escolha sua opção desejada</Text>
+      <Text style={styles.titulo}>Escolha seu perfil</Text>
       <BtnArea>
         <Btn onPress={() => navegacao.navigate('ResgateMembro')} activeOpacity={0.7}>
           <BtnTxt>Resgate</BtnTxt>

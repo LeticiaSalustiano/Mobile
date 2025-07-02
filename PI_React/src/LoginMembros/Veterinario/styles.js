@@ -110,3 +110,41 @@ export const BotaoSair = styled.TouchableOpacity`
   align-self: flex-end;
   border-radius: 10px;
 `;
+
+export const Card = styled.View`
+   background-color: #fff;
+   border-radius: 8px;
+   padding: 15px;
+   margin-bottom: 10px;
+   shadow-color: #000;
+   shadow-offset: 0px 2px;
+   shadow-opacity: 0.2;
+   shadow-radius: 4px;
+   elevation: 3;
+`;
+
+export const PetNome = styled.Text`
+   font-size: 18px;
+   font-weight: bold;
+   color: #000;
+   margin-bottom: 5px;
+`;
+
+export const Info = styled.Text`
+   font-size: 16px;
+   color: #333;
+   margin-bottom: 3px;
+`;
+
+export const Horario = styled.Text`
+   font-size: 16px;
+   color: #555;
+   margin-top: 5px;
+`;
+
+export const Area = styled.View`
+   flex-direction: row;
+   justify-content: flex-start;
+   margin-top: 15px;
+   margin-bottom: 5px;
+`;

@@ -57,7 +57,7 @@ export const BtnArea = styled.View`
    flex-direction: row;
    justify-content: center;
    margin-top: 10px;
-   margin-bottom: 10px;
+   margin-bottom: 30px;
    gap: 10px;
 `;
 
@@ -92,8 +92,9 @@ export const BtnTxt = styled.Text`
 `;
 
 export const BtnTxt2 = styled.Text`
-   color: #000;
+   color: #fff;
    font-size: 20px;
+   align-items: center;
 `;
 
 export const BtnRow = styled.View`
@@ -107,7 +108,7 @@ export const StatusResumo = styled.View`
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  border-left-width: 5px;
+  border-left-width: -1px;
   border-left-color: #14c5ec;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -149,4 +150,9 @@ export const BotaoMapa = styled.TouchableOpacity`
    height: 60px;
    flex-direction: row;
    gap: 10px;
+`;
+
+export const Area = styled.View`
+  flex: 1;
+  margin-top: 10px;
 `;
