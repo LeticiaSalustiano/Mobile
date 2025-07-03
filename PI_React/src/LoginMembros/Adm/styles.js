@@ -197,6 +197,7 @@ export const Button = styled.TouchableOpacity`
   background-color: #14c5ec;
   border-radius: 5px;
   justify-content: center;
+  align-items: center;
   width: 170px;
   height: 50px;
   margin: 5px;
@@ -337,6 +338,7 @@ export const TextoUser4 = styled.Text`
   font-weight: bold;
   color: #000;
   text-align: center;
+  max-width: 60px;
 `;
 
 export const TextoTipo4 = styled.Text`
@@ -373,4 +375,13 @@ export const BotaoSair = styled.TouchableOpacity`
   background-color: #14c5ec;
   align-self: flex-end;
   border-radius: 50px;
+`;
+
+export const Texto5 = styled.Text`
+  font-size: 17px;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 `;

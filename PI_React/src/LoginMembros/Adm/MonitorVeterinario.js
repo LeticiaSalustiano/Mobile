@@ -6,10 +6,9 @@ import {
   Tabela2,
   Linha2,
   TextoUser,
-  TextoTipo,
+  TextoTipo2,
   TextoMotivo,
   TextoUser2,
-  TextoTipo2,
   TextoMotivo2,
   Textoquan
 } from "./styles";
@@ -17,15 +16,21 @@ import Icone from "@expo/vector-icons/Feather";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../conexao/config";
+
 export default function MonitoraVeterinario() {
   const navigation = useNavigation();
   const [monitorados, setMonitorados] = useState([]);
 
-  /*const carregarVeterinarios = async () => {
+  // Função para navegar
+  const navegarPara = (tela) => () => navigation.navigate(tela);
+
+  // Função para carregar veterinários aprovados da coleção "veterinario"
+  const carregarVeterinarios = async () => {
     try {
       const q = query(
-        collection(db, "users"),
-        where("tipo", "==", "Veterinario"),
+        collection(db, "veterinario"),
         where("aprovado", "==", true)
       );
 
@@ -53,8 +58,10 @@ export default function MonitoraVeterinario() {
     carregarVeterinarios();
   }, []);
 
+  // Destaques do mês (6+ atendimentos)
   const destaques = monitorados.filter((vet) => vet.quantidade >= 6);
 
+  // Cores para situação
   const corSituacao = (situacao) => {
     switch (situacao) {
       case "Disponível":
@@ -68,10 +75,6 @@ export default function MonitoraVeterinario() {
     }
   };
 
-  const navegarPara = (tela) => () => {
-    navigation.navigate(tela);
-  };*/
-
   return (
     <UsuariosContainer>
       {/* Cabeçalho */}
@@ -82,7 +85,7 @@ export default function MonitoraVeterinario() {
         <UsuariosTitulo style={{ marginTop: -3 }}>Usuários Veterinário</UsuariosTitulo>
       </AreaHeader>
 
-      {/* Tabela com cabeçalho */}
+      {/* Tabela principal */}
       <Tabela2>
         <Linha2>
           <TextoUser style={{ fontWeight: "bold", marginLeft: 8 }}>Nome</TextoUser>
@@ -107,7 +110,6 @@ export default function MonitoraVeterinario() {
               <TextoMotivo2 style={{ marginLeft: -20 }}>{item.quantidade}</TextoMotivo2>
               <Textoquan style={{ marginLeft: 4 }}>{item.solicitado}</Textoquan>
 
-              {/* Botão de detalhes */}
               <TouchableOpacity onPress={() => alert(`Mais detalhes de ${item.user}`)} style={{ marginLeft: -10 }}>
                 <Icone name="info" size={20} color="#14c5ec" />
               </TouchableOpacity>
@@ -143,4 +145,3 @@ export default function MonitoraVeterinario() {
     </UsuariosContainer>
   );
 }
-

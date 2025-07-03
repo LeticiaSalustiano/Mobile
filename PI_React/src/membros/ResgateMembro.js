@@ -4,9 +4,8 @@ import { Background, Btn, BtnTxt, Input, Titulo } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { isValidEmail, isValidTelefone } from "./Cadastro/validacao";
 import Icone from '@expo/vector-icons/Feather';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../conexao/config';
+import { db } from "../conexao/config"; // ajuste o caminho se necessário
+import { collection, addDoc } from "firebase/firestore";
 
 export default function ApoioMembro() {
   const [nome, setNome] = useState('');
@@ -21,7 +20,6 @@ export default function ApoioMembro() {
   const navigation = useNavigation();
 
   const handleCadastro = async () => {
-    // 🔒 Validações
     if (!nome || !email || !telefone || !experiencia || !senha || !confirmarSenha) {
       Alert.alert('Erro', 'Preencha todos os campos.');
       return;
@@ -48,23 +46,28 @@ export default function ApoioMembro() {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-      const uid = userCredential.user.uid;
-
-      await setDoc(doc(db, 'usuarios', uid), {
+          await addDoc(collection(db, "resgatadores"), {
         nome,
         email,
         telefone,
-        tipo: 'voluntario',
-        experiencia
+        experiencia,
+        tipo: 'resgatador',
+        aprovado: false,
+        criadoEm: new Date()
       });
 
-      Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
-      navigation.goBack(); // ou redirecionar para outra tela
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Erro ao cadastrar', error.message);
-    }
+  Alert.alert("Sucesso", "Cadastro enviado! Aguarde a aprovação.");
+        setNome("");
+        setEmail("");
+        setTelefone("");
+        setExperiencia("");
+        setSenha("");
+        setConfirmarSenha("");
+        navigation.goBack(); // ou navegue para outra tela
+      } catch (error) {
+        console.error("Erro ao cadastrar resgatador:", error);
+        Alert.alert("Erro", "Não foi possível realizar o cadastro.");
+      }
   };
 
   return (
@@ -73,29 +76,12 @@ export default function ApoioMembro() {
       style={{ flex: 1 }}
     >
       <Background>
-        <Titulo>Quero ser um membro Voluntário!</Titulo>
+        <Titulo>Quero ser um membro Resgatador!</Titulo>
 
-        <Input
-          placeholder="Nome completo"
-          value={nome}
-          onChangeText={setNome}
-        />
-        <Input
-          placeholder="Telefone"
-          value={telefone}
-          onChangeText={setTelefone}
-        />
-        <Input
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-        <Input
-          placeholder="Experiência"
-          value={experiencia}
-          onChangeText={setExperiencia}
-        />
+        <Input placeholder="Nome completo" value={nome} onChangeText={setNome} />
+        <Input placeholder="Telefone" value={telefone} onChangeText={setTelefone} />
+        <Input placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
+        <Input placeholder="Experiência" value={experiencia} onChangeText={setExperiencia} />
 
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <Input

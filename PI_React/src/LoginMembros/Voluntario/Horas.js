@@ -47,9 +47,9 @@ const Horas = () => {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <LinhaHorario>
-              <View style={{ flex: 1 }}>
-                <Texto style={{ fontWeight: "bold" }}>{item.data} ({item.dia})</Texto>
-                <Texto style={{ fontSize: 17 }}>{item.horas}</Texto>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Texto style={{ fontWeight: "bold" }}> {item.data} ({item.dia})</Texto>
+                <Texto style={{ fontSize: 17 }}>   {item.horas}</Texto>
               </View>
               <TouchableOpacity onPress={() => toggleCheck(item.id)} activeOpacity={0.7}>
                 <Icone

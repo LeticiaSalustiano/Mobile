@@ -16,18 +16,20 @@ import Icone from "@expo/vector-icons/Feather";
 import { FlatList, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-;
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../conexao/config";
 
 export default function MonitoraVoluntario() {
   const navigation = useNavigation();
   const [monitorados, setMonitorados] = useState([]);
 
-  /* Buscar voluntários aprovados do Firestore
+  const navegarPara = (tela) => () => navigation.navigate(tela);
+
+  // Carregar voluntários aprovados da coleção "voluntarios" (ajuste nome conforme seu bd)
   const carregarVoluntarios = async () => {
     try {
       const q = query(
-        collection(db, "users"),
-        where("tipo", "==", "Voluntario"),
+        collection(db, "voluntarios"),
         where("aprovado", "==", true)
       );
 
@@ -40,7 +42,7 @@ export default function MonitoraVoluntario() {
           id: doc.id,
           user: dados.nome || "Sem nome",
           situacao: dados.situacao || "Ativo",
-          diarias: dados.funcoesRalizadas || "",
+          funcoesRalizadas: dados.funcoesRalizadas || 0, // pode ser número ou texto
           horas: dados.horas || 0
         });
       });
@@ -55,12 +57,10 @@ export default function MonitoraVoluntario() {
     carregarVoluntarios();
   }, []);
 
+  // Destaques: voluntários com 100h ou mais
   const destaques = monitorados.filter((v) => v.horas >= 100);
 
-  const navegarPara = (tela) => () => {
-    navigation.navigate(tela);
-  };
-
+  // Cores para a situação
   const corSituacao = (situacao) => {
     switch (situacao) {
       case "Ativo":
@@ -70,7 +70,7 @@ export default function MonitoraVoluntario() {
       default:
         return "#000";
     }
-  };*/
+  };
 
   return (
     <UsuariosContainer>
@@ -85,7 +85,7 @@ export default function MonitoraVoluntario() {
         <Linha2 style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
           <TextoUser3 style={{ fontWeight: "bold", marginLeft: 8 }}>Nome</TextoUser3>
           <TextoTipo3 style={{ fontWeight: "bold", marginLeft: -10 }}>Situação</TextoTipo3>
-          <TextoMotivo3 style={{ fontWeight: "bold", marginLeft: -10 }}>Diarias</TextoMotivo3>
+          <TextoMotivo3 style={{ fontWeight: "bold", marginLeft: -10 }}>Diárias</TextoMotivo3>
           <TextoMotivo3 style={{ fontWeight: "bold", marginLeft: -10 }}>Info</TextoMotivo3>
         </Linha2>
 
@@ -99,8 +99,8 @@ export default function MonitoraVoluntario() {
           }
           renderItem={({ item }) => (
             <Linha2 style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TextoUser style={{marginLeft: 13}}></TextoUser>
-              <TextoTipo style={{ color: corSituacao(item.situacao), marginLeft: -24 }}></TextoTipo>
+              <TextoUser style={{ marginLeft: 13 }}>{item.user}</TextoUser>
+              <TextoTipo style={{ color: corSituacao(item.situacao), marginLeft: -24 }}>{item.situacao}</TextoTipo>
               <TextoMotivo>{item.funcoesRalizadas}</TextoMotivo>
 
               <TouchableOpacity onPress={() => alert(`Mais detalhes de ${item.user}`)} style={{ marginLeft: -10 }}>
@@ -117,8 +117,7 @@ export default function MonitoraVoluntario() {
           destaques.map((vol) => (
             <Linha2 key={vol.id}>
               <TextoUser>{vol.user}</TextoUser>
-              <TextoMotivo> • Horas trabalhadas: </TextoMotivo>
-              <TextoUser>{vol.horas}h</TextoUser>
+              <TextoMotivo> • Horas trabalhadas: {vol.horas}h</TextoMotivo>
             </Linha2>
           ))
         ) : (

@@ -15,17 +15,21 @@ import {
 import Icone from "@expo/vector-icons/Feather";
 import { FlatList, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../conexao/config";
 
 export default function MonitoraResgate() {
   const navigation = useNavigation();
   const [monitorados, setMonitorados] = useState([]);
 
-  /*const carregarAgentes = async () => {
+  // Navegação segura
+  const navegarPara = (tela) => () => navigation.navigate(tela);
+
+  // Carregar agentes aprovados da coleção "resgatadores"
+  const carregarAgentes = async () => {
     try {
       const q = query(
-        collection(db, "users"),
-        where("tipo", "==", "Resgatador"),
+        collection(db, "resgatadores"),
         where("aprovado", "==", true)
       );
 
@@ -38,8 +42,8 @@ export default function MonitoraResgate() {
           id: doc.id,
           user: dados.nome || "Sem nome",
           situacao: dados.situacao || "Disponível",
-          quantidade: dados.quantidade || 0, // total de resgates feitos
-          solicita: dados.solicita || 0 // número de solicitações em aberto
+          quantidade: dados.quantidade || 0,
+          solicita: dados.solicita || 0
         });
       });
 
@@ -53,8 +57,10 @@ export default function MonitoraResgate() {
     carregarAgentes();
   }, []);
 
+  // Destaques do mês: quem tem 5+ resgates
   const destaques = monitorados.filter((agente) => agente.quantidade >= 5);
 
+  // Cor por situação
   const corSituacao = (situacao) => {
     switch (situacao) {
       case "Disponível":
@@ -68,10 +74,6 @@ export default function MonitoraResgate() {
     }
   };
 
-  const navegarPara = (tela) => () => {
-    navigation.navigate(tela);
-  };
-*/
   return (
     <UsuariosContainer>
       <AreaHeader>
@@ -81,6 +83,7 @@ export default function MonitoraResgate() {
         <UsuariosTitulo style={{ marginTop: -3 }}>Usuários Resgate</UsuariosTitulo>
       </AreaHeader>
 
+      {/* Lista principal */}
       <Tabela2>
         <Linha2 style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
           <TextoUser3 style={{ fontWeight: "bold" }}>Nome</TextoUser3>
@@ -132,7 +135,7 @@ export default function MonitoraResgate() {
         )}
       </Tabela2>
 
-      {/* Pendências */}
+      {/* Pendências - você pode implementar futuramente */}
       <Tabela2>
         <UsuariosTitulo style={{ marginTop: 20 }}>Pendências</UsuariosTitulo>
         <Text style={{ padding: 10, fontStyle: "italic", textAlign: "center" }}>

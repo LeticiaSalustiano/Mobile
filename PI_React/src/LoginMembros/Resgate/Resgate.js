@@ -52,10 +52,7 @@ const Resgate = () => {
           <BtnTxt>Andamento</BtnTxt>
         </Btn>
       </BtnArea>
-      <BotaoMapa activeOpacity={0.7} >
-        <Icone name="map" size={25} color="#fff"/>
-        <BtnTxt>Mapa</BtnTxt>
-      </BotaoMapa>
+    
     </Background>
   );
 };
